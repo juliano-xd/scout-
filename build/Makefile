@@ -198,6 +198,19 @@ test_filesystem/fast:
 .PHONY : test_filesystem/fast
 
 #=============================================================================
+# Target rules for targets named test_sexpr
+
+# Build rule for target.
+test_sexpr: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sexpr
+.PHONY : test_sexpr
+
+# fast build rule for target.
+test_sexpr/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/build
+.PHONY : test_sexpr/fast
+
+#=============================================================================
 # Target rules for targets named test_cli_parser
 
 # Build rule for target.
@@ -460,6 +473,30 @@ tests/test_scanner.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scanner.dir/build.make CMakeFiles/test_scanner.dir/tests/test_scanner.cpp.s
 .PHONY : tests/test_scanner.cpp.s
 
+tests/test_sexpr.o: tests/test_sexpr.cpp.o
+.PHONY : tests/test_sexpr.o
+
+# target to build an object file
+tests/test_sexpr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
+.PHONY : tests/test_sexpr.cpp.o
+
+tests/test_sexpr.i: tests/test_sexpr.cpp.i
+.PHONY : tests/test_sexpr.i
+
+# target to preprocess a source file
+tests/test_sexpr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.i
+.PHONY : tests/test_sexpr.cpp.i
+
+tests/test_sexpr.s: tests/test_sexpr.cpp.s
+.PHONY : tests/test_sexpr.s
+
+# target to generate assembly for a file
+tests/test_sexpr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.s
+.PHONY : tests/test_sexpr.cpp.s
+
 tests/test_smali_parser.o: tests/test_smali_parser.cpp.o
 .PHONY : tests/test_smali_parser.o
 
@@ -532,6 +569,7 @@ help:
 	@echo "... test_cli_parser"
 	@echo "... test_filesystem"
 	@echo "... test_scanner"
+	@echo "... test_sexpr"
 	@echo "... test_smali_parser"
 	@echo "... test_xref"
 	@echo "... src/main.o"
@@ -549,6 +587,9 @@ help:
 	@echo "... tests/test_scanner.o"
 	@echo "... tests/test_scanner.i"
 	@echo "... tests/test_scanner.s"
+	@echo "... tests/test_sexpr.o"
+	@echo "... tests/test_sexpr.i"
+	@echo "... tests/test_sexpr.s"
 	@echo "... tests/test_smali_parser.o"
 	@echo "... tests/test_smali_parser.i"
 	@echo "... tests/test_smali_parser.s"

@@ -1,0 +1,42 @@
+{
+  "tests": 6,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "SexprTest",
+      "tests": 6,
+      "testsuite": [
+        {
+          "name": "HandlesNullAndBooleans",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 7
+        },
+        {
+          "name": "HandlesNumbers",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 13
+        },
+        {
+          "name": "HandlesStringsAndEscaping",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 19
+        },
+        {
+          "name": "HandlesArrays",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 26
+        },
+        {
+          "name": "HandlesObjects",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 34
+        },
+        {
+          "name": "HandlesNestedStructures",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 43
+        }
+      ]
+    }
+  ]
+}

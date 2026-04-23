@@ -65,6 +65,7 @@ CMAKE_BINARY_DIR = /home/trindade/Projetos/scout++/build
 # The main recursive "all" target.
 all: CMakeFiles/scout.dir/all
 all: CMakeFiles/test_filesystem.dir/all
+all: CMakeFiles/test_sexpr.dir/all
 all: CMakeFiles/test_cli_parser.dir/all
 all: CMakeFiles/test_scanner.dir/all
 all: CMakeFiles/test_smali_parser.dir/all
@@ -78,6 +79,7 @@ all: _deps/googlebenchmark-build/all
 # The main recursive "codegen" target.
 codegen: CMakeFiles/scout.dir/codegen
 codegen: CMakeFiles/test_filesystem.dir/codegen
+codegen: CMakeFiles/test_sexpr.dir/codegen
 codegen: CMakeFiles/test_cli_parser.dir/codegen
 codegen: CMakeFiles/test_scanner.dir/codegen
 codegen: CMakeFiles/test_smali_parser.dir/codegen
@@ -97,6 +99,7 @@ preinstall: _deps/googlebenchmark-build/preinstall
 # The main recursive "clean" target.
 clean: CMakeFiles/scout.dir/clean
 clean: CMakeFiles/test_filesystem.dir/clean
+clean: CMakeFiles/test_sexpr.dir/clean
 clean: CMakeFiles/test_cli_parser.dir/clean
 clean: CMakeFiles/test_scanner.dir/clean
 clean: CMakeFiles/test_smali_parser.dir/clean
@@ -299,6 +302,39 @@ CMakeFiles/test_filesystem.dir/clean:
 .PHONY : CMakeFiles/test_filesystem.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/test_sexpr.dir
+
+# All Build rule for target.
+CMakeFiles/test_sexpr.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_sexpr.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=41,42 "Built target test_sexpr"
+.PHONY : CMakeFiles/test_sexpr.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_sexpr.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_sexpr.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_sexpr.dir/rule
+
+# Convenience name for target.
+test_sexpr: CMakeFiles/test_sexpr.dir/rule
+.PHONY : test_sexpr
+
+# codegen rule for target.
+CMakeFiles/test_sexpr.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=41,42 "Finished codegen for target test_sexpr"
+.PHONY : CMakeFiles/test_sexpr.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_sexpr.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/clean
+.PHONY : CMakeFiles/test_sexpr.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/test_cli_parser.dir
 
 # All Build rule for target.
@@ -372,7 +408,7 @@ CMakeFiles/test_smali_parser.dir/all: _deps/googletest-build/googletest/CMakeFil
 CMakeFiles/test_smali_parser.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_smali_parser.dir/build.make CMakeFiles/test_smali_parser.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_smali_parser.dir/build.make CMakeFiles/test_smali_parser.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=41,42 "Built target test_smali_parser"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=43,44 "Built target test_smali_parser"
 .PHONY : CMakeFiles/test_smali_parser.dir/all
 
 # Build rule for subdir invocation for target.
@@ -389,7 +425,7 @@ test_smali_parser: CMakeFiles/test_smali_parser.dir/rule
 # codegen rule for target.
 CMakeFiles/test_smali_parser.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_smali_parser.dir/build.make CMakeFiles/test_smali_parser.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=41,42 "Finished codegen for target test_smali_parser"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=43,44 "Finished codegen for target test_smali_parser"
 .PHONY : CMakeFiles/test_smali_parser.dir/codegen
 
 # clean rule for target.
@@ -405,7 +441,7 @@ CMakeFiles/test_xref.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest
 CMakeFiles/test_xref.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref.dir/build.make CMakeFiles/test_xref.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref.dir/build.make CMakeFiles/test_xref.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=43,44 "Built target test_xref"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=45,46 "Built target test_xref"
 .PHONY : CMakeFiles/test_xref.dir/all
 
 # Build rule for subdir invocation for target.
@@ -422,7 +458,7 @@ test_xref: CMakeFiles/test_xref.dir/rule
 # codegen rule for target.
 CMakeFiles/test_xref.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref.dir/build.make CMakeFiles/test_xref.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=43,44 "Finished codegen for target test_xref"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=45,46 "Finished codegen for target test_xref"
 .PHONY : CMakeFiles/test_xref.dir/codegen
 
 # clean rule for target.

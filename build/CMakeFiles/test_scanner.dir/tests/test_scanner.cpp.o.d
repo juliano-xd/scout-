@@ -294,6 +294,7 @@ CMakeFiles/test_scanner.dir/tests/test_scanner.cpp.o: \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest_pred_impl.h \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest_prod.h \
  /home/trindade/Projetos/scout++/include/core/scanner.hpp \
+ /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \
  /usr/include/c++/15.2.1/filesystem /usr/include/c++/15.2.1/bits/fs_fwd.h \
  /usr/include/c++/15.2.1/bits/fs_path.h /usr/include/c++/15.2.1/codecvt \
  /usr/include/c++/15.2.1/bits/fs_dir.h \

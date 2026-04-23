@@ -200,6 +200,7 @@ CMakeFiles/scout.dir/src/main.cpp.o: \
  /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h \
  /usr/include/c++/15.2.1/pstl/execution_defs.h \
  /home/trindade/Projetos/scout++/include/core/scanner.hpp \
+ /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \
  /usr/include/c++/15.2.1/filesystem /usr/include/c++/15.2.1/bits/fs_fwd.h \
  /usr/include/c++/15.2.1/bits/chrono.h /usr/include/c++/15.2.1/ratio \
  /usr/include/c++/15.2.1/bits/parse_numbers.h \
@@ -289,7 +290,6 @@ CMakeFiles/scout.dir/src/main.cpp.o: \
  /usr/include/c++/15.2.1/mutex /usr/include/c++/15.2.1/bits/unique_lock.h \
  /home/trindade/Projetos/scout++/include/core/smali_parser.hpp \
  /home/trindade/Projetos/scout++/include/analysis/xref.hpp \
- /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \
  /home/trindade/Projetos/scout++/include/utils/sexpr.hpp \
  /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/json.hpp \
  /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/adl_serializer.hpp \

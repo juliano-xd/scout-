@@ -1,5 +1,6 @@
 /home/trindade/Projetos/scout++/build/CMakeFiles/scout.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/test_filesystem.dir
+/home/trindade/Projetos/scout++/build/CMakeFiles/test_sexpr.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/test_cli_parser.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/test_scanner.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/test_smali_parser.dir

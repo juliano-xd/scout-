@@ -1,5 +1,5 @@
-CMakeFiles/test_xref.dir/tests/test_xref.cpp.o: \
- /home/trindade/Projetos/scout++/tests/test_xref.cpp \
+CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o: \
+ /home/trindade/Projetos/scout++/tests/test_sexpr.cpp \
  /usr/include/stdc-predef.h \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest.h \
  /usr/include/c++/15.2.1/cstddef \
@@ -293,37 +293,96 @@ CMakeFiles/test_xref.dir/tests/test_xref.cpp.o: \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest-typed-test.h \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest_pred_impl.h \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest_prod.h \
- /home/trindade/Projetos/scout++/include/analysis/xref.hpp \
- /usr/include/c++/15.2.1/filesystem /usr/include/c++/15.2.1/bits/fs_fwd.h \
- /usr/include/c++/15.2.1/bits/fs_path.h /usr/include/c++/15.2.1/codecvt \
- /usr/include/c++/15.2.1/bits/fs_dir.h \
- /usr/include/c++/15.2.1/bits/fs_ops.h /usr/include/c++/15.2.1/fstream \
- /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
- /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
- /usr/include/c++/15.2.1/bits/fstream.tcc \
- /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \
- /usr/include/c++/15.2.1/execution \
- /usr/include/c++/15.2.1/pstl/glue_execution_defs.h \
- /usr/include/c++/15.2.1/pstl/algorithm_impl.h \
+ /home/trindade/Projetos/scout++/include/utils/sexpr.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/json.hpp \
  /usr/include/c++/15.2.1/algorithm \
  /usr/include/c++/15.2.1/bits/ranges_algo.h \
  /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h \
- /usr/include/c++/15.2.1/pstl/execution_impl.h \
- /usr/include/c++/15.2.1/pstl/memory_impl.h \
- /usr/include/c++/15.2.1/pstl/unseq_backend_simd.h \
- /usr/include/c++/15.2.1/pstl/utils.h \
- /usr/include/c++/15.2.1/pstl/parallel_backend_utils.h \
- /usr/include/c++/15.2.1/pstl/parallel_backend.h \
- /usr/include/c++/15.2.1/pstl/parallel_backend_serial.h \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/adl_serializer.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/abi_macros.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/conversions/from_json.hpp \
+ /usr/include/c++/15.2.1/forward_list \
+ /usr/include/c++/15.2.1/bits/forward_list.h \
+ /usr/include/c++/15.2.1/bits/forward_list.tcc \
+ /usr/include/c++/15.2.1/valarray /usr/include/c++/15.2.1/cmath \
+ /usr/include/math.h /usr/include/bits/math-vector.h \
+ /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
+ /usr/include/bits/fp-fast.h /usr/include/bits/mathcalls-macros.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
+ /usr/include/bits/iscanonical.h /usr/include/c++/15.2.1/bits/specfun.h \
+ /usr/include/c++/15.2.1/tr1/gamma.tcc \
+ /usr/include/c++/15.2.1/tr1/special_function_util.h \
+ /usr/include/c++/15.2.1/tr1/bessel_function.tcc \
+ /usr/include/c++/15.2.1/tr1/beta_function.tcc \
+ /usr/include/c++/15.2.1/tr1/ell_integral.tcc \
+ /usr/include/c++/15.2.1/tr1/exp_integral.tcc \
+ /usr/include/c++/15.2.1/tr1/hypergeometric.tcc \
+ /usr/include/c++/15.2.1/tr1/legendre_function.tcc \
+ /usr/include/c++/15.2.1/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/15.2.1/tr1/poly_hermite.tcc \
+ /usr/include/c++/15.2.1/tr1/poly_laguerre.tcc \
+ /usr/include/c++/15.2.1/tr1/riemann_zeta.tcc \
+ /usr/include/c++/15.2.1/bits/valarray_array.h \
+ /usr/include/c++/15.2.1/bits/valarray_array.tcc \
+ /usr/include/c++/15.2.1/bits/valarray_before.h \
+ /usr/include/c++/15.2.1/bits/slice_array.h \
+ /usr/include/c++/15.2.1/bits/valarray_after.h \
+ /usr/include/c++/15.2.1/bits/gslice.h \
+ /usr/include/c++/15.2.1/bits/gslice_array.h \
+ /usr/include/c++/15.2.1/bits/mask_array.h \
+ /usr/include/c++/15.2.1/bits/indirect_array.h \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/exceptions.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/value_t.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/macro_scope.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/detected.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/void_t.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/thirdparty/hedley/hedley.hpp \
+ /usr/include/c++/15.2.1/version \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/string_escape.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/input/position_t.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/cpp_future.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/type_traits.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/iterators/iterator_traits.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/call_std/begin.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/call_std/end.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/json_fwd.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/string_concat.hpp \
+ /usr/include/c++/15.2.1/cstring \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/identity_tag.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/std_fs.hpp \
+ /usr/include/c++/15.2.1/filesystem /usr/include/c++/15.2.1/bits/fs_fwd.h \
+ /usr/include/c++/15.2.1/bits/fs_path.h /usr/include/c++/15.2.1/codecvt \
+ /usr/include/c++/15.2.1/bits/fs_dir.h \
+ /usr/include/c++/15.2.1/bits/fs_ops.h \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/conversions/to_json.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+ /usr/include/c++/15.2.1/ranges \
+ /usr/include/c++/15.2.1/bits/elements_of.h \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/byte_container_with_subtype.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/hash.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/input/binary_reader.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/input/input_adapters.hpp \
  /usr/include/c++/15.2.1/numeric \
  /usr/include/c++/15.2.1/bits/stl_numeric.h \
  /usr/include/c++/15.2.1/bits/sat_arith.h \
  /usr/include/c++/15.2.1/pstl/glue_numeric_defs.h \
- /usr/include/c++/15.2.1/pstl/parallel_impl.h \
- /usr/include/c++/15.2.1/pstl/numeric_impl.h \
- /usr/include/c++/15.2.1/pstl/pstl_config.h \
- /usr/include/c++/15.2.1/pstl/algorithm_fwd.h \
- /usr/include/c++/15.2.1/pstl/glue_algorithm_impl.h \
- /usr/include/c++/15.2.1/pstl/numeric_fwd.h \
- /usr/include/c++/15.2.1/pstl/glue_numeric_impl.h \
- /usr/include/c++/15.2.1/pstl/glue_memory_impl.h
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/input/json_sax.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/input/lexer.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/meta/is_sax.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/input/parser.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/iterators/internal_iterator.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/iterators/iter_impl.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/json_custom_base_class.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/json_pointer.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/json_ref.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/output/binary_writer.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/output/output_adapters.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/output/serializer.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/conversions/to_chars.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/ordered_map.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/detail/macro_unscope.hpp \
+ /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
