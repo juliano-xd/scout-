@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/test_xref.dir/link.d CMakeFiles/test_xref.dir/tests/test_xref.cpp.o -o test_xref  lib/libgtest_main.a lib/libgtest.a

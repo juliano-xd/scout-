@@ -1,0 +1,26 @@
+FsUtilsTest.ThrowsWhenDirectoryDoesNotExist 5 0.000608094
+FsUtilsTest.FindsFileInRootDirectory 5 0.000633105
+FsUtilsTest.FindsFileInSubdirectory 5 0.000610062
+FsUtilsTest.ReturnsNulloptWhenFileNotFound 5 0.000627857
+CliParserTest.ParsesFlagCorrectly 5 0.000533779
+CliParserTest.ParsesStringOptionCorrectly 5 0.000591719
+CliParserTest.ParsesIntOptionCorrectly 5 0.000615686
+CliParserTest.ThrowsParseErrorOnInvalidInt 5 0.000592863
+CliParserTest.ParsesStringListCorrectly 5 0.000591713
+CliParserTest.ReturnsNulloptOnHelp 5 0.000524143
+CliParserTest.ReturnsNulloptOnEmptyArgs 5 0.00059655
+CliParserTest.ThrowsParseErrorOnMissingValue 5 0.000636445
+CliParserTest.ThrowsParseErrorOnUnknownArg 5 0.000593106
+ScannerTest.ParsesClassInfoCorrectly 5 0.000651343
+ScannerTest.FindsClassWithDalvikName 5 0.000613945
+ScannerTest.FindsClassWithDotName 5 0.000641074
+ScannerTest.FindsClassWithSimpleName 5 0.000670782
+ScannerTest.ReturnsNulloptForNonExistent 5 0.000632686
+ScannerTest.FindsClassesContainingName 5 0.000604503
+ScannerTest.FindsNoClassesContainingNonExistentName 5 0.000612965
+SmaliParserTest.ExtractsMethodsCorrectly 5 0.000659495
+SmaliParserTest.HandlesEmptyOrInvalidFile 5 0.000557853
+ScannerTest.SearchesContentInsideFiles 4 0.000900577
+XrefTest.FindsMethodCallersCorrectly 1 0.00299444
+XrefTest.FindsClassCallersCorrectly 1 0.00282559
+---

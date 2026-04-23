@@ -1,0 +1,5 @@
+add_test([=[XrefTest.FindsMethodCallersCorrectly]=]  [==[/home/trindade/Projetos/scout++/build/test_xref]==] [==[--gtest_filter=XrefTest.FindsMethodCallersCorrectly]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[XrefTest.FindsMethodCallersCorrectly]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_xref.cpp:33]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[XrefTest.FindsClassCallersCorrectly]=]  [==[/home/trindade/Projetos/scout++/build/test_xref]==] [==[--gtest_filter=XrefTest.FindsClassCallersCorrectly]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[XrefTest.FindsClassCallersCorrectly]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_xref.cpp:43]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  test_xref_TESTS XrefTest.FindsMethodCallersCorrectly XrefTest.FindsClassCallersCorrectly)
