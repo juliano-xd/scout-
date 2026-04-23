@@ -111,10 +111,11 @@ namespace core {
 
         std::mutex mtx;
         std::for_each(std::execution::par, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
-            std::string filename = file_path.filename().string();
-            if (filename.size() > 6 && filename.compare(filename.size() - 6, 6, ".smali") == 0) {
-                std::string class_name = filename.substr(0, filename.size() - 6);
-                if (class_name.find(query_str) != std::string::npos) {
+            std::string rel_path = std::filesystem::relative(file_path, search_dir).generic_string();
+            if (rel_path.size() > 6 && rel_path.compare(rel_path.size() - 6, 6, ".smali") == 0) {
+                // Remove .smali extension for the check
+                std::string class_path = rel_path.substr(0, rel_path.size() - 6);
+                if (class_path.find(query_str) != std::string::npos) {
                     std::lock_guard<std::mutex> lock(mtx);
                     results.push_back(file_path);
                 }

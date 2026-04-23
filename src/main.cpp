@@ -1,165 +1,111 @@
 #include "cli/parser.hpp"
-#include "core/scanner.hpp"
-#include "core/smali_parser.hpp"
-#include "analysis/xref.hpp"
-#include "utils/filesystem.hpp"
+#include "engines/register_engines.hpp"
 #include "utils/sexpr.hpp"
-#include <nlohmann/json.hpp>
 #include <iostream>
-#include <string>
-#include <string_view>
-#include <optional>
-#include <stdexcept>
 #include <filesystem>
+#include <stdexcept>
 
 namespace fs = std::filesystem;
-using json = nlohmann::json;
 
 int main(int argc, char** argv) {
-    json response;
     try {
-        // Parse da linha de comando
+        // Parse de argumentos
         auto config_opt = cli::ScoutConfig::parse(argc, argv);
-        if (!config_opt) {
-            return 0; // Ajuda ou parâmetros vazios
-        }
-        
+        if (!config_opt) return 0;
+
         const auto& config = *config_opt;
         fs::path dir = config.path.value_or(fs::current_path().string());
-        
-        response["status"] = "success";
-        
-        // Logs de Verbose e Status Base
-        if (config.verbose) {
-            response["logs"].push_back("[VERBOSE] Modo verboso ativado.");
-        }
-        if (config.manifest) {
-            response["logs"].push_back("[INFO] Analisando o AndroidManifest.xml...");
-        }
-        if (config.scan) {
-            response["logs"].push_back("[INFO] Iniciando scanner: " + *config.scan);
+
+        // Registrar motores e formatador
+        scout::register_all_components();
+
+        // Obter formatador (sempre sexpr)
+        auto formatter = scout::create_formatter("sexpr");
+        if (!formatter) {
+            std::cerr << sexpr::make_error("Falha ao inicializar formatador sexpr").to_string() << "\n";
+            return 1;
         }
 
         // ==========================================
-        // Módulo de Busca (Classes, Conteúdo Interno e Arquivos Genéricos)
+        // Módulo de busca (Classes / Conteúdo)
         // ==========================================
         std::optional<std::string> search_query = config.search;
-        if (!search_query && !config.positional_args.empty()) {
+        if (!search_query && !config.positional_args.empty())
             search_query = config.positional_args[0];
-        }
 
         if (search_query) {
-            json search_results = json::array();
-            
-            // Se o usuário pedir explicitamente por classe, ou se parecer uma notação de classe Dalvik
-            if (config.search_type == "class" || (search_query->find('L') == 0 && search_query->back() == ';')) {
-                if (search_query->find('L') == 0 && search_query->back() == ';') {
-                    auto file = core::find_class_file(dir, *search_query);
-                    if (file) {
-                        search_results.push_back(fs::relative(*file, fs::current_path()).string());
+            std::string engine_name = scout::map_search_type_to_engine(config.search_type);
+            auto engine = scout::create_engine(engine_name);
+
+            if (engine) {
+                engines::SearchConfig scfg;
+                scfg.query       = *search_query;
+                scfg.max_results = static_cast<std::size_t>(config.search_max);
+                auto results = engine->search(dir, scfg);
+                std::cout << formatter->format_search_results(results) << "\n";
+            } else {
+                // Fallback: busca genérica de arquivo por nome
+                for (const auto& entry : fs::recursive_directory_iterator(
+                        dir, fs::directory_options::skip_permission_denied)) {
+                    if (entry.is_regular_file() &&
+                        entry.path().filename().string() == *search_query) {
+                        engines::SearchResult res;
+                        res.file_path   = fs::relative(entry.path(), fs::current_path());
+                        res.engine_name = "generic";
+                        std::cout << formatter->format_search_results({res}) << "\n";
+                        break;
                     }
-                } else {
-                    auto files = core::find_classes_containing(dir, *search_query);
-                    for (const auto& f : files) {
-                        search_results.push_back(fs::relative(f, fs::current_path()).string());
-                    }
-                }
-            } 
-            // Busca por conteúdo interno (strings, regex)
-            else if (config.search_type == "regex" || config.search_type == "string" || config.search_type == "number" || config.search_type == "integer") {
-                auto matches = core::search_content(dir, *search_query, config.search_type);
-                for (const auto& match : matches) {
-                    search_results.push_back({
-                        {"file", fs::relative(match.file_path, fs::current_path()).string()},
-                        {"line", match.line_number},
-                        {"content", match.line_content}
-                    });
-                }
-            } 
-            // Fallback genérico para arquivos
-            else {
-                auto file = utils::buscar_arquivo_recursivo(dir, *search_query);
-                if (file) {
-                    search_results.push_back(fs::relative(*file, fs::current_path()).string());
                 }
             }
-            
-            response["search"] = {
-                {"query", *search_query},
-                {"type", config.search_type},
-                {"results", search_results}
-            };
         }
 
         // ==========================================
-        // Módulo de Listagem de Métodos em Múltiplas Classes
-        // ==========================================
-        if (!config.list_methods.empty()) {
-            json methods_results = json::array();
-            for (const auto& class_name : config.list_methods) {
-                auto file = core::find_class_file(dir, class_name);
-                json class_info;
-                class_info["class_name"] = class_name;
-                
-                if (file) {
-                    class_info["file_path"] = fs::relative(*file, fs::current_path()).string();
-                    auto methods = core::SmaliParser::extract_methods(*file);
-                    
-                    json methods_json = json::array();
-                    for (const auto& m : methods) {
-                        methods_json.push_back({
-                            {"modifiers", m.access_modifiers},
-                            {"name", m.name},
-                            {"signature", m.signature}
-                        });
-                    }
-                    
-                    class_info["methods"] = methods_json;
-                    class_info["found"] = true;
-                } else {
-                    class_info["found"] = false;
-                    class_info["error"] = "Class not found in target directory.";
-                }
-                methods_results.push_back(class_info);
-            }
-            response["list_methods"] = methods_results;
-        }
-
-        // ==========================================
-        // Módulo de Cross-Reference (XREF)
+        // Módulo XREF
         // ==========================================
         if (config.xref) {
-            json xref_results = json::array();
-            auto callers = analysis::XrefEngine::find_callers(dir, *config.xref);
-            
-            for (const auto& caller : callers) {
-                xref_results.push_back({
-                    {"file", fs::relative(caller.caller_file, fs::current_path()).string()},
-                    {"class", caller.caller_class},
-                    {"method", caller.caller_method},
-                    {"line", caller.line_number},
-                    {"instruction", caller.instruction}
-                });
+            auto engine = scout::create_engine("xref");
+            if (engine) {
+                engines::SearchConfig xcfg;
+                xcfg.query = *config.xref;
+                auto results = engine->search(dir, xcfg);
+                std::cout << formatter->format_xref_results(results) << "\n";
             }
-            
-            response["xref"] = {
-                {"target", *config.xref},
-                {"total_references", callers.size()},
-                {"callers", xref_results}
-            };
         }
 
-        // O output primário para o Agente de IA é S-Expression (a não ser que JSON seja exigido)
-        if (config.output_format == "json") {
-            std::cout << response.dump(4) << "\n";
-        } else {
-            std::cout << utils::json_to_sexpr(response) << "\n";
+        // ==========================================
+        // Módulos ainda não implementados → saída informativa em sexpr
+        // ==========================================
+        auto emit_pending = [&](std::string_view module) {
+            auto n = sexpr::form("scout:pending");
+            n.kv("module",  sexpr::string(module));
+            n.kv("status",  sexpr::string("not_implemented"));
+            std::cout << formatter->format(n) << "\n";
+        };
+
+        if (config.manifest)          emit_pending("manifest");
+        if (config.scan)              emit_pending("scan");
+        if (config.hook)              emit_pending("hook");
+        if (config.frida)             emit_pending("frida");
+        if (config.cfg)               emit_pending("cfg");
+        if (config.detect_obfuscation) emit_pending("detect_obfuscation");
+
+        // Verbose
+        if (config.verbose) {
+            auto n = sexpr::form("scout:info");
+            n.kv("dir",     sexpr::string(dir.string()));
+            n.kv("engines", sexpr::string(
+                []{
+                    auto engines = scout::list_available_engines();
+                    std::string s;
+                    for (auto& e : engines) { if (!s.empty()) s += ','; s += e; }
+                    return s;
+                }()
+            ));
+            std::cout << formatter->format(n) << "\n";
         }
 
     } catch (const std::exception& e) {
-        response["status"] = "error";
-        response["error_message"] = e.what();
-        std::cerr << utils::json_to_sexpr(response) << "\n";
+        std::cerr << sexpr::make_error(e.what()).to_string() << "\n";
         return 1;
     }
 

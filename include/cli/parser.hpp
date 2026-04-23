@@ -181,7 +181,7 @@ namespace cli {
         std::optional<std::string> find_resource;
         std::optional<std::string> search;
         bool machine_sexpr = false;
-        std::string output_format = "sexpr";
+
         std::optional<std::string> path;
         std::string progress = "basic";
         bool dry_run = false;
@@ -261,7 +261,7 @@ Introspecção em S-Expression:
             parser.add_option("--find-resource", "RESOURCE_ID", "Encontra uso de um resource ID (ex: 0x7f0b0000).", config.find_resource);
             parser.add_option("--search", "QUERY", "Busca genérica no código Smali.", config.search);
             parser.add_flag("--machine-sexpr", "Output apenas em S-Expression (sem logs humanos).", config.machine_sexpr);
-            parser.add_option("--output-format", "{sexpr,json,text,yaml}", "Formato de saída (padrão: sexpr).", config.output_format);
+
             parser.add_option("--path", "DIRECTORY", "Caminho do APK descompilado (padrão: dir atual).", config.path);
             parser.add_option("--progress", "{none,basic,detailed}", "Relatório de progresso (padrão: basic).", config.progress);
             parser.add_flag("--dry-run", "Mostra o que seria feito sem aplicar as mudanças (para --hook).", config.dry_run);

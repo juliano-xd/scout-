@@ -30,7 +30,7 @@ Se você é uma IA lendo este documento para continuar o desenvolvimento do Scou
 * **Framework:** Utilize o **GoogleTest (GTest)** (já configurado e automatizado no `CMakeLists.txt`) para criar suítes de testes claras e isoladas para cada módulo.
 
 ### 2.2. Saída de Dados Amigável para Máquinas (Machine-Readable Output)
-* **Protocolo de Comunicação S-Expression:** O programa DEVE ser fácil de ser parseado por Agentes de IA. O protocolo primário e exclusivo de comunicação estruturada de todas as funções core de análise é o formato **S-Expression** (Lisp-like), ativado de forma global ou explicitamente pela flag `--machine-sexpr`. Exemplo: `(status "success") (results (class "Lcom/A;"))`.
+* **Protocolo de Comunicação S-Expression (EXCLUSIVO):** O programa DEVE ser fácil de ser parseado por Agentes de IA. Por conta disso, os outputs do programa serão **APENAS e EXCLUSIVAMENTE em S-Expression** (Lisp-like). Todos os formatadores legados (JSON, Text, YAML) foram removidos e a arquitetura foi engessada neste padrão para comunicação com agentes de IA. A opção de linha de comando `--output-format` não existe mais, e a saída será estruturada nesse formato globalmente. Exemplo de saída: `(status "success") (results (class "Lcom/A;"))`.
 * **Códigos de Erro Claros:** Se uma busca falhar, não jogue uma string genérica no console. Utilize exceções tipadas no C++ ou retornos semânticos (`std::optional`, `std::expected`) para que o CLI possa traduzir isso em mensagens de erro S-Expression claras. O Agente que chamou o Scout++ precisa entender *por que* falhou (ex: "Classe não encontrada", "Regex inválida") para tentar uma nova abordagem autônoma.
 
 ### 2.3. Alta Performance e C++26 Moderno
