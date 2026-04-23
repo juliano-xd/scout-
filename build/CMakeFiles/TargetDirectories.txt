@@ -4,6 +4,7 @@
 /home/trindade/Projetos/scout++/build/CMakeFiles/test_scanner.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/test_smali_parser.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/test_xref.dir
+/home/trindade/Projetos/scout++/build/CMakeFiles/run_benchmarks.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/test.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/edit_cache.dir
 /home/trindade/Projetos/scout++/build/CMakeFiles/rebuild_cache.dir
@@ -43,3 +44,19 @@
 /home/trindade/Projetos/scout++/build/_deps/googletest-build/googletest/CMakeFiles/install.dir
 /home/trindade/Projetos/scout++/build/_deps/googletest-build/googletest/CMakeFiles/install/local.dir
 /home/trindade/Projetos/scout++/build/_deps/googletest-build/googletest/CMakeFiles/install/strip.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/CMakeFiles/test.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/CMakeFiles/edit_cache.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/CMakeFiles/rebuild_cache.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/CMakeFiles/list_install_components.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/CMakeFiles/install.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/CMakeFiles/install/local.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/CMakeFiles/install/strip.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/test.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/edit_cache.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/rebuild_cache.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/list_install_components.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/install.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/install/local.dir
+/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-build/src/CMakeFiles/install/strip.dir

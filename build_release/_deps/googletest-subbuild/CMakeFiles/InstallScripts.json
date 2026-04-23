@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/trindade/Projetos/scout++/build_release/_deps/googletest-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

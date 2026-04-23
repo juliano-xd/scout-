@@ -1,0 +1,5 @@
+if(EXISTS "/home/trindade/Projetos/scout++/build_release/test_smali_parser[1]_tests.cmake")
+  include("/home/trindade/Projetos/scout++/build_release/test_smali_parser[1]_tests.cmake")
+else()
+  add_test(test_smali_parser_NOT_BUILT test_smali_parser_NOT_BUILT)
+endif()

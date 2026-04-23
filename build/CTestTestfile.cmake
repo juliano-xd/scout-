@@ -11,3 +11,4 @@ include("/home/trindade/Projetos/scout++/build/test_smali_parser[1]_include.cmak
 include("/home/trindade/Projetos/scout++/build/test_xref[1]_include.cmake")
 subdirs("_deps/nlohmann_json-build")
 subdirs("_deps/googletest-build")
+subdirs("_deps/googlebenchmark-build")

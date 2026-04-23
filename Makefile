@@ -1,4 +1,4 @@
-.PHONY: all build tests clean
+.PHONY: all build tests benchmark clean
 
 # Alvo padrão
 all: build
@@ -15,6 +15,11 @@ tests: build
 	@echo "==> Executando testes automatizados..."
 	@ctest --test-dir build --output-on-failure
 	@echo "==> Todos os testes passaram com sucesso!"
+
+# Compila o projeto e roda os benchmarks de performance
+benchmark: build
+	@echo "==> Executando benchmarks..."
+	@./build/run_benchmarks
 
 # Limpa os arquivos gerados pela compilação
 clean:

@@ -32,6 +32,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+FetchContent_Declare(
+  googlebenchmark
+  URL https://github.com/google/benchmark/archive/refs/tags/v1.8.3.zip
+)
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googlebenchmark)
+
 # Testes de utils/filesystem.hpp
 add_executable(test_filesystem tests/test_filesystem.cpp)
 target_link_libraries(test_filesystem GTest::gtest_main)
@@ -51,6 +58,10 @@ target_link_libraries(test_smali_parser GTest::gtest_main nlohmann_json::nlohman
 # Testes de analysis/xref.hpp
 add_executable(test_xref tests/test_xref.cpp)
 target_link_libraries(test_xref GTest::gtest_main)
+
+# Benchmarks de performance
+add_executable(run_benchmarks tests/benchmark.cpp)
+target_link_libraries(run_benchmarks benchmark::benchmark)
 
 include(GoogleTest)
 gtest_discover_tests(test_filesystem)

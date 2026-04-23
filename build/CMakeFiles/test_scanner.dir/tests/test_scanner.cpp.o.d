@@ -320,4 +320,26 @@ CMakeFiles/test_scanner.dir/tests/test_scanner.cpp.o: \
  /usr/include/c++/15.2.1/bits/regex.h \
  /usr/include/c++/15.2.1/bits/regex.tcc \
  /usr/include/c++/15.2.1/bits/regex_executor.h \
- /usr/include/c++/15.2.1/bits/regex_executor.tcc
+ /usr/include/c++/15.2.1/bits/regex_executor.tcc \
+ /usr/include/c++/15.2.1/execution \
+ /usr/include/c++/15.2.1/pstl/glue_execution_defs.h \
+ /usr/include/c++/15.2.1/pstl/algorithm_impl.h \
+ /usr/include/c++/15.2.1/pstl/execution_impl.h \
+ /usr/include/c++/15.2.1/pstl/memory_impl.h \
+ /usr/include/c++/15.2.1/pstl/unseq_backend_simd.h \
+ /usr/include/c++/15.2.1/pstl/utils.h \
+ /usr/include/c++/15.2.1/pstl/parallel_backend_utils.h \
+ /usr/include/c++/15.2.1/pstl/parallel_backend.h \
+ /usr/include/c++/15.2.1/pstl/parallel_backend_serial.h \
+ /usr/include/c++/15.2.1/numeric \
+ /usr/include/c++/15.2.1/bits/stl_numeric.h \
+ /usr/include/c++/15.2.1/bits/sat_arith.h \
+ /usr/include/c++/15.2.1/pstl/glue_numeric_defs.h \
+ /usr/include/c++/15.2.1/pstl/parallel_impl.h \
+ /usr/include/c++/15.2.1/pstl/numeric_impl.h \
+ /usr/include/c++/15.2.1/pstl/pstl_config.h \
+ /usr/include/c++/15.2.1/pstl/algorithm_fwd.h \
+ /usr/include/c++/15.2.1/pstl/glue_algorithm_impl.h \
+ /usr/include/c++/15.2.1/pstl/numeric_fwd.h \
+ /usr/include/c++/15.2.1/pstl/glue_numeric_impl.h \
+ /usr/include/c++/15.2.1/pstl/glue_memory_impl.h

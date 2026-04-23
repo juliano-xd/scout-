@@ -1,0 +1,5 @@
+add_test([=[SmaliParserTest.ExtractsMethodsCorrectly]=]  [==[/home/trindade/Projetos/scout++/build_release/test_smali_parser]==] [==[--gtest_filter=SmaliParserTest.ExtractsMethodsCorrectly]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[SmaliParserTest.ExtractsMethodsCorrectly]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_smali_parser.cpp:8]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build_release]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[SmaliParserTest.HandlesEmptyOrInvalidFile]=]  [==[/home/trindade/Projetos/scout++/build_release/test_smali_parser]==] [==[--gtest_filter=SmaliParserTest.HandlesEmptyOrInvalidFile]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[SmaliParserTest.HandlesEmptyOrInvalidFile]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_smali_parser.cpp:35]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build_release]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  test_smali_parser_TESTS SmaliParserTest.ExtractsMethodsCorrectly SmaliParserTest.HandlesEmptyOrInvalidFile)

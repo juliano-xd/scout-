@@ -250,6 +250,19 @@ test_xref/fast:
 .PHONY : test_xref/fast
 
 #=============================================================================
+# Target rules for targets named run_benchmarks
+
+# Build rule for target.
+run_benchmarks: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 run_benchmarks
+.PHONY : run_benchmarks
+
+# fast build rule for target.
+run_benchmarks/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/build
+.PHONY : run_benchmarks/fast
+
+#=============================================================================
 # Target rules for targets named gmock
 
 # Build rule for target.
@@ -301,6 +314,32 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+#=============================================================================
+# Target rules for targets named benchmark
+
+# Build rule for target.
+benchmark: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 benchmark
+.PHONY : benchmark
+
+# fast build rule for target.
+benchmark/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/build
+.PHONY : benchmark/fast
+
+#=============================================================================
+# Target rules for targets named benchmark_main
+
+# Build rule for target.
+benchmark_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 benchmark_main
+.PHONY : benchmark_main
+
+# fast build rule for target.
+benchmark_main/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build
+.PHONY : benchmark_main/fast
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -324,6 +363,30 @@ src/main.s: src/main.cpp.s
 src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout.dir/build.make CMakeFiles/scout.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
+
+tests/benchmark.o: tests/benchmark.cpp.o
+.PHONY : tests/benchmark.o
+
+# target to build an object file
+tests/benchmark.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.o
+.PHONY : tests/benchmark.cpp.o
+
+tests/benchmark.i: tests/benchmark.cpp.i
+.PHONY : tests/benchmark.i
+
+# target to preprocess a source file
+tests/benchmark.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.i
+.PHONY : tests/benchmark.cpp.i
+
+tests/benchmark.s: tests/benchmark.cpp.s
+.PHONY : tests/benchmark.s
+
+# target to generate assembly for a file
+tests/benchmark.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.s
+.PHONY : tests/benchmark.cpp.s
 
 tests/test_cli_parser.o: tests/test_cli_parser.cpp.o
 .PHONY : tests/test_cli_parser.o
@@ -458,10 +521,13 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... benchmark"
+	@echo "... benchmark_main"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... run_benchmarks"
 	@echo "... scout"
 	@echo "... test_cli_parser"
 	@echo "... test_filesystem"
@@ -471,6 +537,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... tests/benchmark.o"
+	@echo "... tests/benchmark.i"
+	@echo "... tests/benchmark.s"
 	@echo "... tests/test_cli_parser.o"
 	@echo "... tests/test_cli_parser.i"
 	@echo "... tests/test_cli_parser.s"

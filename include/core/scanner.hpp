@@ -8,6 +8,8 @@
 #include <algorithm>
 #include <fstream>
 #include <regex>
+#include <execution>
+#include <mutex>
 
 namespace core {
 
@@ -51,21 +53,33 @@ namespace core {
         }
 
         auto info = ClassInfo::parse(dalvik_name);
+        
+        // Fast path O(1): Try to find the file directly by resolving its package path
+        // Tenta buscar no smali/, smali_classes2/ etc.
         auto options = std::filesystem::directory_options::skip_permission_denied;
+        for (const auto& entry : std::filesystem::directory_iterator(search_dir, options)) {
+            if (entry.is_directory()) {
+                std::string dir_name = entry.path().filename().string();
+                if (dir_name.find("smali") == 0) {
+                    std::filesystem::path direct_path = entry.path() / info.package_path / info.file_name;
+                    if (std::filesystem::exists(direct_path) && std::filesystem::is_regular_file(direct_path)) {
+                        return direct_path;
+                    }
+                }
+            }
+        }
 
+        // Slow path: O(N) varredura recursiva caso seja um diretório flat ou fora do padrão
         for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
             if (entry.is_regular_file() && entry.path().filename() == info.file_name) {
-                // Se a classe tem pacote, garante que o caminho da pasta bate com o pacote
                 if (!info.package_path.empty()) {
                     std::string expected_suffix = info.package_path + "/" + info.file_name;
-                    std::string path_str = entry.path().generic_string(); // Usa '/' independente do OS
-                    
+                    std::string path_str = entry.path().generic_string(); 
                     if (path_str.size() >= expected_suffix.size() && 
                         path_str.compare(path_str.size() - expected_suffix.size(), expected_suffix.size(), expected_suffix) == 0) {
                         return entry.path();
                     }
                 } else {
-                    // Sem pacote, encontrou a classe
                     return entry.path();
                 }
             }
@@ -88,17 +102,25 @@ namespace core {
         std::string query_str(query);
         auto options = std::filesystem::directory_options::skip_permission_denied;
 
+        std::vector<std::filesystem::path> all_files;
         for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
             if (entry.is_regular_file()) {
-                std::string filename = entry.path().filename().string();
-                if (filename.size() > 6 && filename.compare(filename.size() - 6, 6, ".smali") == 0) {
-                    std::string class_name = filename.substr(0, filename.size() - 6);
-                    if (class_name.find(query_str) != std::string::npos) {
-                        results.push_back(entry.path());
-                    }
-                }
+                all_files.push_back(entry.path());
             }
         }
+
+        std::mutex mtx;
+        std::for_each(std::execution::par_unseq, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
+            std::string filename = file_path.filename().string();
+            if (filename.size() > 6 && filename.compare(filename.size() - 6, 6, ".smali") == 0) {
+                std::string class_name = filename.substr(0, filename.size() - 6);
+                if (class_name.find(query_str) != std::string::npos) {
+                    std::lock_guard<std::mutex> lock(mtx);
+                    results.push_back(file_path);
+                }
+            }
+        });
+
         return results;
     }
 
@@ -135,52 +157,64 @@ namespace core {
         }
 
         auto options = std::filesystem::directory_options::skip_permission_denied;
-
+        std::vector<std::filesystem::path> all_files;
         for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
             if (entry.is_regular_file()) {
                 std::string filename = entry.path().filename().string();
                 if (filename.size() > 6 && filename.compare(filename.size() - 6, 6, ".smali") == 0) {
-                    std::ifstream file(entry.path());
-                    if (!file.is_open()) continue;
-
-                    std::string line;
-                    size_t line_number = 1;
-                    while (std::getline(file, line)) {
-                        bool matched = false;
-                        if (use_regex) {
-                            if (std::regex_search(line, pattern)) {
-                                matched = true;
-                            }
-                        } else if (type == "string") {
-                            size_t const_pos = line.find("const-string");
-                            if (const_pos != std::string::npos) {
-                                size_t start_quote = line.find('"', const_pos);
-                                size_t end_quote = line.rfind('"');
-                                if (start_quote != std::string::npos && end_quote != std::string::npos && end_quote > start_quote) {
-                                    std::string_view content(line.data() + start_quote + 1, end_quote - start_quote - 1);
-                                    if (content.find(query_str) != std::string_view::npos) {
-                                        matched = true;
-                                    }
-                                }
-                            }
-                        } else {
-                            if (line.find(query_str) != std::string::npos) {
-                                matched = true;
-                            }
-                        }
-
-                        if (matched) {
-                            size_t first = line.find_first_not_of(" \t\r\n");
-                            size_t last = line.find_last_not_of(" \t\r\n");
-                            std::string trimmed_line = (first != std::string::npos && last != std::string::npos) ? line.substr(first, last - first + 1) : line;
-                            
-                            results.push_back({entry.path(), line_number, trimmed_line});
-                        }
-                        line_number++;
-                    }
+                    all_files.push_back(entry.path());
                 }
             }
         }
+
+        std::mutex mtx;
+        std::for_each(std::execution::par_unseq, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
+            std::ifstream file(file_path);
+            if (!file.is_open()) return;
+
+            std::string line;
+            size_t line_number = 1;
+            std::vector<MatchResult> local_results;
+
+            while (std::getline(file, line)) {
+                bool matched = false;
+                if (use_regex) {
+                    if (std::regex_search(line, pattern)) {
+                        matched = true;
+                    }
+                } else if (type == "string") {
+                    size_t const_pos = line.find("const-string");
+                    if (const_pos != std::string::npos) {
+                        size_t start_quote = line.find('"', const_pos);
+                        size_t end_quote = line.rfind('"');
+                        if (start_quote != std::string::npos && end_quote != std::string::npos && end_quote > start_quote) {
+                            std::string_view content(line.data() + start_quote + 1, end_quote - start_quote - 1);
+                            if (content.find(query_str) != std::string_view::npos) {
+                                matched = true;
+                            }
+                        }
+                    }
+                } else {
+                    if (line.find(query_str) != std::string::npos) {
+                        matched = true;
+                    }
+                }
+
+                if (matched) {
+                    size_t first = line.find_first_not_of(" \t\r\n");
+                    size_t last = line.find_last_not_of(" \t\r\n");
+                    std::string trimmed_line = (first != std::string::npos && last != std::string::npos) ? line.substr(first, last - first + 1) : line;
+                    local_results.push_back({file_path, line_number, std::move(trimmed_line)});
+                }
+                line_number++;
+            }
+
+            if (!local_results.empty()) {
+                std::lock_guard<std::mutex> lock(mtx);
+                results.insert(results.end(), std::make_move_iterator(local_results.begin()), std::make_move_iterator(local_results.end()));
+            }
+        });
+
         return results;
     }
 }

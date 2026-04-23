@@ -1053,8 +1053,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf"
-      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf"
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1065,14 +1065,14 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf'
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_47e16/fast
-        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf'
-        /usr/bin/make  -f CMakeFiles/cmTC_47e16.dir/build.make CMakeFiles/cmTC_47e16.dir/build
-        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf'
-        Building CXX object CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8f1bd/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm'
+        /usr/bin/make  -f CMakeFiles/cmTC_8f1bd.dir/build.make CMakeFiles/cmTC_8f1bd.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm'
+        Building CXX object CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         Target: x86_64-pc-linux-gnu
@@ -1080,8 +1080,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 15.2.1 20260209 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_47e16.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_47e16.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccgav6Ql.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8f1bd.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_8f1bd.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc2NZJos.s
         GNU C++17 (GCC) version 15.2.1 20260209 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 15.2.1 20260209, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -1099,14 +1099,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 5e3969de92aa3c12a625237f01b15b2f
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_47e16.dir/'
-         as -v --64 -o CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccgav6Ql.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8f1bd.dir/'
+         as -v --64 -o CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc2NZJos.s
         GNU assembler version 2.46 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.46
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_47e16
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47e16.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_8f1bd
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8f1bd.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper
@@ -1117,15 +1117,15 @@ events:
         gcc version 15.2.1 20260209 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_47e16' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_47e16.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cckYImCE.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_47e16 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8f1bd' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_8f1bd.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc2NhyRk.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8f1bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         collect2 version 15.2.1 20260209
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cckYImCE.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_47e16 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc2NhyRk.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8f1bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         GNU ld (GNU Binutils) 2.46
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_47e16' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_47e16.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_47e16
-        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf'
-        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8f1bd' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_8f1bd.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8f1bd
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm'
         
       exitCode: 0
   -
@@ -1164,14 +1164,14 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf']
+        ignore line: [Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_47e16/fast]
-        ignore line: [make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf']
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_47e16.dir/build.make CMakeFiles/cmTC_47e16.dir/build]
-        ignore line: [make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ukBkIf']
-        ignore line: [Building CXX object CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8f1bd/fast]
+        ignore line: [make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm']
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_8f1bd.dir/build.make CMakeFiles/cmTC_8f1bd.dir/build]
+        ignore line: [make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Q2Y7jm']
+        ignore line: [Building CXX object CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [Target: x86_64-pc-linux-gnu]
@@ -1179,8 +1179,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 15.2.1 20260209 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_47e16.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_47e16.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccgav6Ql.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8f1bd.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_8f1bd.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc2NZJos.s]
         ignore line: [GNU C++17 (GCC) version 15.2.1 20260209 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 15.2.1 20260209  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -1198,14 +1198,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 5e3969de92aa3c12a625237f01b15b2f]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_47e16.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccgav6Ql.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8f1bd.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc2NZJos.s]
         ignore line: [GNU assembler version 2.46 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.46]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_47e16]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47e16.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_8f1bd]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8f1bd.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper]
@@ -1216,13 +1216,13 @@ events:
         ignore line: [gcc version 15.2.1 20260209 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_47e16' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_47e16.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cckYImCE.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_47e16 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8f1bd' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_8f1bd.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc2NhyRk.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8f1bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cckYImCE.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc2NhyRk.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1237,7 +1237,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_47e16] ==> ignore
+          arg [cmTC_8f1bd] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -1249,7 +1249,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1260,7 +1260,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         ignore line: [collect2 version 15.2.1 20260209]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cckYImCE.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_47e16 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_47e16.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc2NhyRk.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8f1bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8f1bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -1768,8 +1768,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9"
-      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9"
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu"
     cmakeVariables:
       CMAKE_CXX_STDLIB_MODULES_JSON: ""
       CMAKE_C_FLAGS: ""
@@ -1778,14 +1778,14 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9'
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8876b/fast
-        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9'
-        /usr/bin/make  -f CMakeFiles/cmTC_8876b.dir/build.make CMakeFiles/cmTC_8876b.dir/build
-        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9'
-        Building C object CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1670c/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu'
+        /usr/bin/make  -f CMakeFiles/cmTC_1670c.dir/build.make CMakeFiles/cmTC_1670c.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu'
+        Building C object CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         Target: x86_64-pc-linux-gnu
@@ -1793,8 +1793,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 15.2.1 20260209 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8876b.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_8876b.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccYVPolq.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1670c.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_1670c.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccEwXUvk.s
         GNU C23 (GCC) version 15.2.1 20260209 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 15.2.1 20260209, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -1809,14 +1809,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 4a3176b8a5098bb872007d0a1d5e5fb3
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8876b.dir/'
-         as -v --64 -o CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o /tmp/ccYVPolq.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1670c.dir/'
+         as -v --64 -o CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o /tmp/ccEwXUvk.s
         GNU assembler version 2.46 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.46
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_8876b
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8876b.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_1670c
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1670c.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper
@@ -1827,15 +1827,15 @@ events:
         gcc version 15.2.1 20260209 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8876b' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_8876b.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYdNiXa.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8876b /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1670c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1670c.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cca7fPIT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1670c /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         collect2 version 15.2.1 20260209
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYdNiXa.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8876b /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cca7fPIT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1670c /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         GNU ld (GNU Binutils) 2.46
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8876b' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_8876b.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o -o cmTC_8876b
-        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9'
-        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1670c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1670c.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o -o cmTC_1670c
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu'
         
       exitCode: 0
   -
@@ -1868,14 +1868,14 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9']
+        ignore line: [Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8876b/fast]
-        ignore line: [make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9']
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_8876b.dir/build.make CMakeFiles/cmTC_8876b.dir/build]
-        ignore line: [make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-o2tvW9']
-        ignore line: [Building C object CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1670c/fast]
+        ignore line: [make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu']
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_1670c.dir/build.make CMakeFiles/cmTC_1670c.dir/build]
+        ignore line: [make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-7DHoHu']
+        ignore line: [Building C object CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [Target: x86_64-pc-linux-gnu]
@@ -1883,8 +1883,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 15.2.1 20260209 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8876b.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_8876b.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccYVPolq.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1670c.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_1670c.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccEwXUvk.s]
         ignore line: [GNU C23 (GCC) version 15.2.1 20260209 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 15.2.1 20260209  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -1899,14 +1899,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 4a3176b8a5098bb872007d0a1d5e5fb3]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8876b.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o /tmp/ccYVPolq.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1670c.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o /tmp/ccEwXUvk.s]
         ignore line: [GNU assembler version 2.46 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.46]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_8876b]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8876b.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_1670c]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1670c.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper]
@@ -1917,13 +1917,13 @@ events:
         ignore line: [gcc version 15.2.1 20260209 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8876b' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_8876b.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYdNiXa.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8876b /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1670c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1670c.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cca7fPIT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1670c /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccYdNiXa.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cca7fPIT.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1938,7 +1938,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_8876b] ==> ignore
+          arg [cmTC_1670c] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -1950,7 +1950,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -1965,7 +1965,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         ignore line: [collect2 version 15.2.1 20260209]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYdNiXa.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_8876b /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_8876b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cca7fPIT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1670c /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1670c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -4672,8 +4672,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ"
-      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ"
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym"
     cmakeVariables:
       CMAKE_CXX_STDLIB_MODULES_JSON: ""
       CMAKE_C_FLAGS: ""
@@ -4682,23 +4682,1096 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ'
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b87d9/fast
-        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_dad50/fast
+        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym'
         
-        /usr/bin/make  -f CMakeFiles/cmTC_b87d9.dir/build.make CMakeFiles/cmTC_b87d9.dir/build
-        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ'
+        /usr/bin/make  -f CMakeFiles/cmTC_dad50.dir/build.make CMakeFiles/cmTC_dad50.dir/build
+        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym'
         
-        Building C object CMakeFiles/cmTC_b87d9.dir/src.c.o
-        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_b87d9.dir/src.c.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ/src.c
-        Linking C executable cmTC_b87d9
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b87d9.dir/link.txt --verbose=1
-        /usr/bin/cc CMakeFiles/cmTC_b87d9.dir/src.c.o -o cmTC_b87d9
-        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ'
+        Building C object CMakeFiles/cmTC_dad50.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_dad50.dir/src.c.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym/src.c
+        Linking C executable cmTC_dad50
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dad50.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_dad50.dir/src.c.o -o cmTC_dad50
+        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym'
         
-        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-GTpiNZ'
+        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-t4V9Ym'
         
         
+      exitCode: 0
+  -
+    kind: "find-v1"
+    backtrace:
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:80 (find_program)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:90 (should_enable_assembly_tests)"
+    mode: "program"
+    variable: "LLVM_FILECHECK_EXE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "FileCheck"
+    candidate_directories:
+      - "/home/trindade/.local/bin/"
+      - "/home/trindade/.opencode/bin/"
+      - "/home/trindade/.cargo/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/opt/android-sdk/platform-tools/"
+      - "/usr/lib/jvm/default/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/usr/bin/"
+      - "/usr/sbin/"
+      - "/usr/"
+      - "/bin/"
+      - "/sbin/"
+      - "/usr/X11R6/bin/"
+      - "/usr/X11R6/sbin/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/bin/"
+      - "/usr/pkg/sbin/"
+      - "/usr/pkg/"
+      - "/opt/bin/"
+      - "/opt/sbin/"
+      - "/opt/"
+    searched_directories:
+      - "/home/trindade/.local/bin/FileCheck"
+      - "/home/trindade/.opencode/bin/FileCheck"
+      - "/home/trindade/.cargo/bin/FileCheck"
+      - "/usr/local/sbin/FileCheck"
+      - "/usr/local/bin/FileCheck"
+      - "/usr/bin/FileCheck"
+      - "/opt/android-sdk/platform-tools/FileCheck"
+      - "/usr/lib/jvm/default/bin/FileCheck"
+      - "/usr/bin/site_perl/FileCheck"
+      - "/usr/bin/vendor_perl/FileCheck"
+      - "/usr/bin/core_perl/FileCheck"
+      - "/usr/local/bin/FileCheck"
+      - "/usr/local/sbin/FileCheck"
+      - "/usr/local/FileCheck"
+      - "/usr/bin/FileCheck"
+      - "/usr/sbin/FileCheck"
+      - "/usr/FileCheck"
+      - "/bin/FileCheck"
+      - "/sbin/FileCheck"
+      - "/usr/X11R6/bin/FileCheck"
+      - "/usr/X11R6/sbin/FileCheck"
+      - "/usr/X11R6/FileCheck"
+      - "/usr/pkg/bin/FileCheck"
+      - "/usr/pkg/sbin/FileCheck"
+      - "/usr/pkg/FileCheck"
+      - "/opt/bin/FileCheck"
+      - "/opt/sbin/FileCheck"
+      - "/opt/FileCheck"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.opencode/bin"
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.opencode/bin"
+        - "/home/trindade/.cargo/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/opt/android-sdk/platform-tools"
+        - "/usr/lib/jvm/default/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/opt/android-sdk/platform-tools"
+        - "/opt/android-sdk/platform-tools"
+        - "/opt/android-sdk/platform-tools"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindGit.cmake:111 (find_program)"
+      - "build/_deps/googlebenchmark-src/cmake/GetGitVersion.cmake:14 (find_package)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:102 (include)"
+    mode: "program"
+    variable: "GIT_EXECUTABLE"
+    description: "Git command line client"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "git"
+    candidate_directories:
+      - "/home/trindade/.local/bin/"
+      - "/home/trindade/.opencode/bin/"
+      - "/home/trindade/.cargo/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/opt/android-sdk/platform-tools/"
+      - "/usr/lib/jvm/default/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/usr/bin/"
+      - "/usr/sbin/"
+      - "/usr/"
+      - "/bin/"
+      - "/sbin/"
+      - "/usr/X11R6/bin/"
+      - "/usr/X11R6/sbin/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/bin/"
+      - "/usr/pkg/sbin/"
+      - "/usr/pkg/"
+      - "/opt/bin/"
+      - "/opt/sbin/"
+      - "/opt/"
+    searched_directories:
+      - "/home/trindade/.local/bin/git"
+      - "/home/trindade/.opencode/bin/git"
+      - "/home/trindade/.cargo/bin/git"
+      - "/usr/local/sbin/git"
+      - "/usr/local/bin/git"
+    found: "/usr/bin/git"
+    search_context:
+      ENV{PATH}:
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.opencode/bin"
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.local/bin"
+        - "/home/trindade/.opencode/bin"
+        - "/home/trindade/.cargo/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/opt/android-sdk/platform-tools"
+        - "/usr/lib/jvm/default/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/opt/android-sdk/platform-tools"
+        - "/opt/android-sdk/platform-tools"
+        - "/opt/android-sdk/platform-tools"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:154 (try_compile)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:125 (check_library_exists)"
+    checks:
+      - "Looking for shm_open in rt"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_LIB_RT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e7356/fast
+        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj'
+        
+        /usr/bin/make  -f CMakeFiles/cmTC_e7356.dir/build.make CMakeFiles/cmTC_e7356.dir/build
+        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj'
+        
+        Building CXX object CMakeFiles/cmTC_e7356.dir/CheckFunctionExists.cxx.o
+        /usr/bin/c++   -DCHECK_FUNCTION_EXISTS=shm_open -o CMakeFiles/cmTC_e7356.dir/CheckFunctionExists.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj/CheckFunctionExists.cxx
+        Linking CXX executable cmTC_e7356
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e7356.dir/link.txt --verbose=1
+        /usr/bin/c++  -DCHECK_FUNCTION_EXISTS=shm_open CMakeFiles/cmTC_e7356.dir/CheckFunctionExists.cxx.o -o cmTC_e7356  -lrt
+        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj'
+        
+        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-ic6PYj'
+        
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:174 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WALL"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WALL"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_048b2/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz'
+        /usr/bin/make  -f CMakeFiles/cmTC_048b2.dir/build.make CMakeFiles/cmTC_048b2.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz'
+        Building CXX object CMakeFiles/cmTC_048b2.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WALL  -Wall   -Wall -o CMakeFiles/cmTC_048b2.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz/src.cxx
+        Linking CXX executable cmTC_048b2
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_048b2.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall CMakeFiles/cmTC_048b2.dir/src.cxx.o -o cmTC_048b2
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-8Btpwz'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:175 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WEXTRA"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WEXTRA"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b3732/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN'
+        /usr/bin/make  -f CMakeFiles/cmTC_b3732.dir/build.make CMakeFiles/cmTC_b3732.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN'
+        Building CXX object CMakeFiles/cmTC_b3732.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WEXTRA  -Wall  -Wextra   -Wextra -o CMakeFiles/cmTC_b3732.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN/src.cxx
+        Linking CXX executable cmTC_b3732
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b3732.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra CMakeFiles/cmTC_b3732.dir/src.cxx.o -o cmTC_b3732
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-5v85dN'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:176 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSHADOW"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSHADOW"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bbe4e/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE'
+        /usr/bin/make  -f CMakeFiles/cmTC_bbe4e.dir/build.make CMakeFiles/cmTC_bbe4e.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE'
+        Building CXX object CMakeFiles/cmTC_bbe4e.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSHADOW  -Wall  -Wextra  -Wshadow   -Wshadow -o CMakeFiles/cmTC_bbe4e.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE/src.cxx
+        Linking CXX executable cmTC_bbe4e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bbe4e.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow CMakeFiles/cmTC_bbe4e.dir/src.cxx.o -o cmTC_bbe4e
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-TWRmZE'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:177 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WFLOAT_EQUAL"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WFLOAT_EQUAL"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_30c06/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY'
+        /usr/bin/make  -f CMakeFiles/cmTC_30c06.dir/build.make CMakeFiles/cmTC_30c06.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY'
+        Building CXX object CMakeFiles/cmTC_30c06.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WFLOAT_EQUAL  -Wall  -Wextra  -Wshadow  -Wfloat-equal   -Wfloat-equal -o CMakeFiles/cmTC_30c06.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY/src.cxx
+        Linking CXX executable cmTC_30c06
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_30c06.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal CMakeFiles/cmTC_30c06.dir/src.cxx.o -o cmTC_30c06
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-13EsGY'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:178 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WOLD_STYLE_CAST"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WOLD_STYLE_CAST"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8ecc0/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe'
+        /usr/bin/make  -f CMakeFiles/cmTC_8ecc0.dir/build.make CMakeFiles/cmTC_8ecc0.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe'
+        Building CXX object CMakeFiles/cmTC_8ecc0.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WOLD_STYLE_CAST  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast   -Wold-style-cast -o CMakeFiles/cmTC_8ecc0.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe/src.cxx
+        Linking CXX executable cmTC_8ecc0
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8ecc0.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast CMakeFiles/cmTC_8ecc0.dir/src.cxx.o -o cmTC_8ecc0
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-lO9UOe'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:180 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WERROR"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WERROR"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_3e630/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i'
+        /usr/bin/make  -f CMakeFiles/cmTC_3e630.dir/build.make CMakeFiles/cmTC_3e630.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i'
+        Building CXX object CMakeFiles/cmTC_3e630.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WERROR  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror   -Werror -o CMakeFiles/cmTC_3e630.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i/src.cxx
+        Linking CXX executable cmTC_3e630
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3e630.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror CMakeFiles/cmTC_3e630.dir/src.cxx.o -o cmTC_3e630
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-QmXa2i'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:184 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSUGGEST_OVERRIDE"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSUGGEST_OVERRIDE"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_741c4/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk'
+        /usr/bin/make  -f CMakeFiles/cmTC_741c4.dir/build.make CMakeFiles/cmTC_741c4.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk'
+        Building CXX object CMakeFiles/cmTC_741c4.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSUGGEST_OVERRIDE  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override   -Wsuggest-override -o CMakeFiles/cmTC_741c4.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk/src.cxx
+        Linking CXX executable cmTC_741c4
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_741c4.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override CMakeFiles/cmTC_741c4.dir/src.cxx.o -o cmTC_741c4
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-aPa5Mk'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:186 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_PEDANTIC"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_PEDANTIC"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ac628/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF'
+        /usr/bin/make  -f CMakeFiles/cmTC_ac628.dir/build.make CMakeFiles/cmTC_ac628.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF'
+        Building CXX object CMakeFiles/cmTC_ac628.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_PEDANTIC  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic   -pedantic -o CMakeFiles/cmTC_ac628.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF/src.cxx
+        Linking CXX executable cmTC_ac628
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ac628.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic CMakeFiles/cmTC_ac628.dir/src.cxx.o -o cmTC_ac628
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-L5X0EF'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:187 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_PEDANTIC_ERRORS"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_PEDANTIC_ERRORS"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1c9c8/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2'
+        /usr/bin/make  -f CMakeFiles/cmTC_1c9c8.dir/build.make CMakeFiles/cmTC_1c9c8.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2'
+        Building CXX object CMakeFiles/cmTC_1c9c8.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_PEDANTIC_ERRORS  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors   -pedantic-errors -o CMakeFiles/cmTC_1c9c8.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2/src.cxx
+        Linking CXX executable cmTC_1c9c8
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1c9c8.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors CMakeFiles/cmTC_1c9c8.dir/src.cxx.o -o cmTC_1c9c8
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-japWF2'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:188 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSHORTEN_64_TO_32"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSHORTEN_64_TO_32"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_07208/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k'
+        /usr/bin/make  -f CMakeFiles/cmTC_07208.dir/build.make CMakeFiles/cmTC_07208.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k'
+        Building CXX object CMakeFiles/cmTC_07208.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSHORTEN_64_TO_32  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32   -Wshorten-64-to-32 -o CMakeFiles/cmTC_07208.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k/src.cxx
+        c++: error: unrecognized command-line option '-Wshorten-64-to-32'
+        c++: error: unrecognized command-line option '-Wshorten-64-to-32'
+        make[2]: *** [CMakeFiles/cmTC_07208.dir/build.make:81: CMakeFiles/cmTC_07208.dir/src.cxx.o] Error 1
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k'
+        make[1]: *** [Makefile:134: cmTC_07208/fast] Error 2
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-rtQT2k'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:189 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_FSTRICT_ALIASING"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_FSTRICT_ALIASING"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b4c6d/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld'
+        /usr/bin/make  -f CMakeFiles/cmTC_b4c6d.dir/build.make CMakeFiles/cmTC_b4c6d.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld'
+        Building CXX object CMakeFiles/cmTC_b4c6d.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_FSTRICT_ALIASING  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing   -fstrict-aliasing -o CMakeFiles/cmTC_b4c6d.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld/src.cxx
+        Linking CXX executable cmTC_b4c6d
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b4c6d.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing CMakeFiles/cmTC_b4c6d.dir/src.cxx.o -o cmTC_b4c6d
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-gRKHld'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:192 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WNO_DEPRECATED_DECLARATIONS"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WNO_DEPRECATED_DECLARATIONS"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8b9da/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd'
+        /usr/bin/make  -f CMakeFiles/cmTC_8b9da.dir/build.make CMakeFiles/cmTC_8b9da.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd'
+        Building CXX object CMakeFiles/cmTC_8b9da.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WNO_DEPRECATED_DECLARATIONS  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations   -Wno-deprecated-declarations -o CMakeFiles/cmTC_8b9da.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd/src.cxx
+        Linking CXX executable cmTC_8b9da
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8b9da.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations CMakeFiles/cmTC_8b9da.dir/src.cxx.o -o cmTC_8b9da
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-wMdbFd'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:202 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WNO_DEPRECATED"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WNO_DEPRECATED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_954ae/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH'
+        /usr/bin/make  -f CMakeFiles/cmTC_954ae.dir/build.make CMakeFiles/cmTC_954ae.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH'
+        Building CXX object CMakeFiles/cmTC_954ae.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WNO_DEPRECATED  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated   -Wno-deprecated -o CMakeFiles/cmTC_954ae.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH/src.cxx
+        Linking CXX executable cmTC_954ae
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_954ae.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated CMakeFiles/cmTC_954ae.dir/src.cxx.o -o cmTC_954ae
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-Drg8JH'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:210 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSTRICT_ALIASING"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSTRICT_ALIASING"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_80e29/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ'
+        /usr/bin/make  -f CMakeFiles/cmTC_80e29.dir/build.make CMakeFiles/cmTC_80e29.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ'
+        Building CXX object CMakeFiles/cmTC_80e29.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSTRICT_ALIASING  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing   -Wstrict-aliasing -o CMakeFiles/cmTC_80e29.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ/src.cxx
+        Linking CXX executable cmTC_80e29
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_80e29.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing CMakeFiles/cmTC_80e29.dir/src.cxx.o -o cmTC_80e29
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-KgZRWZ'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:215 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WD654"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WD654"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e8ad2/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j'
+        /usr/bin/make  -f CMakeFiles/cmTC_e8ad2.dir/build.make CMakeFiles/cmTC_e8ad2.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j'
+        Building CXX object CMakeFiles/cmTC_e8ad2.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WD654  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -wd654   -wd654 -o CMakeFiles/cmTC_e8ad2.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j/src.cxx
+        c++: error: unrecognized command-line option '-wd654'
+        c++: error: unrecognized command-line option '-wd654'
+        make[2]: *** [CMakeFiles/cmTC_e8ad2.dir/build.make:81: CMakeFiles/cmTC_e8ad2.dir/src.cxx.o] Error 1
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j'
+        make[1]: *** [Makefile:134: cmTC_e8ad2/fast] Error 2
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-dXhr9j'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:216 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WTHREAD_SAFETY"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WTHREAD_SAFETY"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_9fb5d/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb'
+        /usr/bin/make  -f CMakeFiles/cmTC_9fb5d.dir/build.make CMakeFiles/cmTC_9fb5d.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb'
+        Building CXX object CMakeFiles/cmTC_9fb5d.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WTHREAD_SAFETY  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety   -Wthread-safety -o CMakeFiles/cmTC_9fb5d.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb/src.cxx
+        c++: error: unrecognized command-line option '-Wthread-safety'
+        c++: error: unrecognized command-line option '-Wthread-safety'
+        make[2]: *** [CMakeFiles/cmTC_9fb5d.dir/build.make:81: CMakeFiles/cmTC_9fb5d.dir/src.cxx.o] Error 1
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb'
+        make[1]: *** [Makefile:134: cmTC_9fb5d/fast] Error 2
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-bIXPOb'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:267 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_COVERAGE"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_COVERAGE"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ba363/fast
+        make[1]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH'
+        /usr/bin/make  -f CMakeFiles/cmTC_ba363.dir/build.make CMakeFiles/cmTC_ba363.dir/build
+        make[2]: Entering directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH'
+        Building CXX object CMakeFiles/cmTC_ba363.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_COVERAGE  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  --coverage   --coverage -o CMakeFiles/cmTC_ba363.dir/src.cxx.o -c /home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH/src.cxx
+        Linking CXX executable cmTC_ba363
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ba363.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  --coverage CMakeFiles/cmTC_ba363.dir/src.cxx.o -o cmTC_ba363
+        make[2]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH'
+        make[1]: Leaving directory '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeScratch/TryCompile-w5MicH'
+        
+      exitCode: 0
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "build/_deps/googlebenchmark-src/cmake/CXXFeatureCheck.cmake:57 (try_run)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:297 (cxx_feature_check)"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_STD_REGEX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_475c9/fast
+        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        /usr/bin/make  -f CMakeFiles/cmTC_475c9.dir/build.make CMakeFiles/cmTC_475c9.dir/build
+        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Building CXX object CMakeFiles/cmTC_475c9.dir/std_regex.cpp.o
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_475c9.dir/std_regex.cpp.o -c /home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/std_regex.cpp
+        Linking CXX executable cmTC_475c9
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_475c9.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  CMakeFiles/cmTC_475c9.dir/std_regex.cpp.o -o cmTC_475c9
+        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        
+      exitCode: 0
+    runResult:
+      variable: "RUN_HAVE_STD_REGEX"
+      cached: true
+      stdout: |
+      exitCode: 0
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "build/_deps/googlebenchmark-src/cmake/CXXFeatureCheck.cmake:57 (try_run)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:298 (cxx_feature_check)"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_GNU_POSIX_REGEX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bb28e/fast
+        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        /usr/bin/make  -f CMakeFiles/cmTC_bb28e.dir/build.make CMakeFiles/cmTC_bb28e.dir/build
+        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Building CXX object CMakeFiles/cmTC_bb28e.dir/gnu_posix_regex.cpp.o
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_bb28e.dir/gnu_posix_regex.cpp.o -c /home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/gnu_posix_regex.cpp
+        /home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/gnu_posix_regex.cpp:1:10: fatal error: gnuregex.h: Arquivo ou diretório inexistente
+            1 | #include <gnuregex.h>
+              |          ^~~~~~~~~~~~
+        compilation terminated.
+        make[2]: *** [CMakeFiles/cmTC_bb28e.dir/build.make:81: CMakeFiles/cmTC_bb28e.dir/gnu_posix_regex.cpp.o] Error 1
+        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        make[1]: *** [Makefile:134: cmTC_bb28e/fast] Error 2
+        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        
+      exitCode: 2
+    runResult:
+      variable: "RUN_HAVE_GNU_POSIX_REGEX"
+      cached: true
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "build/_deps/googlebenchmark-src/cmake/CXXFeatureCheck.cmake:57 (try_run)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:299 (cxx_feature_check)"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_POSIX_REGEX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_92f3a/fast
+        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        /usr/bin/make  -f CMakeFiles/cmTC_92f3a.dir/build.make CMakeFiles/cmTC_92f3a.dir/build
+        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Building CXX object CMakeFiles/cmTC_92f3a.dir/posix_regex.cpp.o
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_92f3a.dir/posix_regex.cpp.o -c /home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/posix_regex.cpp
+        Linking CXX executable cmTC_92f3a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92f3a.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  CMakeFiles/cmTC_92f3a.dir/posix_regex.cpp.o -o cmTC_92f3a
+        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        
+      exitCode: 0
+    runResult:
+      variable: "RUN_HAVE_POSIX_REGEX"
+      cached: true
+      stdout: |
+      exitCode: 0
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "build/_deps/googlebenchmark-src/cmake/CXXFeatureCheck.cmake:57 (try_run)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:308 (cxx_feature_check)"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_STEADY_CLOCK"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cb06e/fast
+        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        /usr/bin/make  -f CMakeFiles/cmTC_cb06e.dir/build.make CMakeFiles/cmTC_cb06e.dir/build
+        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Building CXX object CMakeFiles/cmTC_cb06e.dir/steady_clock.cpp.o
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_cb06e.dir/steady_clock.cpp.o -c /home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/steady_clock.cpp
+        Linking CXX executable cmTC_cb06e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cb06e.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  CMakeFiles/cmTC_cb06e.dir/steady_clock.cpp.o -o cmTC_cb06e
+        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        
+      exitCode: 0
+    runResult:
+      variable: "RUN_HAVE_STEADY_CLOCK"
+      cached: true
+      stdout: |
+      exitCode: 0
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "build/_deps/googlebenchmark-src/cmake/CXXFeatureCheck.cmake:57 (try_run)"
+      - "build/_deps/googlebenchmark-src/CMakeLists.txt:312 (cxx_feature_check)"
+    directories:
+      source: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+      binary: "/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/Modules;/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_PTHREAD_AFFINITY"
+      cached: true
+      stdout: |
+        Change Dir: '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2101d/fast
+        make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        /usr/bin/make  -f CMakeFiles/cmTC_2101d.dir/build.make CMakeFiles/cmTC_2101d.dir/build
+        make[2]: Entrando no diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        Building CXX object CMakeFiles/cmTC_2101d.dir/pthread_affinity.cpp.o
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_2101d.dir/pthread_affinity.cpp.o -c /home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/cmake/pthread_affinity.cpp
+        Linking CXX executable cmTC_2101d
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2101d.dir/link.txt --verbose=1
+        /usr/bin/c++   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  CMakeFiles/cmTC_2101d.dir/pthread_affinity.cpp.o -o cmTC_2101d
+        make[2]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build/CMakeFiles/CMakeTmp'
+        
+        
+      exitCode: 0
+    runResult:
+      variable: "RUN_HAVE_PTHREAD_AFFINITY"
+      cached: true
+      stdout: |
       exitCode: 0
 ...

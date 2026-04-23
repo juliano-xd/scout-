@@ -1,0 +1,3 @@
+/home/trindade/Projetos/scout++/build_release/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
+/home/trindade/Projetos/scout++/build_release/_deps/googletest-subbuild/CMakeFiles/edit_cache.dir
+/home/trindade/Projetos/scout++/build_release/_deps/googletest-subbuild/CMakeFiles/rebuild_cache.dir
