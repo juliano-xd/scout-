@@ -72,6 +72,26 @@ int main(int argc, char** argv) {
             }
         }
 
+        if (config.cfg) {
+            auto engine = scout::create_engine("cfg");
+            if (engine) {
+                engines::SearchConfig cfg;
+                cfg.query = *config.cfg;
+                auto results = engine->search(dir, cfg);
+                std::cout << formatter->format_search_results(results) << "\n";
+            }
+        }
+
+        if (config.resource_map || config.find_resource) {
+            auto engine = scout::create_engine("resource_map");
+            if (engine) {
+                engines::SearchConfig rcfg;
+                rcfg.query = config.find_resource.value_or("");
+                auto results = engine->search(dir, rcfg);
+                std::cout << formatter->format_search_results(results) << "\n";
+            }
+        }
+
         // ==========================================
         // Módulos ainda não implementados → saída informativa em sexpr
         // ==========================================
@@ -86,8 +106,8 @@ int main(int argc, char** argv) {
         if (config.scan)              emit_pending("scan");
         if (config.hook)              emit_pending("hook");
         if (config.frida)             emit_pending("frida");
-        if (config.cfg)               emit_pending("cfg");
         if (config.detect_obfuscation) emit_pending("detect_obfuscation");
+
 
         // Verbose
         if (config.verbose) {

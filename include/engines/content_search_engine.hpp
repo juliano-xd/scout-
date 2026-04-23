@@ -64,22 +64,22 @@ namespace engines {
         /**
          * @brief Processa uma linha Smali extraindo contexto.
          */
-        static void update_context(const std::string& trimmed_line, ParseContext& ctx);
+        static void update_context(std::string_view line, ParseContext& ctx);
 
         /**
          * @brief Verifica se a linha contém a query (modo string literal).
          */
-        static bool matches_string(const std::string& line, const std::string& query, bool case_sensitive);
+        static bool matches_string(std::string_view line, std::string_view query, bool case_sensitive);
 
         /**
          * @brief Verifica se a linha corresponde ao padrão regex.
          */
-        static bool matches_regex(const std::string& line, const std::regex& pattern);
+        static bool matches_regex(std::string_view line, const std::regex& pattern);
 
         /**
          * @brief Verifica se a linha contém o inteiro/hex especificado.
          */
-        static bool matches_integer(const std::string& line, const std::string& query);
+        static bool matches_integer(std::string_view line, std::string_view query);
     };
 
     /**

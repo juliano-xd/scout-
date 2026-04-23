@@ -5,6 +5,8 @@
 #include "engines/class_search_engine.hpp"
 #include "engines/content_search_engine.hpp"
 #include "engines/xref_search_engine.hpp"
+#include "engines/resource_mapping_engine.hpp"
+#include "engines/cfg_engine.hpp"
 #include "formatters/sexpr_formatter.hpp"
 #include <memory>
 
@@ -21,6 +23,8 @@ namespace scout {
         static engines::EngineRegistrar<engines::ClassSearchEngine>   _reg_class("class");
         static engines::EngineRegistrar<engines::ContentSearchEngine> _reg_content("content");
         static engines::EngineRegistrar<engines::XrefSearchEngine>    _reg_xref("xref");
+        static engines::EngineRegistrar<engines::ResourceMappingEngine> _reg_res("resource_map");
+        static engines::EngineRegistrar<engines::CFGEngine>           _reg_cfg("cfg");
         static formatters::FormatterRegistrar<formatters::SExprFormatter> _reg_sexpr("sexpr");
     }
 
@@ -35,11 +39,15 @@ namespace scout {
             return er.has_engine("class")   &&
                    er.has_engine("content") &&
                    er.has_engine("xref")    &&
+                   er.has_engine("resource_map") &&
+                   er.has_engine("cfg") &&
                    fr.has_formatter("sexpr");
         } catch (...) {
             return false;
         }
     }
+
+
 
     inline std::vector<std::string> list_available_engines() {
         return engines::EngineRegistry::instance().list_engines();

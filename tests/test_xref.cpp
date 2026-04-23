@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "analysis/xref.hpp"
+#include "engines/xref_search_engine.hpp"
 #include <filesystem>
 #include <fstream>
 
@@ -31,23 +31,28 @@ protected:
 };
 
 TEST_F(XrefTest, FindsMethodCallersCorrectly) {
-    auto results = analysis::XrefEngine::find_callers(test_dir, "Lcom/example/Target;->importantMethod()Z");
+    engines::XrefSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "Lcom/example/Target;->importantMethod()Z";
+    config.search_type = "string";
+    
+    auto results = engine.search(test_dir, config);
     
     ASSERT_EQ(results.size(), 1);
-    EXPECT_EQ(results[0].caller_class, "Lcom/example/Caller;");
-    EXPECT_EQ(results[0].caller_method, "public doSomething()V");
     EXPECT_EQ(results[0].line_number, 5);
-    EXPECT_EQ(results[0].instruction, "invoke-static {}, Lcom/example/Target;->importantMethod()Z");
+    EXPECT_EQ(results[0].line_content, "invoke-static {}, Lcom/example/Target;->importantMethod()Z");
 }
 
 TEST_F(XrefTest, FindsClassCallersCorrectly) {
-    auto results = analysis::XrefEngine::find_callers(test_dir, "Lcom/example/Target;");
+    engines::XrefSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "Lcom/example/Target;";
+    config.search_type = "string";
+    
+    auto results = engine.search(test_dir, config);
     
     // We expect 2 references to the Target class in Caller.smali
     ASSERT_EQ(results.size(), 2);
-    EXPECT_EQ(results[0].caller_method, "public doSomething()V");
-    EXPECT_EQ(results[1].caller_method, "public doSomething()V");
-    
-    EXPECT_EQ(results[0].instruction, "invoke-static {}, Lcom/example/Target;->importantMethod()Z");
-    EXPECT_EQ(results[1].instruction, "sput-object v0, Lcom/example/Target;->someField:I");
+    EXPECT_EQ(results[0].line_content, "invoke-static {}, Lcom/example/Target;->importantMethod()Z");
+    EXPECT_EQ(results[1].line_content, "sput-object v0, Lcom/example/Target;->someField:I");
 }

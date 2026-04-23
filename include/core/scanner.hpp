@@ -53,35 +53,22 @@ namespace core {
         }
 
         auto info = ClassInfo::parse(dalvik_name);
-        
-        // Fast path O(1): Try to find the file directly by resolving its package path
-        // Tenta buscar no smali/, smali_classes2/ etc.
         auto options = std::filesystem::directory_options::skip_permission_denied;
-        for (const auto& entry : std::filesystem::directory_iterator(search_dir, options)) {
-            if (entry.is_directory()) {
-                std::string dir_name = entry.path().filename().string();
-                if (dir_name.find("smali") == 0) {
-                    std::filesystem::path direct_path = entry.path() / info.package_path / info.file_name;
-                    if (std::filesystem::exists(direct_path) && std::filesystem::is_regular_file(direct_path)) {
-                        return direct_path;
-                    }
-                }
-            }
+
+        // Optimized Fast path: Check common Smali directory structures directly
+        static const std::string_view common_dirs[] = {"smali", "smali_classes2", "smali_classes3", "smali_classes4", "smali_classes5"};
+        for (auto d : common_dirs) {
+            std::filesystem::path p = search_dir / d / info.package_path / info.file_name;
+            if (std::filesystem::exists(p)) return p;
         }
 
-        // Slow path: O(N) varredura recursiva caso seja um diretório flat ou fora do padrão
+        // Generic recursive scan for non-standard structures
         for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
             if (entry.is_regular_file() && entry.path().filename() == info.file_name) {
-                if (!info.package_path.empty()) {
-                    std::string expected_suffix = info.package_path + "/" + info.file_name;
-                    std::string path_str = entry.path().generic_string(); 
-                    if (path_str.size() >= expected_suffix.size() && 
-                        path_str.compare(path_str.size() - expected_suffix.size(), expected_suffix.size(), expected_suffix) == 0) {
-                        return entry.path();
-                    }
-                } else {
-                    return entry.path();
-                }
+                // Verify package if not empty
+                if (info.package_path.empty()) return entry.path();
+                std::string path_str = entry.path().generic_string();
+                if (path_str.find(info.package_path) != std::string::npos) return entry.path();
             }
         }
         return std::nullopt;
@@ -95,127 +82,28 @@ namespace core {
      */
     inline std::vector<std::filesystem::path> find_classes_containing(const std::filesystem::path& search_dir, std::string_view query) {
         std::vector<std::filesystem::path> results;
-        if (!std::filesystem::exists(search_dir) || !std::filesystem::is_directory(search_dir)) {
-            return results;
-        }
-
-        std::string query_str(query);
-        auto options = std::filesystem::directory_options::skip_permission_denied;
-
-        std::vector<std::filesystem::path> all_files;
-        for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
-            if (entry.is_regular_file()) {
-                all_files.push_back(entry.path());
-            }
-        }
-
-        std::mutex mtx;
-        std::for_each(std::execution::par, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
-            std::string rel_path = std::filesystem::relative(file_path, search_dir).generic_string();
-            if (rel_path.size() > 6 && rel_path.compare(rel_path.size() - 6, 6, ".smali") == 0) {
-                // Remove .smali extension for the check
-                std::string class_path = rel_path.substr(0, rel_path.size() - 6);
-                if (class_path.find(query_str) != std::string::npos) {
-                    std::lock_guard<std::mutex> lock(mtx);
-                    results.push_back(file_path);
-                }
-            }
-        });
-
-        return results;
-    }
-
-    struct MatchResult {
-        std::filesystem::path file_path;
-        size_t line_number;
-        std::string line_content;
-    };
-
-    /**
-     * @brief Busca conteúdo interno (string literal ou regex) nos arquivos .smali.
-     * @param search_dir Diretório base onde a busca inicia
-     * @param query Texto ou regex a ser buscado
-     * @param type Tipo de busca ("string", "regex", etc.)
-     * @return Vetor de ocorrências contendo arquivo, linha e texto correspondente.
-     */
-    inline std::vector<MatchResult> search_content(const std::filesystem::path& search_dir, std::string_view query, std::string_view type) {
-        std::vector<MatchResult> results;
-        if (!std::filesystem::exists(search_dir) || !std::filesystem::is_directory(search_dir)) {
-            return results;
-        }
-
-        std::string query_str(query);
-        std::regex pattern;
-        bool use_regex = false;
-
-        if (type == "regex") {
-            try {
-                pattern = std::regex(query_str);
-                use_regex = true;
-            } catch (...) {
-                return results;
-            }
-        }
+        if (!std::filesystem::exists(search_dir)) return results;
 
         auto options = std::filesystem::directory_options::skip_permission_denied;
-        std::vector<std::filesystem::path> all_files;
+        std::mutex mtx;
+
+        // Use a more direct recursive scan without pre-collecting all files
+        std::vector<std::filesystem::path> files_to_check;
         for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
-            if (entry.is_regular_file()) {
-                std::string filename = entry.path().filename().string();
-                if (filename.size() > 6 && filename.compare(filename.size() - 6, 6, ".smali") == 0) {
-                    all_files.push_back(entry.path());
-                }
+            if (entry.is_regular_file() && entry.path().extension() == ".smali") {
+                files_to_check.push_back(entry.path());
             }
         }
 
-        std::mutex mtx;
-        std::for_each(std::execution::par, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
-            std::ifstream file(file_path);
-            if (!file.is_open()) return;
-
-            std::string line;
-            size_t line_number = 1;
-            std::vector<MatchResult> local_results;
-
-            while (std::getline(file, line)) {
-                bool matched = false;
-                if (use_regex) {
-                    if (std::regex_search(line, pattern)) {
-                        matched = true;
-                    }
-                } else if (type == "string") {
-                    size_t const_pos = line.find("const-string");
-                    if (const_pos != std::string::npos) {
-                        size_t start_quote = line.find('"', const_pos);
-                        size_t end_quote = line.rfind('"');
-                        if (start_quote != std::string::npos && end_quote != std::string::npos && end_quote > start_quote) {
-                            std::string_view content(line.data() + start_quote + 1, end_quote - start_quote - 1);
-                            if (content.find(query_str) != std::string_view::npos) {
-                                matched = true;
-                            }
-                        }
-                    }
-                } else {
-                    if (line.find(query_str) != std::string::npos) {
-                        matched = true;
-                    }
-                }
-
-                if (matched) {
-                    size_t first = line.find_first_not_of(" \t\r\n");
-                    size_t last = line.find_last_not_of(" \t\r\n");
-                    std::string trimmed_line = (first != std::string::npos && last != std::string::npos) ? line.substr(first, last - first + 1) : line;
-                    local_results.push_back({file_path, line_number, std::move(trimmed_line)});
-                }
-                line_number++;
-            }
-
-            if (!local_results.empty()) {
+        std::for_each(std::execution::par, files_to_check.begin(), files_to_check.end(), [&](const std::filesystem::path& p) {
+            std::string path_str = p.generic_string();
+            if (path_str.find(query) != std::string::npos) {
                 std::lock_guard<std::mutex> lock(mtx);
-                results.insert(results.end(), std::make_move_iterator(local_results.begin()), std::make_move_iterator(local_results.end()));
+                results.push_back(p);
             }
         });
 
         return results;
     }
+
 }

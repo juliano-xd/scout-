@@ -43,25 +43,22 @@ namespace engines {
         /**
          * @brief Detecta se a query parece ser uma notação Dalvik completa.
          */
-        static bool is_dalvik_notation(const std::string& query) {
+        static bool is_dalvik_notation(std::string_view query) {
             return query.starts_with('L') && query.ends_with(';');
         }
 
         /**
          * @brief Normaliza a query removendo L e ; se presentes.
          */
-        static std::string normalize_dalvik(const std::string& query) {
-            std::string result = query;
+        static std::string normalize_dalvik(std::string_view query) {
+            std::string_view result = query;
             if (result.starts_with('L') && result.ends_with(';')) {
-                return result.substr(1, result.size() - 2);
+                result = result.substr(1, result.size() - 2);
+            } else {
+                if (result.starts_with('L')) result.remove_prefix(1);
+                if (result.ends_with(';')) result.remove_suffix(1);
             }
-            if (result.starts_with('L')) {
-                result = result.substr(1);
-            }
-            if (result.ends_with(';')) {
-                result.pop_back();
-            }
-            return result;
+            return std::string(result);
         }
 
     private:

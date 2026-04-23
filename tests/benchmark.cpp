@@ -1,7 +1,7 @@
 #include <benchmark/benchmark.h>
 #include "core/scanner.hpp"
-#include "analysis/xref.hpp"
-#include "core/smali_parser.hpp"
+#include "engines/content_search_engine.hpp"
+#include "engines/xref_search_engine.hpp"
 #include <filesystem>
 #include <fstream>
 #include <string>
@@ -34,9 +34,9 @@ public:
             << ".class public Lcom/example/Target;\n"
             << ".super Ljava/lang/Object;\n"
             << ".method public importantMethod()Z\n"
-            << "    const/4 v0, 0x1\n"
-            << "    return v0\n"
-            << ".end method\n";
+                << "    const/4 v0, 0x1\n"
+                << "    return v0\n"
+                << ".end method\n";
     }
 
     void TearDown(const ::benchmark::State& state) {
@@ -59,22 +59,36 @@ BENCHMARK_F(ScoutFixture, FindClassesContaining)(benchmark::State& state) {
 }
 
 BENCHMARK_F(ScoutFixture, SearchContentString)(benchmark::State& state) {
+    engines::ContentSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "test_string_500";
+    config.search_type = "string";
+
     for (auto _ : state) {
-        auto res = core::search_content(test_dir, "test_string_500", "string");
+        auto res = engine.search(test_dir, config);
         benchmark::DoNotOptimize(res);
     }
 }
 
 BENCHMARK_F(ScoutFixture, SearchContentRegex)(benchmark::State& state) {
+    engines::ContentSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "test_string_[0-9]+";
+    config.search_type = "regex";
+
     for (auto _ : state) {
-        auto res = core::search_content(test_dir, "test_string_[0-9]+", "regex");
+        auto res = engine.search(test_dir, config);
         benchmark::DoNotOptimize(res);
     }
 }
 
 BENCHMARK_F(ScoutFixture, XrefEngineCallers)(benchmark::State& state) {
+    engines::XrefSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "Lcom/example/Target;->importantMethod()Z";
+    
     for (auto _ : state) {
-        auto res = analysis::XrefEngine::find_callers(test_dir, "Lcom/example/Target;->importantMethod()Z");
+        auto res = engine.search(test_dir, config);
         benchmark::DoNotOptimize(res);
     }
 }

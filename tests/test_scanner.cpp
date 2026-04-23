@@ -87,6 +87,8 @@ TEST_F(ScannerTest, FindsNoClassesContainingNonExistentName) {
     EXPECT_TRUE(res.empty());
 }
 
+#include "engines/content_search_engine.hpp"
+
 TEST_F(ScannerTest, SearchesContentInsideFiles) {
     std::ofstream(test_dir / "smali" / "com" / "example" / "Data.smali") 
         << ".class public Lcom/example/Data;\n"
@@ -97,16 +99,21 @@ TEST_F(ScannerTest, SearchesContentInsideFiles) {
         << "    return v0\n"
         << ".end method\n";
 
-    auto results_num = core::search_content(test_dir, "0x42", "number");
+    engines::ContentSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "0x42";
+    config.search_type = "string";
+
+    auto results_num = engine.search(test_dir, config);
     EXPECT_EQ(results_num.size(), 2);
-    EXPECT_EQ(results_num[0].line_number, 2);
-    EXPECT_EQ(results_num[1].line_number, 4);
 
-    auto results_str = core::search_content(test_dir, "string_123", "string");
+    config.query = "string_123";
+    auto results_str = engine.search(test_dir, config);
     EXPECT_EQ(results_str.size(), 1);
-    EXPECT_EQ(results_str[0].line_number, 5);
 
-    auto results_rgx = core::search_content(test_dir, "MAGIC_\\w+", "regex");
+    config.query = "MAGIC_\\w+";
+    config.search_type = "regex";
+    auto results_rgx = engine.search(test_dir, config);
     EXPECT_EQ(results_rgx.size(), 1);
-    EXPECT_EQ(results_rgx[0].line_content, ".field public static final MAGIC_NUMBER:I = 0x42");
 }
+

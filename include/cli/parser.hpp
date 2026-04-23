@@ -21,7 +21,15 @@ namespace cli {
         }
     };
 
+    class AIHelpRequested : public std::exception {
+    public:
+        const char* what() const noexcept override {
+            return "AI Help requested";
+        }
+    };
+
     class ParseError : public std::invalid_argument {
+
     public:
         explicit ParseError(const std::string& msg) : std::invalid_argument(msg) {}
     };
@@ -100,24 +108,45 @@ namespace cli {
         }
 
         void print_help(std::ostream& os, const char* prog_name) const {
-            os << description_ << "\n\n";
-            os << "Uso: " << prog_name << " [OPCOES]\n\n";
-            os << "Opções:\n";
-            os << "  " << std::left << std::setw(38) << "--help" << "Mostra esta mensagem de ajuda e sai.\n";
+            os << "🚀 " << description_ << "\n\n";
+            os << "Uso: " << prog_name << " [OPCOES] [QUERY]\n\n";
+            os << "Opções Principais:\n";
+            os << "  " << std::left << std::setw(38) << "--search QUERY" << "Busca por regex no código.\n";
+            os << "  " << std::left << std::setw(38) << "--xref TARGET" << "Cross-references (quem chama/é chamado).\n";
+            os << "  " << std::left << std::setw(38) << "--cfg TARGET" << "Gera Control Flow Graph de um método.\n";
+            os << "  " << std::left << std::setw(38) << "--resource-map" << "Mapeia IDs hexadecimais para nomes reais.\n";
+            os << "  " << std::left << std::setw(38) << "--manifest" << "Analisa componentes do AndroidManifest.xml.\n";
             
-            for (const auto& arg : args_) {
-                std::string flag = arg.name;
-                if (!arg.metavar.empty()) {
-                    if (arg.type == ArgType::StringList) {
-                        flag += " " + arg.metavar + " [" + arg.metavar + " ...]";
-                    } else {
-                        flag += " " + arg.metavar;
-                    }
-                }
-                os << "  " << std::left << std::setw(38) << flag << arg.help << "\n";
-            }
+            os << "\nConfigurações de Saída:\n";
+            os << "  " << std::left << std::setw(38) << "--machine-sexpr" << "Saída pura em S-Expression (Agente-Nativo).\n";
+            os << "  " << std::left << std::setw(38) << "--verbose" << "Logs detalhados para depuração humana.\n";
+            
+            os << "\nAjuda Especializada:\n";
+            os << "  " << std::left << std::setw(38) << "--ai-help" << "Guia de integração para Agentes de IA.\n";
+            os << "  " << std::left << std::setw(38) << "--help" << "Esta mensagem de ajuda.\n";
+            
             os << "\n" << epilog_ << "\n";
         }
+
+        void print_ai_help(std::ostream& os) const {
+            os << "(scout:ai-documentation\n";
+            os << "  (philosophy \"Agent-First: Scout++ provides high-performance primitives for AI agents.\")\n";
+            os << "  (input-protocol \"CLI arguments. Use --machine-sexpr for guaranteed S-Expression output.\")\n";
+            os << "  (output-protocol \"S-Expression. Every line is a node. Status is (status ...).\")\n";
+            os << "  (capabilities\n";
+            for (const auto& arg : args_) {
+                os << "    (option (name \"" << arg.name << "\") (help \"" << arg.help << "\") (type \"" << (int)arg.type << "\"))\n";
+            }
+            os << "  )\n";
+            os << "  (interaction-tips\n";
+            os << "    \"1. Start with --manifest to map entry points.\"\n";
+            os << "    \"2. Use --search to find string literals or specific API usages.\"\n";
+            os << "    \"3. Use --xref --xref-depth 2 to understand call chains.\"\n";
+            os << "    \"4. Use --cfg to analyze complex logic branching.\"\n";
+            os << "  )\n";
+            os << ")\n";
+        }
+
 
         void parse(int argc, const char* const* argv) {
             std::vector<std::string_view> tokens;
@@ -135,6 +164,11 @@ namespace cli {
                 if (tokens[i] == "--help" || tokens[i] == "-h") {
                     throw HelpRequested();
                 }
+
+                if (tokens[i] == "--ai-help") {
+                    throw AIHelpRequested();
+                }
+
 
                 if (!is_flag(tokens[i])) {
                     if (positional_func_) {
@@ -307,7 +341,11 @@ Introspecção em S-Expression:
             } catch (const HelpRequested&) {
                 parser.print_help(std::cout, argc > 0 && argv && argv[0] ? argv[0] : "scout");
                 return std::nullopt;
+            } catch (const AIHelpRequested&) {
+                parser.print_ai_help(std::cout);
+                return std::nullopt;
             }
+
         }
     };
 } // namespace cli

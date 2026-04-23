@@ -20,28 +20,14 @@ namespace engines {
         std::string target_class;       // Classe do alvo (se for método/field)
         std::string target_member;      // Nome do método/field alvo
         std::string xref_type;          // "caller", "callee", "reference"
+        std::string access_type;        // "read", "write", "invoke", "other"
         std::string instruction;        // Instrução Smali que contém a referência
+        std::vector<std::string> tainted_values; // Valores rastreados (ex: strings literais em regs)
     };
 
     /**
      * @brief Motor de busca especializado para Cross-References (XREF).
-     * 
-     * Encontra todas as referências a uma classe, método ou campo específico.
-     * Suporta:
-     * - Busca por classe completa (Lcom/example/A;)
-     * - Busca por método específico (Lcom/example/A;->method()V)
-     * - Busca por campo (Lcom/example/A;->field:I)
-     * 
-     * Direções suportadas:
-     * - "callers": quem chama este método/classe
-     * - "callees": o que este método/classe chama
-     * - "both": ambas as direções
-     * 
-     * Recursos:
-     * - Paralelização agressiva em múltiplos arquivos
-     * - Contexto estrutural (rastreia .class e .method atuais)
-     * - Suporte a profundidade recursiva (XREF de XREF)
-     * - Filtragem de classes do sistema Android
+     * ... (comments truncated)
      */
     class XrefSearchEngine : public ISearchEngine {
     public:
@@ -62,39 +48,26 @@ namespace engines {
         EngineStats get_stats() const override { return stats_; }
 
         bool supports_config(const SearchConfig& config) const override {
-            // XREF suporta todas as configurações básicas
             return true;
         }
 
+        void set_direction(const std::string& direction) { direction_ = direction; }
+        void set_include_system(bool include) { include_system_ = include; }
+        void set_depth(int depth) { depth_ = depth; }
+        void set_opcodes(const std::vector<std::string>& opcodes) { filter_opcodes_ = opcodes; }
+        
         /**
-         * @brief Define a direção da busca XREF.
-         * @param direction "callers", "callees" ou "both"
+         * @brief Habilita análise de fluxo de dados local (taint lite).
          */
-        void set_direction(const std::string& direction) {
-            direction_ = direction;
-        }
-
-        /**
-         * @brief Define se deve incluir classes do sistema Android.
-         * @param include true para incluir, false para omitir
-         */
-        void set_include_system(bool include) {
-            include_system_ = include;
-        }
-
-        /**
-         * @brief Define a profundidade máxima para XREF recursivo.
-         * @param depth Profundidade (1 = direto, 2 = indireto, etc.)
-         */
-        void set_depth(int depth) {
-            depth_ = depth;
-        }
+        void set_enable_taint(bool enable) { enable_taint_ = enable; }
 
     private:
         EngineStats stats_;
         std::string direction_ = "both";
         bool include_system_ = false;
         int depth_ = 1;
+        bool enable_taint_ = false;
+        std::vector<std::string> filter_opcodes_;
 
         /**
          * @brief Estrutura interna para rastrear contexto durante parsing.
@@ -102,44 +75,62 @@ namespace engines {
         struct ParseContext {
             std::string current_class;
             std::string current_method;
-            std::string current_method_signature;  // Assinatura completa (inclui parênteses e retorno)
+            std::string current_method_signature;
             size_t line_number = 0;
+            // Buffer circular para análise de taint (últimas 10-20 linhas do método)
+            std::vector<std::string> recent_lines;
         };
+
 
         /**
          * @brief Processa uma linha Smali atualizando o contexto.
          */
-        static void update_context(const std::string& trimmed_line, ParseContext& ctx);
+        static void update_context(std::string_view trimmed_line, ParseContext& ctx);
 
         /**
          * @brief Verifica se a linha contém uma referência ao alvo.
          */
-        static bool contains_target(const std::string& line, const std::string& target);
+        static bool contains_target(std::string_view line, std::string_view target);
+
+        /**
+         * @brief Extrai o opcode de uma instrução (ex: invoke-virtual).
+         */
+        static std::string_view extract_opcode(std::string_view line);
 
         /**
          * @brief Extrai o tipo de referência (invoke, iget, sput, etc.)
          */
-        static std::string extract_instruction_type(const std::string& line);
+        static std::string extract_instruction_type(std::string_view line);
 
         /**
          * @brief Normaliza uma assinatura de método para comparação.
          */
-        static std::string normalize_method_signature(const std::string& signature);
+        static std::string normalize_method_signature(std::string_view signature);
 
         /**
          * @brief Verifica se uma classe é do sistema Android.
          */
-        static bool is_system_class(const std::string& class_name);
+        static bool is_system_class(std::string_view class_name);
 
         /**
-         * @brief Executa XREF recursivo até a profundidade especificada.
+         * @brief Executa busca XREF em um conjunto de arquivos.
          */
-        std::vector<XrefResult> search_recursive(
-            const std::filesystem::path& root_dir,
+        std::vector<SearchResult> perform_search(
+            const std::vector<std::filesystem::path>& files,
             const std::string& target,
-            int current_depth,
             const SearchConfig& config
         );
+
+        /**
+         * @brief Encontra o que este método/classe chama (callees).
+         */
+        std::vector<SearchResult> search_callees(
+            const std::filesystem::path& root_dir,
+            const std::string& target,
+            const SearchConfig& config
+        );
+
+
     };
 
     /**

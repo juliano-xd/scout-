@@ -1,6 +1,8 @@
 #include "engines/xref_search_engine.hpp"
+#include "core/scanner.hpp"
 #include "utils/filesystem.hpp"
-#include <nlohmann/json.hpp>
+#include "utils/string_utils.hpp"
+#include "utils/mmap_file.hpp"
 #include <chrono>
 #include <algorithm>
 #include <mutex>
@@ -60,224 +62,347 @@ namespace engines {
     } // anonymous namespace
 
     // Verifica se uma linha Smali contém referência ao target
-    bool XrefSearchEngine::contains_target(const std::string& line, const std::string& target) {
-            // O target pode ser uma classe (Lcom/example/A;) ou método (Lcom/example/A;->method()V)
-            // No Smali, referências aparecem como:
-            // - invoke-virtual {p0}, Lcom/example/A;->doLogin()V
-            // - iget-object v0, p1, Lcom/example/A;->field:I
-            // - sput-object v0, Lcom/example/A;->staticField:Ljava/lang/String;
-            
-            // Busca simples por substring (o target já deve estar no formato Dalvik completo)
-            return line.find(target) != std::string::npos;
-        }
-
-    // Extrai o tipo de instrução (invoke, iget, sput, etc.)
-    std::string XrefSearchEngine::extract_instruction_type(const std::string& line) {
-            // Trim leading whitespace
-            size_t first = line.find_first_not_of(" \t\r\n");
-            if (first == std::string::npos) return "";
-            std::string trimmed = line.substr(first, line.find_last_not_of(" \t\r\n") - first + 1);
-            
-            // Primeiro token é o opcode
-            size_t space_pos = trimmed.find(' ');
-            if (space_pos != std::string::npos) {
-                return trimmed.substr(0, space_pos);
-            }
-            return trimmed;
-        }
-
-    // Verifica se uma classe é do sistema Android
-    bool XrefSearchEngine::is_system_class(const std::string& class_name) {
-            // Classes do sistema começam com "Landroid/", "Ljava/", "Ljavax/", "Lsun/", etc.
-            static const std::vector<std::string> system_prefixes = {
-                "Landroid/",
-                "Ljava/",
-                "Ljavax/",
-                "Lsun/",
-                "Lcom/android/",
-                "Lorg/",
-                "Ldalvik/",
-                "Llibcore/"
-            };
-            
-            for (const auto& prefix : system_prefixes) {
-                if (class_name.starts_with(prefix)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-    // Normaliza assinatura de método para comparação
-    std::string XrefSearchEngine::normalize_method_signature(const std::string& signature) {
-            // Remove espaços extras, normaliza para formato canônico
-            std::string result = signature;
-            // Remover espaços entre tokens
-            result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
-            return result;
+    bool XrefSearchEngine::contains_target(std::string_view line, std::string_view target) {
+        return line.find(target) != std::string_view::npos;
     }
 
-    void XrefSearchEngine::update_context(const std::string& trimmed_line, ParseContext& ctx) {
-        if (trimmed_line.find(".class ") == 0) {
-            std::string class_name = extract_class_name(trimmed_line);
-            ctx.current_class = class_name;
-        } else if (trimmed_line.find(".method ") == 0) {
-            ctx.current_method = extract_method_signature(trimmed_line);
-            ctx.current_method_signature = ctx.current_method;
+    // Verifica se uma classe é do sistema Android
+    bool XrefSearchEngine::is_system_class(std::string_view class_name) {
+        static const std::string_view system_prefixes[] = {
+            "Landroid/", "Ljava/", "Ljavax/", "Lsun/",
+            "Lcom/android/", "Lorg/", "Ldalvik/", "Llibcore/"
+        };
+        for (const auto& prefix : system_prefixes) {
+            if (class_name.starts_with(prefix)) return true;
+        }
+        return false;
+    }
+
+    void XrefSearchEngine::update_context(std::string_view trimmed_line, ParseContext& ctx) {
+        if (trimmed_line.starts_with(".class ")) {
+            size_t last_space = trimmed_line.find_last_of(' ');
+            if (last_space != std::string_view::npos) {
+                std::string_view class_name = trimmed_line.substr(last_space + 1);
+                ctx.current_class = std::string(class_name);
+            }
+        } else if (trimmed_line.starts_with(".method ")) {
+            std::string_view sig = trimmed_line.substr(8);
+            size_t paren_pos = sig.find('(');
+            if (paren_pos != std::string_view::npos) {
+                size_t last_space = sig.find_last_of(' ', paren_pos);
+                if (last_space != std::string_view::npos) sig = sig.substr(last_space + 1);
+            }
+            ctx.current_method = std::string(sig);
         } else if (trimmed_line == ".end method") {
             ctx.current_method.clear();
-            ctx.current_method_signature.clear();
         }
         ctx.line_number++;
+    }
+
+    // Extrai o opcode de uma instrução (ex: invoke-virtual)
+    std::string_view XrefSearchEngine::extract_opcode(std::string_view line) {
+        std::string_view trimmed = utils::trim(line);
+        size_t space = trimmed.find(' ');
+        if (space != std::string_view::npos) return trimmed.substr(0, space);
+        return trimmed;
+    }
+
+    // Extrai registradores de uma instrução (ex: {p0, v0})
+    std::string_view extract_registers(std::string_view line) {
+        size_t start = line.find('{');
+        size_t end = line.find('}', start);
+        if (start != std::string_view::npos && end != std::string_view::npos) {
+            return line.substr(start, end - start + 1);
+        }
+        return "";
+    }
+
+    // Classifica o tipo de acesso baseado no opcode
+    std::string classify_access(std::string_view opcode) {
+        if (opcode.starts_with("invoke-")) return "invoke";
+        if (opcode.starts_with("sget") || opcode.starts_with("iget")) return "read";
+        if (opcode.starts_with("sput") || opcode.starts_with("iput")) return "write";
+        return "other";
+    }
+
+    // Tenta rastrear o valor de um registrador voltando algumas linhas (taint lite)
+    std::string trace_register_value(std::string_view reg, const std::vector<std::string>& history) {
+        // Procurar de trás para frente no histórico
+        for (auto it = history.rbegin(); it != history.rend(); ++it) {
+            std::string_view line = *it;
+            if (line.find("const-string") != std::string_view::npos && line.find(reg) != std::string_view::npos) {
+                size_t quote_start = line.find('"');
+                size_t quote_end = line.find('"', quote_start + 1);
+                if (quote_start != std::string::npos && quote_end != std::string::npos) {
+                    return std::string(line.substr(quote_start + 1, quote_end - quote_start - 1));
+                }
+            }
+            if (line.find("const/") != std::string_view::npos && line.find(reg) != std::string_view::npos) {
+                 size_t comma = line.find(',');
+                 if (comma != std::string_view::npos) {
+                     return "const:" + std::string(utils::trim(line.substr(comma + 1)));
+                 }
+            }
+        }
+        return "";
+    }
+
+    std::vector<SearchResult> XrefSearchEngine::perform_search(
+        const std::vector<std::filesystem::path>& files,
+        const std::string& target,
+        const SearchConfig& config
+    ) {
+        std::vector<SearchResult> results;
+        std::mutex mtx;
+
+        std::for_each(std::execution::par, files.begin(), files.end(),
+            [&](const std::filesystem::path& file_path) {
+                utils::MappedFile mfile(file_path);
+                if (!mfile.is_open()) return;
+
+                std::string_view data = mfile.view();
+                if (data.find(target) == std::string_view::npos) return;
+
+                utils::LineIterator it(data);
+                std::string_view line;
+                ParseContext ctx;
+                std::vector<SearchResult> local_results;
+
+                while (it.next(line)) {
+                    std::string_view trimmed = utils::trim(line);
+                    update_context(trimmed, ctx);
+
+                    // Manter histórico para taint
+                    if (enable_taint_) {
+                        if (trimmed.starts_with(".method ")) ctx.recent_lines.clear();
+                        if (!trimmed.empty() && !trimmed.starts_with(".")) {
+                            ctx.recent_lines.push_back(std::string(trimmed));
+                            if (ctx.recent_lines.size() > 20) ctx.recent_lines.erase(ctx.recent_lines.begin());
+                        }
+                    }
+
+                    if (contains_target(line, target)) {
+                        if (!include_system_ && is_system_class(ctx.current_class)) continue;
+
+                        std::string_view opcode = extract_opcode(trimmed);
+
+                        // Filtro de opcode
+                        if (!filter_opcodes_.empty()) {
+                            bool found = false;
+                            for (const auto& f : filter_opcodes_) {
+                                if (opcode.find(f) != std::string_view::npos) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found) continue;
+                        }
+
+                        SearchResult res;
+                        res.file_path = file_path;
+                        res.line_number = ctx.line_number;
+                        res.line_content = std::string(trimmed);
+                        
+                        std::string xref_type = "reference";
+                        if (!ctx.current_method.empty()) {
+                            if (direction_ == "callers" || direction_ == "both") xref_type = "caller";
+                            else if (direction_ == "callees") xref_type = "callee";
+                        }
+
+                        std::string regs_str = std::string(extract_registers(trimmed));
+                        std::string access = classify_access(opcode);
+
+                        res.context = ctx.current_class + "->" + ctx.current_method;
+                        if (!regs_str.empty()) res.context += " regs:" + regs_str;
+                        res.context += " type:" + access;
+                        if (!xref_type.empty()) res.context += " [" + xref_type + "]";
+
+                        // Taint analysis
+                        if (enable_taint_ && !regs_str.empty()) {
+                            // Simplificado: pega o primeiro registrador ou todos em {v0, v1}
+                            std::string_view inner_regs = regs_str.substr(1, regs_str.size() - 2);
+                            size_t comma = 0, last = 0;
+                            while ((comma = inner_regs.find(',', last)) != std::string_view::npos) {
+                                std::string val = trace_register_value(utils::trim(inner_regs.substr(last, comma - last)), ctx.recent_lines);
+                                if (!val.empty()) res.context += " taint:" + val;
+                                last = comma + 1;
+                            }
+                            std::string val = trace_register_value(utils::trim(inner_regs.substr(last)), ctx.recent_lines);
+                            if (!val.empty()) res.context += " taint:" + val;
+                        }
+                        
+                        res.engine_name = this->name();
+                        local_results.push_back(std::move(res));
+                    }
+                }
+
+                if (!local_results.empty()) {
+                    std::lock_guard<std::mutex> lock(mtx);
+                    for (auto& r : local_results) {
+                        if (results.size() < config.max_results) {
+                            results.push_back(std::move(r));
+                        } else break;
+                    }
+                }
+            });
+
+        return results;
+    }
+
+
+    std::vector<SearchResult> XrefSearchEngine::search_callees(
+        const std::filesystem::path& root_dir,
+        const std::string& target,
+        const SearchConfig& config
+    ) {
+        std::vector<SearchResult> results;
+        
+        // 1. Identificar a classe alvo
+        std::string class_target;
+        std::string method_target;
+        size_t arrow = target.find("->");
+        if (arrow != std::string::npos) {
+            class_target = target.substr(0, arrow);
+            method_target = target.substr(arrow + 2);
+        } else {
+            class_target = target;
+        }
+
+        // 2. Encontrar o arquivo da classe
+        auto class_file = core::find_class_file(root_dir, class_target);
+        if (!class_file) return results;
+
+        // 3. Abrir o arquivo e procurar callees
+        utils::MappedFile mfile(*class_file);
+        if (!mfile.is_open()) return results;
+
+        utils::LineIterator it(mfile.view());
+        std::string_view line;
+        bool in_target_block = false;
+        if (method_target.empty()) in_target_block = true; // Se for classe, procura no arquivo todo
+
+        size_t line_num = 0;
+        while (it.next(line)) {
+            line_num++;
+            std::string_view trimmed = utils::trim(line);
+            if (trimmed.empty()) continue;
+
+            if (!method_target.empty()) {
+                if (trimmed.starts_with(".method ") && trimmed.find(method_target) != std::string_view::npos) {
+                    in_target_block = true;
+                    continue;
+                }
+                if (trimmed == ".end method") {
+                    in_target_block = false;
+                    continue;
+                }
+            }
+
+            if (in_target_block) {
+                // Procurar por instruções que chamam outros (callees)
+                std::string_view opcode = extract_opcode(trimmed);
+                if (opcode.starts_with("invoke-") || opcode.starts_with("sget") || 
+                    opcode.starts_with("sput") || opcode.starts_with("iget") || opcode.starts_with("iput")) {
+                    
+                    // Extrair o alvo da instrução (costuma ser o último token)
+                    size_t last_space = trimmed.find_last_of(' ');
+                    if (last_space != std::string_view::npos) {
+                        std::string_view callee = trimmed.substr(last_space + 1);
+                        
+                        SearchResult res;
+                        res.file_path = *class_file;
+                        res.line_number = line_num;
+                        res.line_content = std::string(trimmed);
+                        res.context = target + " calls " + std::string(callee);
+                        res.engine_name = this->name();
+                        results.push_back(std::move(res));
+                    }
+                }
+            }
+        }
+
+        return results;
     }
 
     std::vector<SearchResult> XrefSearchEngine::search(
         const std::filesystem::path& root_dir,
         const SearchConfig& config
     ) {
-        std::vector<SearchResult> results;
-        
-        if (config.query.empty()) {
-            return results;
+        if (direction_ == "callees") {
+            return search_callees(root_dir, config.query, config);
         }
 
-        if (!std::filesystem::exists(root_dir) || !std::filesystem::is_directory(root_dir)) {
-            return results;
-        }
+        std::vector<SearchResult> final_results;
+        if (config.query.empty() || !std::filesystem::exists(root_dir)) return final_results;
 
-        // Executar busca medindo tempo
-        auto [search_time, elapsed] = measure_execution([&]() {
-            std::vector<XrefResult> xref_results;
-            
-            const std::string& target = config.query;
-            
-            // Coletar todos os arquivos .smali
-            auto options = std::filesystem::directory_options::skip_permission_denied;
-            std::vector<std::filesystem::path> all_files;
-            
-            for (const auto& entry : std::filesystem::recursive_directory_iterator(root_dir, options)) {
-                if (entry.is_regular_file()) {
-                    std::string filename = entry.path().filename().string();
-                    if (filename.size() > 6 && filename.compare(filename.size() - 6, 6, ".smali") == 0) {
-                        all_files.push_back(entry.path());
-                    }
-                }
+        std::vector<std::filesystem::path> all_files;
+        auto options = std::filesystem::directory_options::skip_permission_denied;
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(root_dir, options)) {
+            if (entry.is_regular_file() && entry.path().extension() == ".smali") {
+                all_files.push_back(entry.path());
             }
+        }
 
-            std::mutex mtx;
-            size_t total_files = all_files.size();
+        std::set<std::string> targets_to_search;
+        targets_to_search.insert(config.query);
+        std::set<std::string> processed_targets;
+        std::set<std::string> found_contexts; // Para evitar duplicatas em profundidades diferentes
 
-            // Processar arquivos em paralelo
-            std::for_each(std::execution::par_unseq, all_files.begin(), all_files.end(),
-                [&](const std::filesystem::path& file_path) {
-                    std::ifstream file(file_path);
-                    if (!file.is_open()) return;
+        auto [search_dummy, elapsed] = measure_execution([&]() {
+            for (int d = 0; d < depth_; ++d) {
+                std::vector<SearchResult> depth_results;
+                std::set<std::string> next_targets;
 
-                    std::string line;
-                    ParseContext ctx;
-                    std::vector<XrefResult> local_results;
+                for (const auto& current_target : targets_to_search) {
+                    if (processed_targets.count(current_target)) continue;
+                    processed_targets.insert(current_target);
 
-                    while (std::getline(file, line)) {
-                        // Trim da linha antes de atualizar contexto (bug fix: raw line passada antes)
-                        size_t first = line.find_first_not_of(" \t\r\n");
-                        std::string trimmed = (first != std::string::npos)
-                            ? line.substr(first, line.find_last_not_of(" \t\r\n") - first + 1)
-                            : line;
+                    auto results = perform_search(all_files, current_target, config);
+                    for (auto& r : results) {
+                        // Se o resultado já foi encontrado em uma profundidade anterior, ignora
+                        std::string context_id = r.file_path.string() + ":" + std::to_string(r.line_number);
+                        if (found_contexts.count(context_id)) continue;
+                        found_contexts.insert(context_id);
 
-                        // Atualizar contexto com linha trimada
-                        update_context(trimmed, ctx);
-
-                        // Verificar se a linha original contém o target
-                        if (contains_target(line, target)) {
-                            // Determinar tipo de referência baseado na direção configurada
-                            std::string xref_type = "reference";
-                            
-                            if (direction_ == "callers" || direction_ == "both") {
-                                // Se estamos buscando callers de um método, a linha atual contém uma chamada para o target
-                                // O contexto atual (ctx.current_method) é o caller
-                                if (!ctx.current_method.empty()) {
-                                    xref_type = "caller";
+                        // Identifica o novo alvo para a próxima profundidade (o caller atual)
+                        if (d < depth_ - 1) {
+                            // Extrai a classe e método atual como alvo
+                            // O contexto é: "Class->Method regs:{...} [caller]"
+                            // Queremos apenas "Class->Method"
+                            size_t arrow = r.context.find("->");
+                            if (arrow != std::string::npos) {
+                                size_t first_space = r.context.find(' ', arrow);
+                                std::string caller_sig;
+                                if (first_space != std::string::npos) {
+                                    caller_sig = r.context.substr(0, first_space);
+                                } else {
+                                    caller_sig = r.context;
+                                }
+                                if (!caller_sig.empty()) {
+                                    next_targets.insert(caller_sig);
                                 }
                             }
-                            
-                            if (direction_ == "callees" || direction_ == "both") {
-                                // Se estamos buscando callees de um método, a linha atual mostra o que o método atual chama
-                                // O target é o callee
-                                if (!ctx.current_method.empty()) {
-                                    xref_type = "callee";
-                                }
-                            }
-
-                            // Filtrar classes do sistema se necessário
-                            if (!include_system_ && is_system_class(ctx.current_class)) {
-                                continue;
-                            }
-
-                            XrefResult result;
-                            result.file_path = file_path;
-                            result.caller_class = ctx.current_class;
-                            result.caller_method = ctx.current_method;
-                            result.line_number = ctx.line_number;
-                            result.instruction = line;
-                            result.target_class = target;
-                            result.target_member = ""; // Pode ser extraído se necessário
-                            result.xref_type = xref_type;
-                            result.engine_name = this->name();
-                            result.search_time = std::chrono::microseconds(0);
-                            
-                            local_results.push_back(std::move(result));
                         }
+                        depth_results.push_back(std::move(r));
                     }
-
-                    if (!local_results.empty()) {
-                        std::lock_guard<std::mutex> lock(mtx);
-                        for (auto& r : local_results) {
-                            if (xref_results.size() < config.max_results) {
-                                xref_results.push_back(std::move(r));
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                });
-
-            // Se profundidade > 1, realizar busca recursiva
-            if (depth_ > 1) {
-                // Coletar todos os targets únicos encontrados na primeira passada
-                std::set<std::string> unique_targets;
-                for (const auto& result : xref_results) {
-                    // Extrair método ou classe referenciada
-                    // Para simplificar, usamos o próprio target original
-                    // Em implementação completa, extrairíamos da instrução
                 }
+
+                final_results.insert(final_results.end(), 
+                                   std::make_move_iterator(depth_results.begin()), 
+                                   std::make_move_iterator(depth_results.end()));
                 
-                // TODO: Implementar XREF recursivo se necessário
-                // Por enquanto, retornamos apenas resultados diretos
+                targets_to_search = std::move(next_targets);
+                if (targets_to_search.empty()) break;
             }
-
-            // Converter XrefResult para SearchResult base
-            for (const auto& xr : xref_results) {
-                SearchResult sr;
-                sr.file_path = xr.file_path;
-                sr.line_number = xr.line_number;
-                sr.line_content = xr.instruction;
-                sr.context = xr.caller_class + "->" + xr.caller_method + " [" + xr.xref_type + "]";
-                sr.engine_name = xr.engine_name;
-                sr.search_time = xr.search_time;
-                results.push_back(sr);
-            }
-
-            stats_.files_scanned = total_files;
-            // BUG FIX: stats atualizadas com base nos xref_results antes da conversão
-            stats_.matches_found = xref_results.size();
-
             return 0;
         });
 
+        stats_.files_scanned = all_files.size();
+        stats_.matches_found = final_results.size();
         stats_.total_time = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
-        return results;
-    }
 
+        return final_results;
+    }
 
     std::unique_ptr<ISearchEngine> create_xref_search_engine() {
         return std::make_unique<XrefSearchEngine>();

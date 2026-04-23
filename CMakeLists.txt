@@ -21,7 +21,10 @@ add_library(scout_lib
     src/engines/class_search_engine.cpp
     src/engines/content_search_engine.cpp
     src/engines/xref_search_engine.cpp
+    src/engines/resource_mapping_engine.cpp
+    src/engines/cfg_engine.cpp
     src/formatters/sexpr_formatter.cpp
+
 )
 target_link_libraries(scout_lib PUBLIC nlohmann_json::nlohmann_json)
 
@@ -58,15 +61,15 @@ target_link_libraries(test_cli_parser GTest::gtest_main)
 
 # Testes de core/scanner.hpp
 add_executable(test_scanner tests/test_scanner.cpp)
-target_link_libraries(test_scanner GTest::gtest_main)
+target_link_libraries(test_scanner GTest::gtest_main scout_lib)
 
 # Testes de core/smali_parser.hpp
 add_executable(test_smali_parser tests/test_smali_parser.cpp)
 target_link_libraries(test_smali_parser GTest::gtest_main nlohmann_json::nlohmann_json)
 
-# Testes de analysis/xref.hpp
+# Testes de analysis/xref.hpp (Now using XrefSearchEngine)
 add_executable(test_xref tests/test_xref.cpp)
-target_link_libraries(test_xref GTest::gtest_main)
+target_link_libraries(test_xref GTest::gtest_main scout_lib)
 
 # Testes dos Motores de Busca
 add_executable(test_class_search_engine tests/test_class_search_engine.cpp)
@@ -78,6 +81,9 @@ target_link_libraries(test_content_search_engine GTest::gtest_main scout_lib)
 add_executable(test_xref_search_engine tests/test_xref_search_engine.cpp)
 target_link_libraries(test_xref_search_engine GTest::gtest_main scout_lib)
 
+add_executable(test_xref_advanced tests/test_xref_advanced.cpp)
+target_link_libraries(test_xref_advanced GTest::gtest_main scout_lib)
+
 # Testes de formatters/sexpr_formatter.hpp
 add_executable(test_sexpr tests/test_sexpr.cpp)
 target_link_libraries(test_sexpr GTest::gtest_main scout_lib)
@@ -87,7 +93,7 @@ target_link_libraries(test_sexpr_edge GTest::gtest_main scout_lib)
 
 # Benchmarks de performance
 add_executable(run_benchmarks tests/benchmark.cpp)
-target_link_libraries(run_benchmarks benchmark::benchmark)
+target_link_libraries(run_benchmarks benchmark::benchmark scout_lib)
 
 include(GoogleTest)
 gtest_discover_tests(test_filesystem)
@@ -98,5 +104,10 @@ gtest_discover_tests(test_xref)
 gtest_discover_tests(test_class_search_engine)
 gtest_discover_tests(test_content_search_engine)
 gtest_discover_tests(test_xref_search_engine)
+gtest_discover_tests(test_xref_advanced)
 gtest_discover_tests(test_sexpr)
 gtest_discover_tests(test_sexpr_edge)
+
+add_executable(test_new_engines tests/test_new_engines.cpp)
+target_link_libraries(test_new_engines GTest::gtest_main scout_lib)
+gtest_discover_tests(test_new_engines)
