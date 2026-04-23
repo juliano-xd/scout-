@@ -110,7 +110,7 @@ namespace core {
         }
 
         std::mutex mtx;
-        std::for_each(std::execution::par_unseq, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
+        std::for_each(std::execution::par, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
             std::string filename = file_path.filename().string();
             if (filename.size() > 6 && filename.compare(filename.size() - 6, 6, ".smali") == 0) {
                 std::string class_name = filename.substr(0, filename.size() - 6);
@@ -168,7 +168,7 @@ namespace core {
         }
 
         std::mutex mtx;
-        std::for_each(std::execution::par_unseq, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
+        std::for_each(std::execution::par, all_files.begin(), all_files.end(), [&](const std::filesystem::path& file_path) {
             std::ifstream file(file_path);
             if (!file.is_open()) return;
 
