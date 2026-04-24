@@ -26,6 +26,7 @@ CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o: /home/trindade/Proje
   /home/trindade/Projetos/scout++/include/core/analysis_context.hpp \
   /home/trindade/Projetos/scout++/include/engines/i_search_engine.hpp \
   /home/trindade/Projetos/scout++/include/engines/register_engines.hpp \
+  /home/trindade/Projetos/scout++/include/engines/variable_tracker_engine.hpp \
   /home/trindade/Projetos/scout++/include/formatters/i_formatter.hpp \
   /home/trindade/Projetos/scout++/include/formatters/sexpr_formatter.hpp \
   /home/trindade/Projetos/scout++/include/utils/mmap_file.hpp \
@@ -155,6 +156,7 @@ CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o: /home/trindade/Proje
   /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
+  /usr/include/c++/15.2.1/algorithm \
   /usr/include/c++/15.2.1/any \
   /usr/include/c++/15.2.1/array \
   /usr/include/c++/15.2.1/atomic \
@@ -230,6 +232,7 @@ CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o: /home/trindade/Proje
   /usr/include/c++/15.2.1/bits/ptr_traits.h \
   /usr/include/c++/15.2.1/bits/quoted_string.h \
   /usr/include/c++/15.2.1/bits/range_access.h \
+  /usr/include/c++/15.2.1/bits/ranges_algo.h \
   /usr/include/c++/15.2.1/bits/ranges_algobase.h \
   /usr/include/c++/15.2.1/bits/ranges_base.h \
   /usr/include/c++/15.2.1/bits/ranges_cmp.h \
@@ -279,6 +282,7 @@ CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o: /home/trindade/Proje
   /usr/include/c++/15.2.1/bits/unique_lock.h \
   /usr/include/c++/15.2.1/bits/unique_ptr.h \
   /usr/include/c++/15.2.1/bits/unordered_map.h \
+  /usr/include/c++/15.2.1/bits/unordered_set.h \
   /usr/include/c++/15.2.1/bits/uses_allocator.h \
   /usr/include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/include/c++/15.2.1/bits/utility.h \
@@ -333,6 +337,7 @@ CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o: /home/trindade/Proje
   /usr/include/c++/15.2.1/optional \
   /usr/include/c++/15.2.1/ostream \
   /usr/include/c++/15.2.1/pstl/execution_defs.h \
+  /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/include/c++/15.2.1/pstl/pstl_config.h \
   /usr/include/c++/15.2.1/ratio \
@@ -352,6 +357,7 @@ CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o: /home/trindade/Proje
   /usr/include/c++/15.2.1/type_traits \
   /usr/include/c++/15.2.1/typeinfo \
   /usr/include/c++/15.2.1/unordered_map \
+  /usr/include/c++/15.2.1/unordered_set \
   /usr/include/c++/15.2.1/utility \
   /usr/include/c++/15.2.1/variant \
   /usr/include/c++/15.2.1/vector \
@@ -553,6 +559,8 @@ CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o:
 
 /usr/include/c++/15.2.1/utility:
 
+/usr/include/c++/15.2.1/unordered_set:
+
 /usr/include/c++/15.2.1/typeinfo:
 
 /usr/include/c++/15.2.1/text_encoding:
@@ -655,6 +663,8 @@ libscout_lib.a:
 
 /usr/include/c++/15.2.1/bits/stream_iterator.h:
 
+/usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h:
+
 /usr/include/c++/15.2.1/bits/stl_tree.h:
 
 /usr/include/sys/ucontext.h:
@@ -670,6 +680,8 @@ libscout_lib.a:
 /usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h:
 
 /usr/include/c++/15.2.1/bits/stl_pair.h:
+
+/usr/include/c++/15.2.1/bits/stl_multiset.h:
 
 /usr/include/bits/semaphore.h:
 
@@ -729,6 +741,8 @@ lib/libgtest_main.a:
 
 /usr/include/c++/15.2.1/bits/char_traits.h:
 
+/usr/include/c++/15.2.1/bits/unordered_set.h:
+
 /usr/include/bits/sigstack.h:
 
 /usr/include/c++/15.2.1/ext/numeric_traits.h:
@@ -743,6 +757,8 @@ lib/libgtest_main.a:
 
 /usr/include/bits/types/cookie_io_functions_t.h:
 
+/home/trindade/Projetos/scout++/include/engines/variable_tracker_engine.hpp:
+
 /usr/include/features.h:
 
 /usr/include/bits/types/__FILE.h:
@@ -756,10 +772,6 @@ lib/libgtest_main.a:
 /usr/include/bits/signum-arch.h:
 
 /usr/include/c++/15.2.1/bits/stl_algobase.h:
-
-/usr/lib/libc.so:
-
-/usr/include/bits/pthreadtypes.h:
 
 /usr/include/bits/pthread_stack_min-dynamic.h:
 
@@ -823,6 +835,8 @@ lib/libgtest_main.a:
 
 /usr/include/bits/local_lim.h:
 
+/usr/include/bits/libc-header-start.h:
+
 /usr/include/bits/byteswap.h:
 
 /usr/include/bits/types/__mbstate_t.h:
@@ -834,6 +848,14 @@ _deps/googletest-src/googletest/include/gtest/gtest-matchers.h:
 /usr/include/bits/mman-linux.h:
 
 /usr/include/c++/15.2.1/bits/ostream.h:
+
+/usr/lib/libc.so:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/c++/15.2.1/bits/stl_multimap.h:
+
+/usr/include/c++/15.2.1/bits/exception_ptr.h:
 
 /usr/include/linux/posix_types.h:
 
@@ -883,6 +905,10 @@ _deps/googletest-src/googletest/include/gtest/gtest-death-test.h:
 
 _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h:
 
+/usr/include/c++/15.2.1/bits/move.h:
+
+/usr/include/bits/types.h:
+
 /usr/include/c++/15.2.1/cwchar:
 
 /usr/include/c++/15.2.1/bits/uniform_int_dist.h:
@@ -901,10 +927,6 @@ _deps/googletest-src/googletest/include/gtest/gtest-typed-test.h:
 
 _deps/googletest-src/googletest/include/gtest/internal/gtest-internal.h:
 
-/usr/include/c++/15.2.1/bits/memoryfwd.h:
-
-/home/trindade/Projetos/scout++/include/formatters/sexpr_formatter.hpp:
-
 /usr/include/c++/15.2.1/bits/string_view.tcc:
 
 /usr/include/bits/typesizes.h:
@@ -915,17 +937,21 @@ _deps/googletest-src/googletest/include/gtest/gtest-message.h:
 
 /usr/include/c++/15.2.1/bits/basic_string.h:
 
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cxxabi_tweaks.h:
+
+/usr/include/c++/15.2.1/bits/sstream.tcc:
+
+/usr/include/bits/fcntl-linux.h:
+
+/usr/include/c++/15.2.1/bits/allocated_ptr.h:
+
+_deps/googletest-src/googletest/include/gtest/gtest-printers.h:
+
 /usr/include/c++/15.2.1/bits/stl_iterator.h:
 
 /usr/lib/crti.o:
 
 _deps/googletest-src/googletest/include/gtest/gtest-test-part.h:
-
-/usr/include/bits/types.h:
-
-/usr/include/c++/15.2.1/bits/move.h:
-
-/usr/include/bits/libc-header-start.h:
 
 /usr/include/bits/endian.h:
 
@@ -934,6 +960,10 @@ _deps/googletest-src/googletest/include/gtest/gtest-test-part.h:
 /usr/include/c++/15.2.1/bits/stl_function.h:
 
 _deps/googletest-src/googletest/include/gtest/gtest-assertion-result.h:
+
+/usr/include/c++/15.2.1/bits/memoryfwd.h:
+
+/home/trindade/Projetos/scout++/include/formatters/sexpr_formatter.hpp:
 
 /usr/include/asm/types.h:
 
@@ -1049,16 +1079,6 @@ _deps/googletest-src/googletest/include/gtest/gtest_pred_impl.h:
 
 /usr/include/bits/endianness.h:
 
-_deps/googletest-src/googletest/include/gtest/gtest-printers.h:
-
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cxxabi_tweaks.h:
-
-/usr/include/c++/15.2.1/bits/sstream.tcc:
-
-/usr/include/bits/fcntl-linux.h:
-
-/usr/include/c++/15.2.1/bits/allocated_ptr.h:
-
 /usr/include/bits/fcntl.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/limits.h:
@@ -1093,9 +1113,9 @@ _deps/googletest-src/googletest/include/gtest/gtest-printers.h:
 
 /usr/include/bits/types/struct_statx.h:
 
-/usr/include/c++/15.2.1/bits/locale_classes.tcc:
-
 /usr/include/c++/15.2.1/bits/shared_ptr_atomic.h:
+
+/usr/include/c++/15.2.1/bits/locale_classes.tcc:
 
 /usr/include/bits/types/struct_statx_timestamp.h:
 
@@ -1114,6 +1134,8 @@ _deps/googletest-src/googletest/include/gtest/gtest-printers.h:
 /usr/include/stdlib.h:
 
 /usr/include/c++/15.2.1/bits/mofunc_impl.h:
+
+/usr/include/c++/15.2.1/bits/ranges_algo.h:
 
 /usr/include/bits/types/timer_t.h:
 
@@ -1155,6 +1177,8 @@ _deps/googletest-src/googletest/include/gtest/gtest-printers.h:
 
 /usr/include/c++/15.2.1/bits/postypes.h:
 
+/usr/include/c++/15.2.1/algorithm:
+
 /usr/include/c++/15.2.1/any:
 
 /usr/include/c++/15.2.1/format:
@@ -1178,10 +1202,6 @@ _deps/googletest-src/googletest/include/gtest/gtest-printers.h:
 /usr/include/semaphore.h:
 
 /usr/include/c++/15.2.1/bits/atomic_wait.h:
-
-/usr/include/c++/15.2.1/bits/exception_ptr.h:
-
-/usr/include/c++/15.2.1/bits/stl_multimap.h:
 
 /usr/include/c++/15.2.1/bits/basic_ios.tcc:
 
@@ -1324,5 +1344,3 @@ _deps/googletest-src/googletest/include/gtest/gtest.h:
 /usr/include/c++/15.2.1/bits/std_thread.h:
 
 /usr/include/c++/15.2.1/bits/stl_iterator_base_types.h:
-
-/usr/include/c++/15.2.1/bits/stl_multiset.h:

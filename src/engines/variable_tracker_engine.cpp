@@ -371,9 +371,17 @@ namespace engines {
                             }
 
                             TrackingState next_state; next_state.current_method = pool_string(target); next_state.depth = depth + 1; 
-                            next_state.active_regs = ((state.active_regs & (1ULL << call_bits[i])) || pc_tainted) ? (1ULL << (32 + i)) : 0;
-                            if (state.obj_taint_map.count(call_bits[i])) next_state.obj_taint_map[32 + i] = state.obj_taint_map[call_bits[i]];
-                            state.last_call_summary = track_recursive(ctx, next_state, events, config);
+                            
+                            // Nível 16: Se for reflexão ou código externo, aplicamos EPS/EES
+                            if (target.find("java/lang/reflect/Method;->invoke") != std::string::npos || target.find("DexClassLoader") != std::string::npos) {
+                                state.last_call_summary.return_tainted = true; // Assumimos incerteza (EIT)
+                                // Opaque Taint: Marcamos como influência externa
+                                events.push_back({method_name, line_idx, bit_to_reg_sv(call_bits[i]), "EES_OPAQUE_ENTRY", target, "EXTERNAL_PAYLOAD_SHADOWING"});
+                            } else {
+                                next_state.active_regs = ((state.active_regs & (1ULL << call_bits[i])) || pc_tainted) ? (1ULL << (32 + i)) : 0;
+                                if (state.obj_taint_map.count(call_bits[i])) next_state.obj_taint_map[32 + i] = state.obj_taint_map[call_bits[i]];
+                                state.last_call_summary = track_recursive(ctx, next_state, events, config);
+                            }
                         }
                     }
                 }
@@ -402,6 +410,23 @@ namespace engines {
 
     bool VariableTrackerEngine::supports_config(const SearchConfig& config) const {
         return !config.var_name.empty() || config.query.find(':') != std::string::npos;
+    }
+
+    PointsToSet VariableTrackerEngine::get_points_to_set(core::AnalysisContext&, std::string_view, uint32_t, uint32_t) {
+        return {};
+    }
+
+    std::vector<std::string> VariableTrackerEngine::devirtualize_call(core::AnalysisContext& ctx, const PointsToSet& receiver_aliases, std::string_view virtual_method_sig) {
+        // Nível 16: ReflectionResolver
+        if (virtual_method_sig.find("java/lang/reflect/Method;->invoke") != std::string_view::npos) {
+            // Se o receptor do invoke (v0) tem um alias que aponta para um nome de método resolvido
+            // Injetamos a aresta sintética (Reflect-Bridge)
+            // Por enquanto, retorna um marcador de reflexão opaca
+            return {"(REFLECTIVE_INVOKE_OPAQUE)"};
+        }
+
+        // Caso padrão: CHA guidada por Alias
+        return {std::string(virtual_method_sig)};
     }
 
 } // namespace engines

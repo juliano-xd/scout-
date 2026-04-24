@@ -177,6 +177,11 @@ target_link_libraries(test_variable_tracker PRIVATE scout_lib GTest::gtest_main)
 add_executable(test_variable_tracker_massive tests/test_variable_tracker_massive.cpp)
 target_link_libraries(test_variable_tracker_massive PRIVATE scout_lib GTest::gtest_main)
 
+add_executable(test_level16_forensics tests/test_level16_forensics.cpp)
+target_link_libraries(test_level16_forensics scout_lib GTest::gtest_main)
+add_test(NAME Level16ForensicsTest COMMAND test_level16_forensics)
+
 gtest_discover_tests(test_brain_massive)
 gtest_discover_tests(test_variable_tracker)
 gtest_discover_tests(test_variable_tracker_massive)
+gtest_discover_tests(test_level16_forensics)

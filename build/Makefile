@@ -562,6 +562,19 @@ test_variable_tracker_massive/fast:
 .PHONY : test_variable_tracker_massive/fast
 
 #=============================================================================
+# Target rules for targets named test_level16_forensics
+
+# Build rule for target.
+test_level16_forensics: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_level16_forensics
+.PHONY : test_level16_forensics
+
+# fast build rule for target.
+test_level16_forensics/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_level16_forensics.dir/build.make CMakeFiles/test_level16_forensics.dir/build
+.PHONY : test_level16_forensics/fast
+
+#=============================================================================
 # Target rules for targets named gmock
 
 # Build rule for target.
@@ -1263,6 +1276,30 @@ tests/test_filesystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_filesystem.dir/build.make CMakeFiles/test_filesystem.dir/tests/test_filesystem.cpp.s
 .PHONY : tests/test_filesystem.cpp.s
 
+tests/test_level16_forensics.o: tests/test_level16_forensics.cpp.o
+.PHONY : tests/test_level16_forensics.o
+
+# target to build an object file
+tests/test_level16_forensics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_level16_forensics.dir/build.make CMakeFiles/test_level16_forensics.dir/tests/test_level16_forensics.cpp.o
+.PHONY : tests/test_level16_forensics.cpp.o
+
+tests/test_level16_forensics.i: tests/test_level16_forensics.cpp.i
+.PHONY : tests/test_level16_forensics.i
+
+# target to preprocess a source file
+tests/test_level16_forensics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_level16_forensics.dir/build.make CMakeFiles/test_level16_forensics.dir/tests/test_level16_forensics.cpp.i
+.PHONY : tests/test_level16_forensics.cpp.i
+
+tests/test_level16_forensics.s: tests/test_level16_forensics.cpp.s
+.PHONY : tests/test_level16_forensics.s
+
+# target to generate assembly for a file
+tests/test_level16_forensics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_level16_forensics.dir/build.make CMakeFiles/test_level16_forensics.dir/tests/test_level16_forensics.cpp.s
+.PHONY : tests/test_level16_forensics.cpp.s
+
 tests/test_manifest_massive.o: tests/test_manifest_massive.cpp.o
 .PHONY : tests/test_manifest_massive.o
 
@@ -1680,6 +1717,7 @@ help:
 	@echo "... test_content_search_engine"
 	@echo "... test_deobf_massive"
 	@echo "... test_filesystem"
+	@echo "... test_level16_forensics"
 	@echo "... test_manifest_massive"
 	@echo "... test_new_engines"
 	@echo "... test_res_map_massive"
@@ -1774,6 +1812,9 @@ help:
 	@echo "... tests/test_filesystem.o"
 	@echo "... tests/test_filesystem.i"
 	@echo "... tests/test_filesystem.s"
+	@echo "... tests/test_level16_forensics.o"
+	@echo "... tests/test_level16_forensics.i"
+	@echo "... tests/test_level16_forensics.s"
 	@echo "... tests/test_manifest_massive.o"
 	@echo "... tests/test_manifest_massive.i"
 	@echo "... tests/test_manifest_massive.s"

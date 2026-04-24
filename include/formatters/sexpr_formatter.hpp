@@ -2,6 +2,7 @@
 
 #include "i_formatter.hpp"
 #include "utils/sexpr.hpp"
+#include "engines/variable_tracker_engine.hpp"
 
 namespace formatters {
 
@@ -55,5 +56,10 @@ namespace formatters {
             const Opts& opts
         ) const;
     };
+
+    /**
+     * @brief Função de conveniência para serializar eventos causais (Nível 16).
+     */
+    std::string format_causal_intent(const std::vector<engines::VariableEvent>& events);
 
 } // namespace formatters

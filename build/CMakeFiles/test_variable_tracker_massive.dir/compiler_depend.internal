@@ -154,6 +154,7 @@ CMakeFiles/test_variable_tracker_massive.dir/tests/test_variable_tracker_massive
  /usr/include/bits/wctype-wchar.h
  /usr/include/bits/wordsize.h
  /usr/include/bits/xopen_lim.h
+ /usr/include/c++/15.2.1/algorithm
  /usr/include/c++/15.2.1/any
  /usr/include/c++/15.2.1/array
  /usr/include/c++/15.2.1/atomic
@@ -230,6 +231,7 @@ CMakeFiles/test_variable_tracker_massive.dir/tests/test_variable_tracker_massive
  /usr/include/c++/15.2.1/bits/ptr_traits.h
  /usr/include/c++/15.2.1/bits/quoted_string.h
  /usr/include/c++/15.2.1/bits/range_access.h
+ /usr/include/c++/15.2.1/bits/ranges_algo.h
  /usr/include/c++/15.2.1/bits/ranges_algobase.h
  /usr/include/c++/15.2.1/bits/ranges_base.h
  /usr/include/c++/15.2.1/bits/ranges_cmp.h
@@ -335,6 +337,7 @@ CMakeFiles/test_variable_tracker_massive.dir/tests/test_variable_tracker_massive
  /usr/include/c++/15.2.1/optional
  /usr/include/c++/15.2.1/ostream
  /usr/include/c++/15.2.1/pstl/execution_defs.h
+ /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h
  /usr/include/c++/15.2.1/pstl/glue_memory_defs.h
  /usr/include/c++/15.2.1/pstl/pstl_config.h
  /usr/include/c++/15.2.1/ratio

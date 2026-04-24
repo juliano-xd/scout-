@@ -1,0 +1,27 @@
+{
+  "tests": 3,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "Level16ForensicsTest",
+      "tests": 3,
+      "testsuite": [
+        {
+          "name": "ReflectionDetectionTest",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_level16_forensics.cpp",
+          "line": 34
+        },
+        {
+          "name": "DexClassLoaderDetectionTest",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_level16_forensics.cpp",
+          "line": 66
+        },
+        {
+          "name": "CausalIntentSerializationTest",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_level16_forensics.cpp",
+          "line": 97
+        }
+      ]
+    }
+  ]
+}

@@ -303,6 +303,9 @@ CMakeFiles/test_variable_tracker.dir/tests/test_variable_tracker.cpp.o: \
  /home/trindade/Projetos/scout++/include/utils/sexpr.hpp \
  /usr/include/c++/15.2.1/unordered_set \
  /usr/include/c++/15.2.1/bits/unordered_set.h \
+ /usr/include/c++/15.2.1/algorithm \
+ /usr/include/c++/15.2.1/bits/ranges_algo.h \
+ /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h \
  /home/trindade/Projetos/scout++/include/core/analysis_context.hpp \
  /home/trindade/Projetos/scout++/include/utils/mmap_file.hpp \
  /usr/include/fcntl.h /usr/include/bits/fcntl.h \

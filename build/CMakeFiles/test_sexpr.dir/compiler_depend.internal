@@ -27,6 +27,7 @@ CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
  /home/trindade/Projetos/scout++/include/core/analysis_context.hpp
  /home/trindade/Projetos/scout++/include/engines/i_search_engine.hpp
  /home/trindade/Projetos/scout++/include/engines/register_engines.hpp
+ /home/trindade/Projetos/scout++/include/engines/variable_tracker_engine.hpp
  /home/trindade/Projetos/scout++/include/formatters/i_formatter.hpp
  /home/trindade/Projetos/scout++/include/formatters/sexpr_formatter.hpp
  /home/trindade/Projetos/scout++/include/utils/mmap_file.hpp
@@ -156,6 +157,7 @@ CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
  /usr/include/bits/wctype-wchar.h
  /usr/include/bits/wordsize.h
  /usr/include/bits/xopen_lim.h
+ /usr/include/c++/15.2.1/algorithm
  /usr/include/c++/15.2.1/any
  /usr/include/c++/15.2.1/array
  /usr/include/c++/15.2.1/atomic
@@ -231,6 +233,7 @@ CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
  /usr/include/c++/15.2.1/bits/ptr_traits.h
  /usr/include/c++/15.2.1/bits/quoted_string.h
  /usr/include/c++/15.2.1/bits/range_access.h
+ /usr/include/c++/15.2.1/bits/ranges_algo.h
  /usr/include/c++/15.2.1/bits/ranges_algobase.h
  /usr/include/c++/15.2.1/bits/ranges_base.h
  /usr/include/c++/15.2.1/bits/ranges_cmp.h
@@ -280,6 +283,7 @@ CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
  /usr/include/c++/15.2.1/bits/unique_lock.h
  /usr/include/c++/15.2.1/bits/unique_ptr.h
  /usr/include/c++/15.2.1/bits/unordered_map.h
+ /usr/include/c++/15.2.1/bits/unordered_set.h
  /usr/include/c++/15.2.1/bits/uses_allocator.h
  /usr/include/c++/15.2.1/bits/uses_allocator_args.h
  /usr/include/c++/15.2.1/bits/utility.h
@@ -334,6 +338,7 @@ CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
  /usr/include/c++/15.2.1/optional
  /usr/include/c++/15.2.1/ostream
  /usr/include/c++/15.2.1/pstl/execution_defs.h
+ /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h
  /usr/include/c++/15.2.1/pstl/glue_memory_defs.h
  /usr/include/c++/15.2.1/pstl/pstl_config.h
  /usr/include/c++/15.2.1/ratio
@@ -353,6 +358,7 @@ CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
  /usr/include/c++/15.2.1/type_traits
  /usr/include/c++/15.2.1/typeinfo
  /usr/include/c++/15.2.1/unordered_map
+ /usr/include/c++/15.2.1/unordered_set
  /usr/include/c++/15.2.1/utility
  /usr/include/c++/15.2.1/variant
  /usr/include/c++/15.2.1/vector
