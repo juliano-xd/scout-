@@ -56,6 +56,8 @@ namespace core {
         std::mutex mutex_;
 
         void initialize_smali_index() {
+            if (!std::filesystem::exists(root_dir_) || !std::filesystem::is_directory(root_dir_)) return;
+
             // Varredura inicial ultra-rápida apenas para mapear Lcom/X; -> path
             for (const auto& entry : std::filesystem::recursive_directory_iterator(root_dir_)) {
                 if (entry.is_regular_file() && entry.path().extension() == ".smali") {

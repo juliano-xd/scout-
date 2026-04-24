@@ -332,10 +332,10 @@ namespace engines {
         const SearchConfig& config
     ) {
         auto root_dir = ctx.root_dir();
-        // Sincronizar configurações internas com o config recebido
-        direction_ = config.direction;
-        include_system_ = config.include_system;
-        depth_ = config.search_depth;
+        // Sincronizar configurações internas com o config recebido (apenas se fornecidos)
+        if (config.direction != "both") direction_ = config.direction;
+        if (config.include_system) include_system_ = config.include_system;
+        if (config.search_depth > 1) depth_ = config.search_depth;
         if (!config.filter_opcodes.empty()) {
             filter_opcodes_ = config.filter_opcodes;
         }

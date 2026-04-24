@@ -43,20 +43,22 @@ namespace engines {
         res.engine_name = name();
         res.file_path = std::string(class_name);
         
-        auto root = sexpr::form("cfg-report");
+        auto root = sexpr::list();
+        root.push(sexpr::symbol("cfg-report"));
         root.kv("method", sexpr::string(std::string(config.query)));
         
         auto blocks_node = sexpr::list();
         for (const auto& b : cfg.blocks) {
-            auto b_node = sexpr::form("block");
-            b_node.kv("id", sexpr::integer(b.id));
+            auto b_node = sexpr::list();
+            b_node.push(sexpr::symbol("BB" + std::to_string(b.id)));
             auto succs = sexpr::list();
-            for (int s : b.successors) succs.push(sexpr::integer(s));
+            for (int s : b.successors) succs.push(sexpr::symbol("BB" + std::to_string(s)));
             b_node.kv("succ", succs);
             blocks_node.push(b_node);
         }
         root.kv("blocks", blocks_node);
-        res.context = root.to_string();
+        res.line_content = root.to_string(); 
+        res.context = res.line_content;
         results.push_back(std::move(res));
 
         auto end = std::chrono::high_resolution_clock::now();
