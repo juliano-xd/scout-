@@ -1,0 +1,87 @@
+{
+  "tests": 15,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "XrefSearchEngine",
+      "tests": 15,
+      "testsuite": [
+        {
+          "name": "ConstructorAndName",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 94
+        },
+        {
+          "name": "SupportsConfig",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 100
+        },
+        {
+          "name": "EmptyQueryReturnsEmpty",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 106
+        },
+        {
+          "name": "InvalidDirectoryReturnsEmpty",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 118
+        },
+        {
+          "name": "FindsCallers",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 127
+        },
+        {
+          "name": "FindsReferenceToClass",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 155
+        },
+        {
+          "name": "FilterSystemClassesByDefault",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 169
+        },
+        {
+          "name": "IncludesSystemClassesWhenEnabled",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 189
+        },
+        {
+          "name": "MaxResultsRespected",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 211
+        },
+        {
+          "name": "StatsAreUpdatedAfterSearch",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 226
+        },
+        {
+          "name": "ResultContextContainsBothClassAndMethod",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 245
+        },
+        {
+          "name": "DirectionCallersOnlyFindsCallers",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 264
+        },
+        {
+          "name": "EngineNameInResults",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 282
+        },
+        {
+          "name": "RegistryIntegration",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 297
+        },
+        {
+          "name": "FactoryFunction",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_search_engine.cpp",
+          "line": 304
+        }
+      ]
+    }
+  ]
+}

@@ -181,10 +181,8 @@ CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.o: \
  /usr/include/asm/unistd_64.h /usr/include/bits/syscall.h \
  /usr/include/c++/15.2.1/bits/std_mutex.h \
  /home/trindade/Projetos/scout++/include/core/scanner.hpp \
- /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \
- /usr/include/c++/15.2.1/stdexcept /usr/include/c++/15.2.1/filesystem \
- /usr/include/c++/15.2.1/bits/fs_fwd.h \
- /usr/include/c++/15.2.1/system_error \
+ /usr/include/c++/15.2.1/filesystem /usr/include/c++/15.2.1/bits/fs_fwd.h \
+ /usr/include/c++/15.2.1/system_error /usr/include/c++/15.2.1/stdexcept \
  /usr/include/c++/15.2.1/bits/chrono.h /usr/include/c++/15.2.1/ratio \
  /usr/include/c++/15.2.1/ctime \
  /usr/include/c++/15.2.1/bits/parse_numbers.h \
@@ -291,5 +289,22 @@ CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.o: \
  /usr/include/c++/15.2.1/pstl/glue_numeric_impl.h \
  /usr/include/c++/15.2.1/pstl/glue_memory_impl.h \
  /usr/include/c++/15.2.1/mutex /usr/include/c++/15.2.1/bits/unique_lock.h \
- /home/trindade/Projetos/scout++/include/analysis/xref.hpp \
- /home/trindade/Projetos/scout++/include/core/smali_parser.hpp
+ /home/trindade/Projetos/scout++/include/engines/content_search_engine.hpp \
+ /home/trindade/Projetos/scout++/include/engines/i_search_engine.hpp \
+ /usr/include/c++/15.2.1/chrono /usr/include/c++/15.2.1/bits/chrono_io.h \
+ /home/trindade/Projetos/scout++/include/utils/sexpr.hpp \
+ /home/trindade/Projetos/scout++/include/core/analysis_context.hpp \
+ /home/trindade/Projetos/scout++/include/utils/mmap_file.hpp \
+ /usr/include/fcntl.h /usr/include/bits/fcntl.h \
+ /usr/include/bits/fcntl-linux.h /usr/include/bits/types/struct_iovec.h \
+ /usr/include/linux/falloc.h /usr/include/linux/openat2.h \
+ /usr/include/bits/openat2.h /usr/include/bits/stat.h \
+ /usr/include/bits/struct_stat.h /usr/include/sys/mman.h \
+ /usr/include/bits/mman.h /usr/include/bits/mman-map-flags-generic.h \
+ /usr/include/bits/mman-linux.h /usr/include/bits/mman-shared.h \
+ /usr/include/bits/mman_ext.h /usr/include/sys/stat.h \
+ /usr/include/bits/statx.h /usr/include/linux/stat.h \
+ /usr/include/bits/statx-generic.h \
+ /usr/include/bits/types/struct_statx_timestamp.h \
+ /usr/include/bits/types/struct_statx.h \
+ /home/trindade/Projetos/scout++/include/engines/xref_search_engine.hpp

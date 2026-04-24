@@ -172,6 +172,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named scout_lib
+
+# Build rule for target.
+scout_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scout_lib
+.PHONY : scout_lib
+
+# fast build rule for target.
+scout_lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/build
+.PHONY : scout_lib/fast
+
+#=============================================================================
 # Target rules for targets named scout
 
 # Build rule for target.
@@ -196,19 +209,6 @@ test_filesystem: cmake_check_build_system
 test_filesystem/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_filesystem.dir/build.make CMakeFiles/test_filesystem.dir/build
 .PHONY : test_filesystem/fast
-
-#=============================================================================
-# Target rules for targets named test_sexpr
-
-# Build rule for target.
-test_sexpr: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sexpr
-.PHONY : test_sexpr
-
-# fast build rule for target.
-test_sexpr/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/build
-.PHONY : test_sexpr/fast
 
 #=============================================================================
 # Target rules for targets named test_cli_parser
@@ -263,6 +263,84 @@ test_xref/fast:
 .PHONY : test_xref/fast
 
 #=============================================================================
+# Target rules for targets named test_class_search_engine
+
+# Build rule for target.
+test_class_search_engine: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_class_search_engine
+.PHONY : test_class_search_engine
+
+# fast build rule for target.
+test_class_search_engine/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/build
+.PHONY : test_class_search_engine/fast
+
+#=============================================================================
+# Target rules for targets named test_content_search_engine
+
+# Build rule for target.
+test_content_search_engine: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_content_search_engine
+.PHONY : test_content_search_engine
+
+# fast build rule for target.
+test_content_search_engine/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/build
+.PHONY : test_content_search_engine/fast
+
+#=============================================================================
+# Target rules for targets named test_xref_search_engine
+
+# Build rule for target.
+test_xref_search_engine: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_xref_search_engine
+.PHONY : test_xref_search_engine
+
+# fast build rule for target.
+test_xref_search_engine/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/build
+.PHONY : test_xref_search_engine/fast
+
+#=============================================================================
+# Target rules for targets named test_xref_advanced
+
+# Build rule for target.
+test_xref_advanced: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_xref_advanced
+.PHONY : test_xref_advanced
+
+# fast build rule for target.
+test_xref_advanced/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/build
+.PHONY : test_xref_advanced/fast
+
+#=============================================================================
+# Target rules for targets named test_sexpr
+
+# Build rule for target.
+test_sexpr: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sexpr
+.PHONY : test_sexpr
+
+# fast build rule for target.
+test_sexpr/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/build
+.PHONY : test_sexpr/fast
+
+#=============================================================================
+# Target rules for targets named test_sexpr_edge
+
+# Build rule for target.
+test_sexpr_edge: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sexpr_edge
+.PHONY : test_sexpr_edge
+
+# fast build rule for target.
+test_sexpr_edge/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/build
+.PHONY : test_sexpr_edge/fast
+
+#=============================================================================
 # Target rules for targets named run_benchmarks
 
 # Build rule for target.
@@ -274,6 +352,214 @@ run_benchmarks: cmake_check_build_system
 run_benchmarks/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/build
 .PHONY : run_benchmarks/fast
+
+#=============================================================================
+# Target rules for targets named test_new_engines
+
+# Build rule for target.
+test_new_engines: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_new_engines
+.PHONY : test_new_engines
+
+# fast build rule for target.
+test_new_engines/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/build
+.PHONY : test_new_engines/fast
+
+#=============================================================================
+# Target rules for targets named test_manifest_massive
+
+# Build rule for target.
+test_manifest_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_manifest_massive
+.PHONY : test_manifest_massive
+
+# fast build rule for target.
+test_manifest_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/build
+.PHONY : test_manifest_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_class_inspector_massive
+
+# Build rule for target.
+test_class_inspector_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_class_inspector_massive
+.PHONY : test_class_inspector_massive
+
+# fast build rule for target.
+test_class_inspector_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/build
+.PHONY : test_class_inspector_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_deobf_massive
+
+# Build rule for target.
+test_deobf_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_deobf_massive
+.PHONY : test_deobf_massive
+
+# fast build rule for target.
+test_deobf_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/build
+.PHONY : test_deobf_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_xref_massive
+
+# Build rule for target.
+test_xref_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_xref_massive
+.PHONY : test_xref_massive
+
+# fast build rule for target.
+test_xref_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/build
+.PHONY : test_xref_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_ui_mapper_massive
+
+# Build rule for target.
+test_ui_mapper_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_ui_mapper_massive
+.PHONY : test_ui_mapper_massive
+
+# fast build rule for target.
+test_ui_mapper_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/build
+.PHONY : test_ui_mapper_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_search_massive
+
+# Build rule for target.
+test_search_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_search_massive
+.PHONY : test_search_massive
+
+# fast build rule for target.
+test_search_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/build
+.PHONY : test_search_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_res_map_massive
+
+# Build rule for target.
+test_res_map_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_res_map_massive
+.PHONY : test_res_map_massive
+
+# fast build rule for target.
+test_res_map_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/build
+.PHONY : test_res_map_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_cfg_massive
+
+# Build rule for target.
+test_cfg_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_cfg_massive
+.PHONY : test_cfg_massive
+
+# fast build rule for target.
+test_cfg_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/build
+.PHONY : test_cfg_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_sexpr_massive
+
+# Build rule for target.
+test_sexpr_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sexpr_massive
+.PHONY : test_sexpr_massive
+
+# fast build rule for target.
+test_sexpr_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/build
+.PHONY : test_sexpr_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_cli_massive
+
+# Build rule for target.
+test_cli_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_cli_massive
+.PHONY : test_cli_massive
+
+# fast build rule for target.
+test_cli_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/build
+.PHONY : test_cli_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_class_search_massive
+
+# Build rule for target.
+test_class_search_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_class_search_massive
+.PHONY : test_class_search_massive
+
+# fast build rule for target.
+test_class_search_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/build
+.PHONY : test_class_search_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_batch_massive
+
+# Build rule for target.
+test_batch_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_batch_massive
+.PHONY : test_batch_massive
+
+# fast build rule for target.
+test_batch_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/build
+.PHONY : test_batch_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_brain_massive
+
+# Build rule for target.
+test_brain_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_brain_massive
+.PHONY : test_brain_massive
+
+# fast build rule for target.
+test_brain_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/build
+.PHONY : test_brain_massive/fast
+
+#=============================================================================
+# Target rules for targets named test_variable_tracker
+
+# Build rule for target.
+test_variable_tracker: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_variable_tracker
+.PHONY : test_variable_tracker
+
+# fast build rule for target.
+test_variable_tracker/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/build
+.PHONY : test_variable_tracker/fast
+
+#=============================================================================
+# Target rules for targets named test_variable_tracker_massive
+
+# Build rule for target.
+test_variable_tracker_massive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_variable_tracker_massive
+.PHONY : test_variable_tracker_massive
+
+# fast build rule for target.
+test_variable_tracker_massive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/build
+.PHONY : test_variable_tracker_massive/fast
 
 #=============================================================================
 # Target rules for targets named gmock
@@ -353,6 +639,318 @@ benchmark_main/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build
 .PHONY : benchmark_main/fast
 
+src/engines/cfg_engine.o: src/engines/cfg_engine.cpp.o
+.PHONY : src/engines/cfg_engine.o
+
+# target to build an object file
+src/engines/cfg_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/cfg_engine.cpp.o
+.PHONY : src/engines/cfg_engine.cpp.o
+
+src/engines/cfg_engine.i: src/engines/cfg_engine.cpp.i
+.PHONY : src/engines/cfg_engine.i
+
+# target to preprocess a source file
+src/engines/cfg_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/cfg_engine.cpp.i
+.PHONY : src/engines/cfg_engine.cpp.i
+
+src/engines/cfg_engine.s: src/engines/cfg_engine.cpp.s
+.PHONY : src/engines/cfg_engine.s
+
+# target to generate assembly for a file
+src/engines/cfg_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/cfg_engine.cpp.s
+.PHONY : src/engines/cfg_engine.cpp.s
+
+src/engines/class_inspector_engine.o: src/engines/class_inspector_engine.cpp.o
+.PHONY : src/engines/class_inspector_engine.o
+
+# target to build an object file
+src/engines/class_inspector_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/class_inspector_engine.cpp.o
+.PHONY : src/engines/class_inspector_engine.cpp.o
+
+src/engines/class_inspector_engine.i: src/engines/class_inspector_engine.cpp.i
+.PHONY : src/engines/class_inspector_engine.i
+
+# target to preprocess a source file
+src/engines/class_inspector_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/class_inspector_engine.cpp.i
+.PHONY : src/engines/class_inspector_engine.cpp.i
+
+src/engines/class_inspector_engine.s: src/engines/class_inspector_engine.cpp.s
+.PHONY : src/engines/class_inspector_engine.s
+
+# target to generate assembly for a file
+src/engines/class_inspector_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/class_inspector_engine.cpp.s
+.PHONY : src/engines/class_inspector_engine.cpp.s
+
+src/engines/class_search_engine.o: src/engines/class_search_engine.cpp.o
+.PHONY : src/engines/class_search_engine.o
+
+# target to build an object file
+src/engines/class_search_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/class_search_engine.cpp.o
+.PHONY : src/engines/class_search_engine.cpp.o
+
+src/engines/class_search_engine.i: src/engines/class_search_engine.cpp.i
+.PHONY : src/engines/class_search_engine.i
+
+# target to preprocess a source file
+src/engines/class_search_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/class_search_engine.cpp.i
+.PHONY : src/engines/class_search_engine.cpp.i
+
+src/engines/class_search_engine.s: src/engines/class_search_engine.cpp.s
+.PHONY : src/engines/class_search_engine.s
+
+# target to generate assembly for a file
+src/engines/class_search_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/class_search_engine.cpp.s
+.PHONY : src/engines/class_search_engine.cpp.s
+
+src/engines/content_search_engine.o: src/engines/content_search_engine.cpp.o
+.PHONY : src/engines/content_search_engine.o
+
+# target to build an object file
+src/engines/content_search_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/content_search_engine.cpp.o
+.PHONY : src/engines/content_search_engine.cpp.o
+
+src/engines/content_search_engine.i: src/engines/content_search_engine.cpp.i
+.PHONY : src/engines/content_search_engine.i
+
+# target to preprocess a source file
+src/engines/content_search_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/content_search_engine.cpp.i
+.PHONY : src/engines/content_search_engine.cpp.i
+
+src/engines/content_search_engine.s: src/engines/content_search_engine.cpp.s
+.PHONY : src/engines/content_search_engine.s
+
+# target to generate assembly for a file
+src/engines/content_search_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/content_search_engine.cpp.s
+.PHONY : src/engines/content_search_engine.cpp.s
+
+src/engines/deobf_engine.o: src/engines/deobf_engine.cpp.o
+.PHONY : src/engines/deobf_engine.o
+
+# target to build an object file
+src/engines/deobf_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/deobf_engine.cpp.o
+.PHONY : src/engines/deobf_engine.cpp.o
+
+src/engines/deobf_engine.i: src/engines/deobf_engine.cpp.i
+.PHONY : src/engines/deobf_engine.i
+
+# target to preprocess a source file
+src/engines/deobf_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/deobf_engine.cpp.i
+.PHONY : src/engines/deobf_engine.cpp.i
+
+src/engines/deobf_engine.s: src/engines/deobf_engine.cpp.s
+.PHONY : src/engines/deobf_engine.s
+
+# target to generate assembly for a file
+src/engines/deobf_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/deobf_engine.cpp.s
+.PHONY : src/engines/deobf_engine.cpp.s
+
+src/engines/dominator_analyzer.o: src/engines/dominator_analyzer.cpp.o
+.PHONY : src/engines/dominator_analyzer.o
+
+# target to build an object file
+src/engines/dominator_analyzer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/dominator_analyzer.cpp.o
+.PHONY : src/engines/dominator_analyzer.cpp.o
+
+src/engines/dominator_analyzer.i: src/engines/dominator_analyzer.cpp.i
+.PHONY : src/engines/dominator_analyzer.i
+
+# target to preprocess a source file
+src/engines/dominator_analyzer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/dominator_analyzer.cpp.i
+.PHONY : src/engines/dominator_analyzer.cpp.i
+
+src/engines/dominator_analyzer.s: src/engines/dominator_analyzer.cpp.s
+.PHONY : src/engines/dominator_analyzer.s
+
+# target to generate assembly for a file
+src/engines/dominator_analyzer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/dominator_analyzer.cpp.s
+.PHONY : src/engines/dominator_analyzer.cpp.s
+
+src/engines/manifest_engine.o: src/engines/manifest_engine.cpp.o
+.PHONY : src/engines/manifest_engine.o
+
+# target to build an object file
+src/engines/manifest_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/manifest_engine.cpp.o
+.PHONY : src/engines/manifest_engine.cpp.o
+
+src/engines/manifest_engine.i: src/engines/manifest_engine.cpp.i
+.PHONY : src/engines/manifest_engine.i
+
+# target to preprocess a source file
+src/engines/manifest_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/manifest_engine.cpp.i
+.PHONY : src/engines/manifest_engine.cpp.i
+
+src/engines/manifest_engine.s: src/engines/manifest_engine.cpp.s
+.PHONY : src/engines/manifest_engine.s
+
+# target to generate assembly for a file
+src/engines/manifest_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/manifest_engine.cpp.s
+.PHONY : src/engines/manifest_engine.cpp.s
+
+src/engines/register_engines.o: src/engines/register_engines.cpp.o
+.PHONY : src/engines/register_engines.o
+
+# target to build an object file
+src/engines/register_engines.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/register_engines.cpp.o
+.PHONY : src/engines/register_engines.cpp.o
+
+src/engines/register_engines.i: src/engines/register_engines.cpp.i
+.PHONY : src/engines/register_engines.i
+
+# target to preprocess a source file
+src/engines/register_engines.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/register_engines.cpp.i
+.PHONY : src/engines/register_engines.cpp.i
+
+src/engines/register_engines.s: src/engines/register_engines.cpp.s
+.PHONY : src/engines/register_engines.s
+
+# target to generate assembly for a file
+src/engines/register_engines.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/register_engines.cpp.s
+.PHONY : src/engines/register_engines.cpp.s
+
+src/engines/resource_mapping_engine.o: src/engines/resource_mapping_engine.cpp.o
+.PHONY : src/engines/resource_mapping_engine.o
+
+# target to build an object file
+src/engines/resource_mapping_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/resource_mapping_engine.cpp.o
+.PHONY : src/engines/resource_mapping_engine.cpp.o
+
+src/engines/resource_mapping_engine.i: src/engines/resource_mapping_engine.cpp.i
+.PHONY : src/engines/resource_mapping_engine.i
+
+# target to preprocess a source file
+src/engines/resource_mapping_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/resource_mapping_engine.cpp.i
+.PHONY : src/engines/resource_mapping_engine.cpp.i
+
+src/engines/resource_mapping_engine.s: src/engines/resource_mapping_engine.cpp.s
+.PHONY : src/engines/resource_mapping_engine.s
+
+# target to generate assembly for a file
+src/engines/resource_mapping_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/resource_mapping_engine.cpp.s
+.PHONY : src/engines/resource_mapping_engine.cpp.s
+
+src/engines/ui_mapper_engine.o: src/engines/ui_mapper_engine.cpp.o
+.PHONY : src/engines/ui_mapper_engine.o
+
+# target to build an object file
+src/engines/ui_mapper_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/ui_mapper_engine.cpp.o
+.PHONY : src/engines/ui_mapper_engine.cpp.o
+
+src/engines/ui_mapper_engine.i: src/engines/ui_mapper_engine.cpp.i
+.PHONY : src/engines/ui_mapper_engine.i
+
+# target to preprocess a source file
+src/engines/ui_mapper_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/ui_mapper_engine.cpp.i
+.PHONY : src/engines/ui_mapper_engine.cpp.i
+
+src/engines/ui_mapper_engine.s: src/engines/ui_mapper_engine.cpp.s
+.PHONY : src/engines/ui_mapper_engine.s
+
+# target to generate assembly for a file
+src/engines/ui_mapper_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/ui_mapper_engine.cpp.s
+.PHONY : src/engines/ui_mapper_engine.cpp.s
+
+src/engines/variable_tracker_engine.o: src/engines/variable_tracker_engine.cpp.o
+.PHONY : src/engines/variable_tracker_engine.o
+
+# target to build an object file
+src/engines/variable_tracker_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/variable_tracker_engine.cpp.o
+.PHONY : src/engines/variable_tracker_engine.cpp.o
+
+src/engines/variable_tracker_engine.i: src/engines/variable_tracker_engine.cpp.i
+.PHONY : src/engines/variable_tracker_engine.i
+
+# target to preprocess a source file
+src/engines/variable_tracker_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/variable_tracker_engine.cpp.i
+.PHONY : src/engines/variable_tracker_engine.cpp.i
+
+src/engines/variable_tracker_engine.s: src/engines/variable_tracker_engine.cpp.s
+.PHONY : src/engines/variable_tracker_engine.s
+
+# target to generate assembly for a file
+src/engines/variable_tracker_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/variable_tracker_engine.cpp.s
+.PHONY : src/engines/variable_tracker_engine.cpp.s
+
+src/engines/xref_search_engine.o: src/engines/xref_search_engine.cpp.o
+.PHONY : src/engines/xref_search_engine.o
+
+# target to build an object file
+src/engines/xref_search_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/xref_search_engine.cpp.o
+.PHONY : src/engines/xref_search_engine.cpp.o
+
+src/engines/xref_search_engine.i: src/engines/xref_search_engine.cpp.i
+.PHONY : src/engines/xref_search_engine.i
+
+# target to preprocess a source file
+src/engines/xref_search_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/xref_search_engine.cpp.i
+.PHONY : src/engines/xref_search_engine.cpp.i
+
+src/engines/xref_search_engine.s: src/engines/xref_search_engine.cpp.s
+.PHONY : src/engines/xref_search_engine.s
+
+# target to generate assembly for a file
+src/engines/xref_search_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/engines/xref_search_engine.cpp.s
+.PHONY : src/engines/xref_search_engine.cpp.s
+
+src/formatters/sexpr_formatter.o: src/formatters/sexpr_formatter.cpp.o
+.PHONY : src/formatters/sexpr_formatter.o
+
+# target to build an object file
+src/formatters/sexpr_formatter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/formatters/sexpr_formatter.cpp.o
+.PHONY : src/formatters/sexpr_formatter.cpp.o
+
+src/formatters/sexpr_formatter.i: src/formatters/sexpr_formatter.cpp.i
+.PHONY : src/formatters/sexpr_formatter.i
+
+# target to preprocess a source file
+src/formatters/sexpr_formatter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/formatters/sexpr_formatter.cpp.i
+.PHONY : src/formatters/sexpr_formatter.cpp.i
+
+src/formatters/sexpr_formatter.s: src/formatters/sexpr_formatter.cpp.s
+.PHONY : src/formatters/sexpr_formatter.s
+
+# target to generate assembly for a file
+src/formatters/sexpr_formatter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/src/formatters/sexpr_formatter.cpp.s
+.PHONY : src/formatters/sexpr_formatter.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -401,6 +999,174 @@ tests/benchmark.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.s
 .PHONY : tests/benchmark.cpp.s
 
+tests/test_batch_massive.o: tests/test_batch_massive.cpp.o
+.PHONY : tests/test_batch_massive.o
+
+# target to build an object file
+tests/test_batch_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/tests/test_batch_massive.cpp.o
+.PHONY : tests/test_batch_massive.cpp.o
+
+tests/test_batch_massive.i: tests/test_batch_massive.cpp.i
+.PHONY : tests/test_batch_massive.i
+
+# target to preprocess a source file
+tests/test_batch_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/tests/test_batch_massive.cpp.i
+.PHONY : tests/test_batch_massive.cpp.i
+
+tests/test_batch_massive.s: tests/test_batch_massive.cpp.s
+.PHONY : tests/test_batch_massive.s
+
+# target to generate assembly for a file
+tests/test_batch_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/tests/test_batch_massive.cpp.s
+.PHONY : tests/test_batch_massive.cpp.s
+
+tests/test_brain_massive.o: tests/test_brain_massive.cpp.o
+.PHONY : tests/test_brain_massive.o
+
+# target to build an object file
+tests/test_brain_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/tests/test_brain_massive.cpp.o
+.PHONY : tests/test_brain_massive.cpp.o
+
+tests/test_brain_massive.i: tests/test_brain_massive.cpp.i
+.PHONY : tests/test_brain_massive.i
+
+# target to preprocess a source file
+tests/test_brain_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/tests/test_brain_massive.cpp.i
+.PHONY : tests/test_brain_massive.cpp.i
+
+tests/test_brain_massive.s: tests/test_brain_massive.cpp.s
+.PHONY : tests/test_brain_massive.s
+
+# target to generate assembly for a file
+tests/test_brain_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/tests/test_brain_massive.cpp.s
+.PHONY : tests/test_brain_massive.cpp.s
+
+tests/test_cfg_massive.o: tests/test_cfg_massive.cpp.o
+.PHONY : tests/test_cfg_massive.o
+
+# target to build an object file
+tests/test_cfg_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/tests/test_cfg_massive.cpp.o
+.PHONY : tests/test_cfg_massive.cpp.o
+
+tests/test_cfg_massive.i: tests/test_cfg_massive.cpp.i
+.PHONY : tests/test_cfg_massive.i
+
+# target to preprocess a source file
+tests/test_cfg_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/tests/test_cfg_massive.cpp.i
+.PHONY : tests/test_cfg_massive.cpp.i
+
+tests/test_cfg_massive.s: tests/test_cfg_massive.cpp.s
+.PHONY : tests/test_cfg_massive.s
+
+# target to generate assembly for a file
+tests/test_cfg_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/tests/test_cfg_massive.cpp.s
+.PHONY : tests/test_cfg_massive.cpp.s
+
+tests/test_class_inspector_massive.o: tests/test_class_inspector_massive.cpp.o
+.PHONY : tests/test_class_inspector_massive.o
+
+# target to build an object file
+tests/test_class_inspector_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/tests/test_class_inspector_massive.cpp.o
+.PHONY : tests/test_class_inspector_massive.cpp.o
+
+tests/test_class_inspector_massive.i: tests/test_class_inspector_massive.cpp.i
+.PHONY : tests/test_class_inspector_massive.i
+
+# target to preprocess a source file
+tests/test_class_inspector_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/tests/test_class_inspector_massive.cpp.i
+.PHONY : tests/test_class_inspector_massive.cpp.i
+
+tests/test_class_inspector_massive.s: tests/test_class_inspector_massive.cpp.s
+.PHONY : tests/test_class_inspector_massive.s
+
+# target to generate assembly for a file
+tests/test_class_inspector_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/tests/test_class_inspector_massive.cpp.s
+.PHONY : tests/test_class_inspector_massive.cpp.s
+
+tests/test_class_search_engine.o: tests/test_class_search_engine.cpp.o
+.PHONY : tests/test_class_search_engine.o
+
+# target to build an object file
+tests/test_class_search_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/tests/test_class_search_engine.cpp.o
+.PHONY : tests/test_class_search_engine.cpp.o
+
+tests/test_class_search_engine.i: tests/test_class_search_engine.cpp.i
+.PHONY : tests/test_class_search_engine.i
+
+# target to preprocess a source file
+tests/test_class_search_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/tests/test_class_search_engine.cpp.i
+.PHONY : tests/test_class_search_engine.cpp.i
+
+tests/test_class_search_engine.s: tests/test_class_search_engine.cpp.s
+.PHONY : tests/test_class_search_engine.s
+
+# target to generate assembly for a file
+tests/test_class_search_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/tests/test_class_search_engine.cpp.s
+.PHONY : tests/test_class_search_engine.cpp.s
+
+tests/test_class_search_massive.o: tests/test_class_search_massive.cpp.o
+.PHONY : tests/test_class_search_massive.o
+
+# target to build an object file
+tests/test_class_search_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/tests/test_class_search_massive.cpp.o
+.PHONY : tests/test_class_search_massive.cpp.o
+
+tests/test_class_search_massive.i: tests/test_class_search_massive.cpp.i
+.PHONY : tests/test_class_search_massive.i
+
+# target to preprocess a source file
+tests/test_class_search_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/tests/test_class_search_massive.cpp.i
+.PHONY : tests/test_class_search_massive.cpp.i
+
+tests/test_class_search_massive.s: tests/test_class_search_massive.cpp.s
+.PHONY : tests/test_class_search_massive.s
+
+# target to generate assembly for a file
+tests/test_class_search_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/tests/test_class_search_massive.cpp.s
+.PHONY : tests/test_class_search_massive.cpp.s
+
+tests/test_cli_massive.o: tests/test_cli_massive.cpp.o
+.PHONY : tests/test_cli_massive.o
+
+# target to build an object file
+tests/test_cli_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/tests/test_cli_massive.cpp.o
+.PHONY : tests/test_cli_massive.cpp.o
+
+tests/test_cli_massive.i: tests/test_cli_massive.cpp.i
+.PHONY : tests/test_cli_massive.i
+
+# target to preprocess a source file
+tests/test_cli_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/tests/test_cli_massive.cpp.i
+.PHONY : tests/test_cli_massive.cpp.i
+
+tests/test_cli_massive.s: tests/test_cli_massive.cpp.s
+.PHONY : tests/test_cli_massive.s
+
+# target to generate assembly for a file
+tests/test_cli_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/tests/test_cli_massive.cpp.s
+.PHONY : tests/test_cli_massive.cpp.s
+
 tests/test_cli_parser.o: tests/test_cli_parser.cpp.o
 .PHONY : tests/test_cli_parser.o
 
@@ -424,6 +1190,54 @@ tests/test_cli_parser.s: tests/test_cli_parser.cpp.s
 tests/test_cli_parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_parser.dir/build.make CMakeFiles/test_cli_parser.dir/tests/test_cli_parser.cpp.s
 .PHONY : tests/test_cli_parser.cpp.s
+
+tests/test_content_search_engine.o: tests/test_content_search_engine.cpp.o
+.PHONY : tests/test_content_search_engine.o
+
+# target to build an object file
+tests/test_content_search_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/tests/test_content_search_engine.cpp.o
+.PHONY : tests/test_content_search_engine.cpp.o
+
+tests/test_content_search_engine.i: tests/test_content_search_engine.cpp.i
+.PHONY : tests/test_content_search_engine.i
+
+# target to preprocess a source file
+tests/test_content_search_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/tests/test_content_search_engine.cpp.i
+.PHONY : tests/test_content_search_engine.cpp.i
+
+tests/test_content_search_engine.s: tests/test_content_search_engine.cpp.s
+.PHONY : tests/test_content_search_engine.s
+
+# target to generate assembly for a file
+tests/test_content_search_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/tests/test_content_search_engine.cpp.s
+.PHONY : tests/test_content_search_engine.cpp.s
+
+tests/test_deobf_massive.o: tests/test_deobf_massive.cpp.o
+.PHONY : tests/test_deobf_massive.o
+
+# target to build an object file
+tests/test_deobf_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/tests/test_deobf_massive.cpp.o
+.PHONY : tests/test_deobf_massive.cpp.o
+
+tests/test_deobf_massive.i: tests/test_deobf_massive.cpp.i
+.PHONY : tests/test_deobf_massive.i
+
+# target to preprocess a source file
+tests/test_deobf_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/tests/test_deobf_massive.cpp.i
+.PHONY : tests/test_deobf_massive.cpp.i
+
+tests/test_deobf_massive.s: tests/test_deobf_massive.cpp.s
+.PHONY : tests/test_deobf_massive.s
+
+# target to generate assembly for a file
+tests/test_deobf_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/tests/test_deobf_massive.cpp.s
+.PHONY : tests/test_deobf_massive.cpp.s
 
 tests/test_filesystem.o: tests/test_filesystem.cpp.o
 .PHONY : tests/test_filesystem.o
@@ -449,6 +1263,78 @@ tests/test_filesystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_filesystem.dir/build.make CMakeFiles/test_filesystem.dir/tests/test_filesystem.cpp.s
 .PHONY : tests/test_filesystem.cpp.s
 
+tests/test_manifest_massive.o: tests/test_manifest_massive.cpp.o
+.PHONY : tests/test_manifest_massive.o
+
+# target to build an object file
+tests/test_manifest_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/tests/test_manifest_massive.cpp.o
+.PHONY : tests/test_manifest_massive.cpp.o
+
+tests/test_manifest_massive.i: tests/test_manifest_massive.cpp.i
+.PHONY : tests/test_manifest_massive.i
+
+# target to preprocess a source file
+tests/test_manifest_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/tests/test_manifest_massive.cpp.i
+.PHONY : tests/test_manifest_massive.cpp.i
+
+tests/test_manifest_massive.s: tests/test_manifest_massive.cpp.s
+.PHONY : tests/test_manifest_massive.s
+
+# target to generate assembly for a file
+tests/test_manifest_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/tests/test_manifest_massive.cpp.s
+.PHONY : tests/test_manifest_massive.cpp.s
+
+tests/test_new_engines.o: tests/test_new_engines.cpp.o
+.PHONY : tests/test_new_engines.o
+
+# target to build an object file
+tests/test_new_engines.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/tests/test_new_engines.cpp.o
+.PHONY : tests/test_new_engines.cpp.o
+
+tests/test_new_engines.i: tests/test_new_engines.cpp.i
+.PHONY : tests/test_new_engines.i
+
+# target to preprocess a source file
+tests/test_new_engines.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/tests/test_new_engines.cpp.i
+.PHONY : tests/test_new_engines.cpp.i
+
+tests/test_new_engines.s: tests/test_new_engines.cpp.s
+.PHONY : tests/test_new_engines.s
+
+# target to generate assembly for a file
+tests/test_new_engines.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/tests/test_new_engines.cpp.s
+.PHONY : tests/test_new_engines.cpp.s
+
+tests/test_res_map_massive.o: tests/test_res_map_massive.cpp.o
+.PHONY : tests/test_res_map_massive.o
+
+# target to build an object file
+tests/test_res_map_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/tests/test_res_map_massive.cpp.o
+.PHONY : tests/test_res_map_massive.cpp.o
+
+tests/test_res_map_massive.i: tests/test_res_map_massive.cpp.i
+.PHONY : tests/test_res_map_massive.i
+
+# target to preprocess a source file
+tests/test_res_map_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/tests/test_res_map_massive.cpp.i
+.PHONY : tests/test_res_map_massive.cpp.i
+
+tests/test_res_map_massive.s: tests/test_res_map_massive.cpp.s
+.PHONY : tests/test_res_map_massive.s
+
+# target to generate assembly for a file
+tests/test_res_map_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/tests/test_res_map_massive.cpp.s
+.PHONY : tests/test_res_map_massive.cpp.s
+
 tests/test_scanner.o: tests/test_scanner.cpp.o
 .PHONY : tests/test_scanner.o
 
@@ -472,6 +1358,30 @@ tests/test_scanner.s: tests/test_scanner.cpp.s
 tests/test_scanner.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scanner.dir/build.make CMakeFiles/test_scanner.dir/tests/test_scanner.cpp.s
 .PHONY : tests/test_scanner.cpp.s
+
+tests/test_search_massive.o: tests/test_search_massive.cpp.o
+.PHONY : tests/test_search_massive.o
+
+# target to build an object file
+tests/test_search_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/tests/test_search_massive.cpp.o
+.PHONY : tests/test_search_massive.cpp.o
+
+tests/test_search_massive.i: tests/test_search_massive.cpp.i
+.PHONY : tests/test_search_massive.i
+
+# target to preprocess a source file
+tests/test_search_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/tests/test_search_massive.cpp.i
+.PHONY : tests/test_search_massive.cpp.i
+
+tests/test_search_massive.s: tests/test_search_massive.cpp.s
+.PHONY : tests/test_search_massive.s
+
+# target to generate assembly for a file
+tests/test_search_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/tests/test_search_massive.cpp.s
+.PHONY : tests/test_search_massive.cpp.s
 
 tests/test_sexpr.o: tests/test_sexpr.cpp.o
 .PHONY : tests/test_sexpr.o
@@ -497,6 +1407,54 @@ tests/test_sexpr.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.s
 .PHONY : tests/test_sexpr.cpp.s
 
+tests/test_sexpr_edge.o: tests/test_sexpr_edge.cpp.o
+.PHONY : tests/test_sexpr_edge.o
+
+# target to build an object file
+tests/test_sexpr_edge.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.o
+.PHONY : tests/test_sexpr_edge.cpp.o
+
+tests/test_sexpr_edge.i: tests/test_sexpr_edge.cpp.i
+.PHONY : tests/test_sexpr_edge.i
+
+# target to preprocess a source file
+tests/test_sexpr_edge.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.i
+.PHONY : tests/test_sexpr_edge.cpp.i
+
+tests/test_sexpr_edge.s: tests/test_sexpr_edge.cpp.s
+.PHONY : tests/test_sexpr_edge.s
+
+# target to generate assembly for a file
+tests/test_sexpr_edge.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/tests/test_sexpr_edge.cpp.s
+.PHONY : tests/test_sexpr_edge.cpp.s
+
+tests/test_sexpr_massive.o: tests/test_sexpr_massive.cpp.o
+.PHONY : tests/test_sexpr_massive.o
+
+# target to build an object file
+tests/test_sexpr_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/tests/test_sexpr_massive.cpp.o
+.PHONY : tests/test_sexpr_massive.cpp.o
+
+tests/test_sexpr_massive.i: tests/test_sexpr_massive.cpp.i
+.PHONY : tests/test_sexpr_massive.i
+
+# target to preprocess a source file
+tests/test_sexpr_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/tests/test_sexpr_massive.cpp.i
+.PHONY : tests/test_sexpr_massive.cpp.i
+
+tests/test_sexpr_massive.s: tests/test_sexpr_massive.cpp.s
+.PHONY : tests/test_sexpr_massive.s
+
+# target to generate assembly for a file
+tests/test_sexpr_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/tests/test_sexpr_massive.cpp.s
+.PHONY : tests/test_sexpr_massive.cpp.s
+
 tests/test_smali_parser.o: tests/test_smali_parser.cpp.o
 .PHONY : tests/test_smali_parser.o
 
@@ -520,6 +1478,78 @@ tests/test_smali_parser.s: tests/test_smali_parser.cpp.s
 tests/test_smali_parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_smali_parser.dir/build.make CMakeFiles/test_smali_parser.dir/tests/test_smali_parser.cpp.s
 .PHONY : tests/test_smali_parser.cpp.s
+
+tests/test_ui_mapper_massive.o: tests/test_ui_mapper_massive.cpp.o
+.PHONY : tests/test_ui_mapper_massive.o
+
+# target to build an object file
+tests/test_ui_mapper_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/tests/test_ui_mapper_massive.cpp.o
+.PHONY : tests/test_ui_mapper_massive.cpp.o
+
+tests/test_ui_mapper_massive.i: tests/test_ui_mapper_massive.cpp.i
+.PHONY : tests/test_ui_mapper_massive.i
+
+# target to preprocess a source file
+tests/test_ui_mapper_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/tests/test_ui_mapper_massive.cpp.i
+.PHONY : tests/test_ui_mapper_massive.cpp.i
+
+tests/test_ui_mapper_massive.s: tests/test_ui_mapper_massive.cpp.s
+.PHONY : tests/test_ui_mapper_massive.s
+
+# target to generate assembly for a file
+tests/test_ui_mapper_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/tests/test_ui_mapper_massive.cpp.s
+.PHONY : tests/test_ui_mapper_massive.cpp.s
+
+tests/test_variable_tracker.o: tests/test_variable_tracker.cpp.o
+.PHONY : tests/test_variable_tracker.o
+
+# target to build an object file
+tests/test_variable_tracker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/tests/test_variable_tracker.cpp.o
+.PHONY : tests/test_variable_tracker.cpp.o
+
+tests/test_variable_tracker.i: tests/test_variable_tracker.cpp.i
+.PHONY : tests/test_variable_tracker.i
+
+# target to preprocess a source file
+tests/test_variable_tracker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/tests/test_variable_tracker.cpp.i
+.PHONY : tests/test_variable_tracker.cpp.i
+
+tests/test_variable_tracker.s: tests/test_variable_tracker.cpp.s
+.PHONY : tests/test_variable_tracker.s
+
+# target to generate assembly for a file
+tests/test_variable_tracker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/tests/test_variable_tracker.cpp.s
+.PHONY : tests/test_variable_tracker.cpp.s
+
+tests/test_variable_tracker_massive.o: tests/test_variable_tracker_massive.cpp.o
+.PHONY : tests/test_variable_tracker_massive.o
+
+# target to build an object file
+tests/test_variable_tracker_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/tests/test_variable_tracker_massive.cpp.o
+.PHONY : tests/test_variable_tracker_massive.cpp.o
+
+tests/test_variable_tracker_massive.i: tests/test_variable_tracker_massive.cpp.i
+.PHONY : tests/test_variable_tracker_massive.i
+
+# target to preprocess a source file
+tests/test_variable_tracker_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/tests/test_variable_tracker_massive.cpp.i
+.PHONY : tests/test_variable_tracker_massive.cpp.i
+
+tests/test_variable_tracker_massive.s: tests/test_variable_tracker_massive.cpp.s
+.PHONY : tests/test_variable_tracker_massive.s
+
+# target to generate assembly for a file
+tests/test_variable_tracker_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/tests/test_variable_tracker_massive.cpp.s
+.PHONY : tests/test_variable_tracker_massive.cpp.s
 
 tests/test_xref.o: tests/test_xref.cpp.o
 .PHONY : tests/test_xref.o
@@ -545,6 +1575,78 @@ tests/test_xref.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref.dir/build.make CMakeFiles/test_xref.dir/tests/test_xref.cpp.s
 .PHONY : tests/test_xref.cpp.s
 
+tests/test_xref_advanced.o: tests/test_xref_advanced.cpp.o
+.PHONY : tests/test_xref_advanced.o
+
+# target to build an object file
+tests/test_xref_advanced.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/tests/test_xref_advanced.cpp.o
+.PHONY : tests/test_xref_advanced.cpp.o
+
+tests/test_xref_advanced.i: tests/test_xref_advanced.cpp.i
+.PHONY : tests/test_xref_advanced.i
+
+# target to preprocess a source file
+tests/test_xref_advanced.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/tests/test_xref_advanced.cpp.i
+.PHONY : tests/test_xref_advanced.cpp.i
+
+tests/test_xref_advanced.s: tests/test_xref_advanced.cpp.s
+.PHONY : tests/test_xref_advanced.s
+
+# target to generate assembly for a file
+tests/test_xref_advanced.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/tests/test_xref_advanced.cpp.s
+.PHONY : tests/test_xref_advanced.cpp.s
+
+tests/test_xref_massive.o: tests/test_xref_massive.cpp.o
+.PHONY : tests/test_xref_massive.o
+
+# target to build an object file
+tests/test_xref_massive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/tests/test_xref_massive.cpp.o
+.PHONY : tests/test_xref_massive.cpp.o
+
+tests/test_xref_massive.i: tests/test_xref_massive.cpp.i
+.PHONY : tests/test_xref_massive.i
+
+# target to preprocess a source file
+tests/test_xref_massive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/tests/test_xref_massive.cpp.i
+.PHONY : tests/test_xref_massive.cpp.i
+
+tests/test_xref_massive.s: tests/test_xref_massive.cpp.s
+.PHONY : tests/test_xref_massive.s
+
+# target to generate assembly for a file
+tests/test_xref_massive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/tests/test_xref_massive.cpp.s
+.PHONY : tests/test_xref_massive.cpp.s
+
+tests/test_xref_search_engine.o: tests/test_xref_search_engine.cpp.o
+.PHONY : tests/test_xref_search_engine.o
+
+# target to build an object file
+tests/test_xref_search_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/tests/test_xref_search_engine.cpp.o
+.PHONY : tests/test_xref_search_engine.cpp.o
+
+tests/test_xref_search_engine.i: tests/test_xref_search_engine.cpp.i
+.PHONY : tests/test_xref_search_engine.i
+
+# target to preprocess a source file
+tests/test_xref_search_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/tests/test_xref_search_engine.cpp.i
+.PHONY : tests/test_xref_search_engine.cpp.i
+
+tests/test_xref_search_engine.s: tests/test_xref_search_engine.cpp.s
+.PHONY : tests/test_xref_search_engine.s
+
+# target to generate assembly for a file
+tests/test_xref_search_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/tests/test_xref_search_engine.cpp.s
+.PHONY : tests/test_xref_search_engine.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -566,36 +1668,160 @@ help:
 	@echo "... gtest_main"
 	@echo "... run_benchmarks"
 	@echo "... scout"
+	@echo "... scout_lib"
+	@echo "... test_batch_massive"
+	@echo "... test_brain_massive"
+	@echo "... test_cfg_massive"
+	@echo "... test_class_inspector_massive"
+	@echo "... test_class_search_engine"
+	@echo "... test_class_search_massive"
+	@echo "... test_cli_massive"
 	@echo "... test_cli_parser"
+	@echo "... test_content_search_engine"
+	@echo "... test_deobf_massive"
 	@echo "... test_filesystem"
+	@echo "... test_manifest_massive"
+	@echo "... test_new_engines"
+	@echo "... test_res_map_massive"
 	@echo "... test_scanner"
+	@echo "... test_search_massive"
 	@echo "... test_sexpr"
+	@echo "... test_sexpr_edge"
+	@echo "... test_sexpr_massive"
 	@echo "... test_smali_parser"
+	@echo "... test_ui_mapper_massive"
+	@echo "... test_variable_tracker"
+	@echo "... test_variable_tracker_massive"
 	@echo "... test_xref"
+	@echo "... test_xref_advanced"
+	@echo "... test_xref_massive"
+	@echo "... test_xref_search_engine"
+	@echo "... src/engines/cfg_engine.o"
+	@echo "... src/engines/cfg_engine.i"
+	@echo "... src/engines/cfg_engine.s"
+	@echo "... src/engines/class_inspector_engine.o"
+	@echo "... src/engines/class_inspector_engine.i"
+	@echo "... src/engines/class_inspector_engine.s"
+	@echo "... src/engines/class_search_engine.o"
+	@echo "... src/engines/class_search_engine.i"
+	@echo "... src/engines/class_search_engine.s"
+	@echo "... src/engines/content_search_engine.o"
+	@echo "... src/engines/content_search_engine.i"
+	@echo "... src/engines/content_search_engine.s"
+	@echo "... src/engines/deobf_engine.o"
+	@echo "... src/engines/deobf_engine.i"
+	@echo "... src/engines/deobf_engine.s"
+	@echo "... src/engines/dominator_analyzer.o"
+	@echo "... src/engines/dominator_analyzer.i"
+	@echo "... src/engines/dominator_analyzer.s"
+	@echo "... src/engines/manifest_engine.o"
+	@echo "... src/engines/manifest_engine.i"
+	@echo "... src/engines/manifest_engine.s"
+	@echo "... src/engines/register_engines.o"
+	@echo "... src/engines/register_engines.i"
+	@echo "... src/engines/register_engines.s"
+	@echo "... src/engines/resource_mapping_engine.o"
+	@echo "... src/engines/resource_mapping_engine.i"
+	@echo "... src/engines/resource_mapping_engine.s"
+	@echo "... src/engines/ui_mapper_engine.o"
+	@echo "... src/engines/ui_mapper_engine.i"
+	@echo "... src/engines/ui_mapper_engine.s"
+	@echo "... src/engines/variable_tracker_engine.o"
+	@echo "... src/engines/variable_tracker_engine.i"
+	@echo "... src/engines/variable_tracker_engine.s"
+	@echo "... src/engines/xref_search_engine.o"
+	@echo "... src/engines/xref_search_engine.i"
+	@echo "... src/engines/xref_search_engine.s"
+	@echo "... src/formatters/sexpr_formatter.o"
+	@echo "... src/formatters/sexpr_formatter.i"
+	@echo "... src/formatters/sexpr_formatter.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
 	@echo "... tests/benchmark.o"
 	@echo "... tests/benchmark.i"
 	@echo "... tests/benchmark.s"
+	@echo "... tests/test_batch_massive.o"
+	@echo "... tests/test_batch_massive.i"
+	@echo "... tests/test_batch_massive.s"
+	@echo "... tests/test_brain_massive.o"
+	@echo "... tests/test_brain_massive.i"
+	@echo "... tests/test_brain_massive.s"
+	@echo "... tests/test_cfg_massive.o"
+	@echo "... tests/test_cfg_massive.i"
+	@echo "... tests/test_cfg_massive.s"
+	@echo "... tests/test_class_inspector_massive.o"
+	@echo "... tests/test_class_inspector_massive.i"
+	@echo "... tests/test_class_inspector_massive.s"
+	@echo "... tests/test_class_search_engine.o"
+	@echo "... tests/test_class_search_engine.i"
+	@echo "... tests/test_class_search_engine.s"
+	@echo "... tests/test_class_search_massive.o"
+	@echo "... tests/test_class_search_massive.i"
+	@echo "... tests/test_class_search_massive.s"
+	@echo "... tests/test_cli_massive.o"
+	@echo "... tests/test_cli_massive.i"
+	@echo "... tests/test_cli_massive.s"
 	@echo "... tests/test_cli_parser.o"
 	@echo "... tests/test_cli_parser.i"
 	@echo "... tests/test_cli_parser.s"
+	@echo "... tests/test_content_search_engine.o"
+	@echo "... tests/test_content_search_engine.i"
+	@echo "... tests/test_content_search_engine.s"
+	@echo "... tests/test_deobf_massive.o"
+	@echo "... tests/test_deobf_massive.i"
+	@echo "... tests/test_deobf_massive.s"
 	@echo "... tests/test_filesystem.o"
 	@echo "... tests/test_filesystem.i"
 	@echo "... tests/test_filesystem.s"
+	@echo "... tests/test_manifest_massive.o"
+	@echo "... tests/test_manifest_massive.i"
+	@echo "... tests/test_manifest_massive.s"
+	@echo "... tests/test_new_engines.o"
+	@echo "... tests/test_new_engines.i"
+	@echo "... tests/test_new_engines.s"
+	@echo "... tests/test_res_map_massive.o"
+	@echo "... tests/test_res_map_massive.i"
+	@echo "... tests/test_res_map_massive.s"
 	@echo "... tests/test_scanner.o"
 	@echo "... tests/test_scanner.i"
 	@echo "... tests/test_scanner.s"
+	@echo "... tests/test_search_massive.o"
+	@echo "... tests/test_search_massive.i"
+	@echo "... tests/test_search_massive.s"
 	@echo "... tests/test_sexpr.o"
 	@echo "... tests/test_sexpr.i"
 	@echo "... tests/test_sexpr.s"
+	@echo "... tests/test_sexpr_edge.o"
+	@echo "... tests/test_sexpr_edge.i"
+	@echo "... tests/test_sexpr_edge.s"
+	@echo "... tests/test_sexpr_massive.o"
+	@echo "... tests/test_sexpr_massive.i"
+	@echo "... tests/test_sexpr_massive.s"
 	@echo "... tests/test_smali_parser.o"
 	@echo "... tests/test_smali_parser.i"
 	@echo "... tests/test_smali_parser.s"
+	@echo "... tests/test_ui_mapper_massive.o"
+	@echo "... tests/test_ui_mapper_massive.i"
+	@echo "... tests/test_ui_mapper_massive.s"
+	@echo "... tests/test_variable_tracker.o"
+	@echo "... tests/test_variable_tracker.i"
+	@echo "... tests/test_variable_tracker.s"
+	@echo "... tests/test_variable_tracker_massive.o"
+	@echo "... tests/test_variable_tracker_massive.i"
+	@echo "... tests/test_variable_tracker_massive.s"
 	@echo "... tests/test_xref.o"
 	@echo "... tests/test_xref.i"
 	@echo "... tests/test_xref.s"
+	@echo "... tests/test_xref_advanced.o"
+	@echo "... tests/test_xref_advanced.i"
+	@echo "... tests/test_xref_advanced.s"
+	@echo "... tests/test_xref_massive.o"
+	@echo "... tests/test_xref_massive.i"
+	@echo "... tests/test_xref_massive.s"
+	@echo "... tests/test_xref_search_engine.o"
+	@echo "... tests/test_xref_search_engine.i"
+	@echo "... tests/test_xref_search_engine.s"
 .PHONY : help
 
 

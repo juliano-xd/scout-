@@ -1,840 +1,155 @@
-Start testing: Apr 23 14:18 -03
+Start testing: Apr 23 22:37 -03
 ----------------------------------------------------------
-1/31 Testing: FsUtilsTest.ThrowsWhenDirectoryDoesNotExist
-1/31 Test: FsUtilsTest.ThrowsWhenDirectoryDoesNotExist
-Command: "/home/trindade/Projetos/scout++/build/test_filesystem" "--gtest_filter=FsUtilsTest.ThrowsWhenDirectoryDoesNotExist" "--gtest_also_run_disabled_tests"
+62/1414 Testing: XrefSearchEngine.IncludesSystemClassesWhenEnabled
+62/1414 Test: XrefSearchEngine.IncludesSystemClassesWhenEnabled
+Command: "/home/trindade/Projetos/scout++/build/test_xref_search_engine" "--gtest_filter=XrefSearchEngine.IncludesSystemClassesWhenEnabled" "--gtest_also_run_disabled_tests"
 Directory: /home/trindade/Projetos/scout++/build
-"FsUtilsTest.ThrowsWhenDirectoryDoesNotExist" start time: Apr 23 14:18 -03
+"XrefSearchEngine.IncludesSystemClassesWhenEnabled" start time: Apr 23 22:37 -03
 Output:
 ----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = FsUtilsTest.ThrowsWhenDirectoryDoesNotExist
+Note: Google Test filter = XrefSearchEngine.IncludesSystemClassesWhenEnabled
 [==========] Running 1 test from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from FsUtilsTest
-[ RUN      ] FsUtilsTest.ThrowsWhenDirectoryDoesNotExist
-[       OK ] FsUtilsTest.ThrowsWhenDirectoryDoesNotExist (0 ms)
-[----------] 1 test from FsUtilsTest (0 ms total)
+[----------] 1 test from XrefSearchEngine
+[ RUN      ] XrefSearchEngine.IncludesSystemClassesWhenEnabled
+/home/trindade/Projetos/scout++/tests/test_xref_search_engine.cpp:206: Failure
+Value of: found_system
+  Actual: false
+Expected: true
+[  FAILED  ] XrefSearchEngine.IncludesSystemClassesWhenEnabled (0 ms)
+[----------] 1 test from XrefSearchEngine (0 ms total)
 
 [----------] Global test environment tear-down
 [==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] XrefSearchEngine.IncludesSystemClassesWhenEnabled
+
+ 1 FAILED TEST
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
-Test Passed.
-"FsUtilsTest.ThrowsWhenDirectoryDoesNotExist" end time: Apr 23 14:18 -03
-"FsUtilsTest.ThrowsWhenDirectoryDoesNotExist" time elapsed: 00:00:00
+Test Failed.
+"XrefSearchEngine.IncludesSystemClassesWhenEnabled" end time: Apr 23 22:37 -03
+"XrefSearchEngine.IncludesSystemClassesWhenEnabled" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/31 Testing: FsUtilsTest.FindsFileInRootDirectory
-2/31 Test: FsUtilsTest.FindsFileInRootDirectory
-Command: "/home/trindade/Projetos/scout++/build/test_filesystem" "--gtest_filter=FsUtilsTest.FindsFileInRootDirectory" "--gtest_also_run_disabled_tests"
+70/1414 Testing: XrefAdvancedTest.RecursiveXrefDepth2
+70/1414 Test: XrefAdvancedTest.RecursiveXrefDepth2
+Command: "/home/trindade/Projetos/scout++/build/test_xref_advanced" "--gtest_filter=XrefAdvancedTest.RecursiveXrefDepth2" "--gtest_also_run_disabled_tests"
 Directory: /home/trindade/Projetos/scout++/build
-"FsUtilsTest.FindsFileInRootDirectory" start time: Apr 23 14:18 -03
+"XrefAdvancedTest.RecursiveXrefDepth2" start time: Apr 23 22:37 -03
 Output:
 ----------------------------------------------------------
 Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = FsUtilsTest.FindsFileInRootDirectory
+Note: Google Test filter = XrefAdvancedTest.RecursiveXrefDepth2
 [==========] Running 1 test from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from FsUtilsTest
-[ RUN      ] FsUtilsTest.FindsFileInRootDirectory
-[       OK ] FsUtilsTest.FindsFileInRootDirectory (0 ms)
-[----------] 1 test from FsUtilsTest (0 ms total)
+[----------] 1 test from XrefAdvancedTest
+[ RUN      ] XrefAdvancedTest.RecursiveXrefDepth2
+/home/trindade/Projetos/scout++/tests/test_xref_advanced.cpp:61: Failure
+Expected equality of these values:
+  results.size()
+    Which is: 1
+  2
+[  FAILED  ] XrefAdvancedTest.RecursiveXrefDepth2 (0 ms)
+[----------] 1 test from XrefAdvancedTest (0 ms total)
 
 [----------] Global test environment tear-down
 [==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] XrefAdvancedTest.RecursiveXrefDepth2
+
+ 1 FAILED TEST
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
-Test Passed.
-"FsUtilsTest.FindsFileInRootDirectory" end time: Apr 23 14:18 -03
-"FsUtilsTest.FindsFileInRootDirectory" time elapsed: 00:00:00
+Test Failed.
+"XrefAdvancedTest.RecursiveXrefDepth2" end time: Apr 23 22:37 -03
+"XrefAdvancedTest.RecursiveXrefDepth2" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-3/31 Testing: FsUtilsTest.FindsFileInSubdirectory
-3/31 Test: FsUtilsTest.FindsFileInSubdirectory
-Command: "/home/trindade/Projetos/scout++/build/test_filesystem" "--gtest_filter=FsUtilsTest.FindsFileInSubdirectory" "--gtest_also_run_disabled_tests"
+74/1414 Testing: XrefAdvancedTest.FindsCallees
+74/1414 Test: XrefAdvancedTest.FindsCallees
+Command: "/home/trindade/Projetos/scout++/build/test_xref_advanced" "--gtest_filter=XrefAdvancedTest.FindsCallees" "--gtest_also_run_disabled_tests"
 Directory: /home/trindade/Projetos/scout++/build
-"FsUtilsTest.FindsFileInSubdirectory" start time: Apr 23 14:18 -03
+"XrefAdvancedTest.FindsCallees" start time: Apr 23 22:37 -03
 Output:
 ----------------------------------------------------------
 Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = FsUtilsTest.FindsFileInSubdirectory
+Note: Google Test filter = XrefAdvancedTest.FindsCallees
 [==========] Running 1 test from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from FsUtilsTest
-[ RUN      ] FsUtilsTest.FindsFileInSubdirectory
-[       OK ] FsUtilsTest.FindsFileInSubdirectory (0 ms)
-[----------] 1 test from FsUtilsTest (0 ms total)
+[----------] 1 test from XrefAdvancedTest
+[ RUN      ] XrefAdvancedTest.FindsCallees
+/home/trindade/Projetos/scout++/tests/test_xref_advanced.cpp:126: Failure
+Value of: results[0].line_content.find("Lcom/example/A;->targetMethod()V") != std::string::npos
+  Actual: false
+Expected: true
+[  FAILED  ] XrefAdvancedTest.FindsCallees (0 ms)
+[----------] 1 test from XrefAdvancedTest (0 ms total)
 
 [----------] Global test environment tear-down
 [==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] XrefAdvancedTest.FindsCallees
+
+ 1 FAILED TEST
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
-Test Passed.
-"FsUtilsTest.FindsFileInSubdirectory" end time: Apr 23 14:18 -03
-"FsUtilsTest.FindsFileInSubdirectory" time elapsed: 00:00:00
+Test Failed.
+"XrefAdvancedTest.FindsCallees" end time: Apr 23 22:37 -03
+"XrefAdvancedTest.FindsCallees" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-4/31 Testing: FsUtilsTest.ReturnsNulloptWhenFileNotFound
-4/31 Test: FsUtilsTest.ReturnsNulloptWhenFileNotFound
-Command: "/home/trindade/Projetos/scout++/build/test_filesystem" "--gtest_filter=FsUtilsTest.ReturnsNulloptWhenFileNotFound" "--gtest_also_run_disabled_tests"
+112/1414 Testing: NewEnginesTest.CFGGenerationWorks
+112/1414 Test: NewEnginesTest.CFGGenerationWorks
+Command: "/home/trindade/Projetos/scout++/build/test_new_engines" "--gtest_filter=NewEnginesTest.CFGGenerationWorks" "--gtest_also_run_disabled_tests"
 Directory: /home/trindade/Projetos/scout++/build
-"FsUtilsTest.ReturnsNulloptWhenFileNotFound" start time: Apr 23 14:18 -03
+"NewEnginesTest.CFGGenerationWorks" start time: Apr 23 22:37 -03
 Output:
 ----------------------------------------------------------
 Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = FsUtilsTest.ReturnsNulloptWhenFileNotFound
+Note: Google Test filter = NewEnginesTest.CFGGenerationWorks
 [==========] Running 1 test from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from FsUtilsTest
-[ RUN      ] FsUtilsTest.ReturnsNulloptWhenFileNotFound
-[       OK ] FsUtilsTest.ReturnsNulloptWhenFileNotFound (0 ms)
-[----------] 1 test from FsUtilsTest (0 ms total)
+[----------] 1 test from NewEnginesTest
+[ RUN      ] NewEnginesTest.CFGGenerationWorks
+/home/trindade/Projetos/scout++/tests/test_new_engines.cpp:77: Failure
+Value of: results[0].line_content.find("(cfg") != std::string::npos
+  Actual: false
+Expected: true
+/home/trindade/Projetos/scout++/tests/test_new_engines.cpp:78: Failure
+Value of: results[0].line_content.find("BB0") != std::string::npos
+  Actual: false
+Expected: true
+/home/trindade/Projetos/scout++/tests/test_new_engines.cpp:79: Failure
+Value of: results[0].line_content.find("BB1") != std::string::npos
+  Actual: false
+Expected: true
+/home/trindade/Projetos/scout++/tests/test_new_engines.cpp:80: Failure
+Value of: results[0].line_content.find("BB2") != std::string::npos
+  Actual: false
+Expected: true
+[  FAILED  ] NewEnginesTest.CFGGenerationWorks (0 ms)
+[----------] 1 test from NewEnginesTest (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] NewEnginesTest.CFGGenerationWorks
+
+ 1 FAILED TEST
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
-Test Passed.
-"FsUtilsTest.ReturnsNulloptWhenFileNotFound" end time: Apr 23 14:18 -03
-"FsUtilsTest.ReturnsNulloptWhenFileNotFound" time elapsed: 00:00:00
-----------------------------------------------------------
-
-5/31 Testing: SexprTest.HandlesNullAndBooleans
-5/31 Test: SexprTest.HandlesNullAndBooleans
-Command: "/home/trindade/Projetos/scout++/build/test_sexpr" "--gtest_filter=SexprTest.HandlesNullAndBooleans" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SexprTest.HandlesNullAndBooleans" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SexprTest.HandlesNullAndBooleans
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SexprTest
-[ RUN      ] SexprTest.HandlesNullAndBooleans
-[       OK ] SexprTest.HandlesNullAndBooleans (0 ms)
-[----------] 1 test from SexprTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SexprTest.HandlesNullAndBooleans" end time: Apr 23 14:18 -03
-"SexprTest.HandlesNullAndBooleans" time elapsed: 00:00:00
+Test Failed.
+"NewEnginesTest.CFGGenerationWorks" end time: Apr 23 22:37 -03
+"NewEnginesTest.CFGGenerationWorks" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-6/31 Testing: SexprTest.HandlesNumbers
-6/31 Test: SexprTest.HandlesNumbers
-Command: "/home/trindade/Projetos/scout++/build/test_sexpr" "--gtest_filter=SexprTest.HandlesNumbers" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SexprTest.HandlesNumbers" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SexprTest.HandlesNumbers
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SexprTest
-[ RUN      ] SexprTest.HandlesNumbers
-[       OK ] SexprTest.HandlesNumbers (0 ms)
-[----------] 1 test from SexprTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SexprTest.HandlesNumbers" end time: Apr 23 14:18 -03
-"SexprTest.HandlesNumbers" time elapsed: 00:00:00
-----------------------------------------------------------
-
-7/31 Testing: SexprTest.HandlesStringsAndEscaping
-7/31 Test: SexprTest.HandlesStringsAndEscaping
-Command: "/home/trindade/Projetos/scout++/build/test_sexpr" "--gtest_filter=SexprTest.HandlesStringsAndEscaping" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SexprTest.HandlesStringsAndEscaping" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SexprTest.HandlesStringsAndEscaping
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SexprTest
-[ RUN      ] SexprTest.HandlesStringsAndEscaping
-[       OK ] SexprTest.HandlesStringsAndEscaping (0 ms)
-[----------] 1 test from SexprTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SexprTest.HandlesStringsAndEscaping" end time: Apr 23 14:18 -03
-"SexprTest.HandlesStringsAndEscaping" time elapsed: 00:00:00
-----------------------------------------------------------
-
-8/31 Testing: SexprTest.HandlesArrays
-8/31 Test: SexprTest.HandlesArrays
-Command: "/home/trindade/Projetos/scout++/build/test_sexpr" "--gtest_filter=SexprTest.HandlesArrays" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SexprTest.HandlesArrays" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SexprTest.HandlesArrays
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SexprTest
-[ RUN      ] SexprTest.HandlesArrays
-[       OK ] SexprTest.HandlesArrays (0 ms)
-[----------] 1 test from SexprTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SexprTest.HandlesArrays" end time: Apr 23 14:18 -03
-"SexprTest.HandlesArrays" time elapsed: 00:00:00
-----------------------------------------------------------
-
-9/31 Testing: SexprTest.HandlesObjects
-9/31 Test: SexprTest.HandlesObjects
-Command: "/home/trindade/Projetos/scout++/build/test_sexpr" "--gtest_filter=SexprTest.HandlesObjects" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SexprTest.HandlesObjects" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SexprTest.HandlesObjects
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SexprTest
-[ RUN      ] SexprTest.HandlesObjects
-[       OK ] SexprTest.HandlesObjects (0 ms)
-[----------] 1 test from SexprTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SexprTest.HandlesObjects" end time: Apr 23 14:18 -03
-"SexprTest.HandlesObjects" time elapsed: 00:00:00
-----------------------------------------------------------
-
-10/31 Testing: SexprTest.HandlesNestedStructures
-10/31 Test: SexprTest.HandlesNestedStructures
-Command: "/home/trindade/Projetos/scout++/build/test_sexpr" "--gtest_filter=SexprTest.HandlesNestedStructures" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SexprTest.HandlesNestedStructures" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SexprTest.HandlesNestedStructures
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SexprTest
-[ RUN      ] SexprTest.HandlesNestedStructures
-[       OK ] SexprTest.HandlesNestedStructures (0 ms)
-[----------] 1 test from SexprTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SexprTest.HandlesNestedStructures" end time: Apr 23 14:18 -03
-"SexprTest.HandlesNestedStructures" time elapsed: 00:00:00
-----------------------------------------------------------
-
-11/31 Testing: CliParserTest.ParsesFlagCorrectly
-11/31 Test: CliParserTest.ParsesFlagCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ParsesFlagCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ParsesFlagCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ParsesFlagCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ParsesFlagCorrectly
-[       OK ] CliParserTest.ParsesFlagCorrectly (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ParsesFlagCorrectly" end time: Apr 23 14:18 -03
-"CliParserTest.ParsesFlagCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-12/31 Testing: CliParserTest.ParsesStringOptionCorrectly
-12/31 Test: CliParserTest.ParsesStringOptionCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ParsesStringOptionCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ParsesStringOptionCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ParsesStringOptionCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ParsesStringOptionCorrectly
-[       OK ] CliParserTest.ParsesStringOptionCorrectly (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ParsesStringOptionCorrectly" end time: Apr 23 14:18 -03
-"CliParserTest.ParsesStringOptionCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-13/31 Testing: CliParserTest.ParsesIntOptionCorrectly
-13/31 Test: CliParserTest.ParsesIntOptionCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ParsesIntOptionCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ParsesIntOptionCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ParsesIntOptionCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ParsesIntOptionCorrectly
-[       OK ] CliParserTest.ParsesIntOptionCorrectly (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ParsesIntOptionCorrectly" end time: Apr 23 14:18 -03
-"CliParserTest.ParsesIntOptionCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-14/31 Testing: CliParserTest.ThrowsParseErrorOnInvalidInt
-14/31 Test: CliParserTest.ThrowsParseErrorOnInvalidInt
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ThrowsParseErrorOnInvalidInt" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ThrowsParseErrorOnInvalidInt" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ThrowsParseErrorOnInvalidInt
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ThrowsParseErrorOnInvalidInt
-[       OK ] CliParserTest.ThrowsParseErrorOnInvalidInt (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ThrowsParseErrorOnInvalidInt" end time: Apr 23 14:18 -03
-"CliParserTest.ThrowsParseErrorOnInvalidInt" time elapsed: 00:00:00
-----------------------------------------------------------
-
-15/31 Testing: CliParserTest.ParsesStringListCorrectly
-15/31 Test: CliParserTest.ParsesStringListCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ParsesStringListCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ParsesStringListCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ParsesStringListCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ParsesStringListCorrectly
-[       OK ] CliParserTest.ParsesStringListCorrectly (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ParsesStringListCorrectly" end time: Apr 23 14:18 -03
-"CliParserTest.ParsesStringListCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-16/31 Testing: CliParserTest.ReturnsNulloptOnHelp
-16/31 Test: CliParserTest.ReturnsNulloptOnHelp
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ReturnsNulloptOnHelp" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ReturnsNulloptOnHelp" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ReturnsNulloptOnHelp
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ReturnsNulloptOnHelp
-[       OK ] CliParserTest.ReturnsNulloptOnHelp (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ReturnsNulloptOnHelp" end time: Apr 23 14:18 -03
-"CliParserTest.ReturnsNulloptOnHelp" time elapsed: 00:00:00
-----------------------------------------------------------
-
-17/31 Testing: CliParserTest.ReturnsNulloptOnEmptyArgs
-17/31 Test: CliParserTest.ReturnsNulloptOnEmptyArgs
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ReturnsNulloptOnEmptyArgs" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ReturnsNulloptOnEmptyArgs" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ReturnsNulloptOnEmptyArgs
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ReturnsNulloptOnEmptyArgs
-[       OK ] CliParserTest.ReturnsNulloptOnEmptyArgs (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ReturnsNulloptOnEmptyArgs" end time: Apr 23 14:18 -03
-"CliParserTest.ReturnsNulloptOnEmptyArgs" time elapsed: 00:00:00
-----------------------------------------------------------
-
-18/31 Testing: CliParserTest.ThrowsParseErrorOnMissingValue
-18/31 Test: CliParserTest.ThrowsParseErrorOnMissingValue
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ThrowsParseErrorOnMissingValue" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ThrowsParseErrorOnMissingValue" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ThrowsParseErrorOnMissingValue
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ThrowsParseErrorOnMissingValue
-[       OK ] CliParserTest.ThrowsParseErrorOnMissingValue (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ThrowsParseErrorOnMissingValue" end time: Apr 23 14:18 -03
-"CliParserTest.ThrowsParseErrorOnMissingValue" time elapsed: 00:00:00
-----------------------------------------------------------
-
-19/31 Testing: CliParserTest.ThrowsParseErrorOnUnknownArg
-19/31 Test: CliParserTest.ThrowsParseErrorOnUnknownArg
-Command: "/home/trindade/Projetos/scout++/build/test_cli_parser" "--gtest_filter=CliParserTest.ThrowsParseErrorOnUnknownArg" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"CliParserTest.ThrowsParseErrorOnUnknownArg" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = CliParserTest.ThrowsParseErrorOnUnknownArg
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from CliParserTest
-[ RUN      ] CliParserTest.ThrowsParseErrorOnUnknownArg
-[       OK ] CliParserTest.ThrowsParseErrorOnUnknownArg (0 ms)
-[----------] 1 test from CliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"CliParserTest.ThrowsParseErrorOnUnknownArg" end time: Apr 23 14:18 -03
-"CliParserTest.ThrowsParseErrorOnUnknownArg" time elapsed: 00:00:00
-----------------------------------------------------------
-
-20/31 Testing: ScannerTest.ParsesClassInfoCorrectly
-20/31 Test: ScannerTest.ParsesClassInfoCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.ParsesClassInfoCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.ParsesClassInfoCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.ParsesClassInfoCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.ParsesClassInfoCorrectly
-[       OK ] ScannerTest.ParsesClassInfoCorrectly (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.ParsesClassInfoCorrectly" end time: Apr 23 14:18 -03
-"ScannerTest.ParsesClassInfoCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-21/31 Testing: ScannerTest.FindsClassWithDalvikName
-21/31 Test: ScannerTest.FindsClassWithDalvikName
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.FindsClassWithDalvikName" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.FindsClassWithDalvikName" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.FindsClassWithDalvikName
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.FindsClassWithDalvikName
-[       OK ] ScannerTest.FindsClassWithDalvikName (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.FindsClassWithDalvikName" end time: Apr 23 14:18 -03
-"ScannerTest.FindsClassWithDalvikName" time elapsed: 00:00:00
-----------------------------------------------------------
-
-22/31 Testing: ScannerTest.FindsClassWithDotName
-22/31 Test: ScannerTest.FindsClassWithDotName
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.FindsClassWithDotName" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.FindsClassWithDotName" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.FindsClassWithDotName
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.FindsClassWithDotName
-[       OK ] ScannerTest.FindsClassWithDotName (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.FindsClassWithDotName" end time: Apr 23 14:18 -03
-"ScannerTest.FindsClassWithDotName" time elapsed: 00:00:00
-----------------------------------------------------------
-
-23/31 Testing: ScannerTest.FindsClassWithSimpleName
-23/31 Test: ScannerTest.FindsClassWithSimpleName
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.FindsClassWithSimpleName" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.FindsClassWithSimpleName" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.FindsClassWithSimpleName
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.FindsClassWithSimpleName
-[       OK ] ScannerTest.FindsClassWithSimpleName (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.FindsClassWithSimpleName" end time: Apr 23 14:18 -03
-"ScannerTest.FindsClassWithSimpleName" time elapsed: 00:00:00
-----------------------------------------------------------
-
-24/31 Testing: ScannerTest.ReturnsNulloptForNonExistent
-24/31 Test: ScannerTest.ReturnsNulloptForNonExistent
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.ReturnsNulloptForNonExistent" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.ReturnsNulloptForNonExistent" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.ReturnsNulloptForNonExistent
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.ReturnsNulloptForNonExistent
-[       OK ] ScannerTest.ReturnsNulloptForNonExistent (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.ReturnsNulloptForNonExistent" end time: Apr 23 14:18 -03
-"ScannerTest.ReturnsNulloptForNonExistent" time elapsed: 00:00:00
-----------------------------------------------------------
-
-25/31 Testing: ScannerTest.FindsClassesContainingName
-25/31 Test: ScannerTest.FindsClassesContainingName
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.FindsClassesContainingName" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.FindsClassesContainingName" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.FindsClassesContainingName
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.FindsClassesContainingName
-[       OK ] ScannerTest.FindsClassesContainingName (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.FindsClassesContainingName" end time: Apr 23 14:18 -03
-"ScannerTest.FindsClassesContainingName" time elapsed: 00:00:00
-----------------------------------------------------------
-
-26/31 Testing: ScannerTest.FindsNoClassesContainingNonExistentName
-26/31 Test: ScannerTest.FindsNoClassesContainingNonExistentName
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.FindsNoClassesContainingNonExistentName" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.FindsNoClassesContainingNonExistentName" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.FindsNoClassesContainingNonExistentName
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.FindsNoClassesContainingNonExistentName
-[       OK ] ScannerTest.FindsNoClassesContainingNonExistentName (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.FindsNoClassesContainingNonExistentName" end time: Apr 23 14:18 -03
-"ScannerTest.FindsNoClassesContainingNonExistentName" time elapsed: 00:00:00
-----------------------------------------------------------
-
-27/31 Testing: ScannerTest.SearchesContentInsideFiles
-27/31 Test: ScannerTest.SearchesContentInsideFiles
-Command: "/home/trindade/Projetos/scout++/build/test_scanner" "--gtest_filter=ScannerTest.SearchesContentInsideFiles" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"ScannerTest.SearchesContentInsideFiles" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = ScannerTest.SearchesContentInsideFiles
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from ScannerTest
-[ RUN      ] ScannerTest.SearchesContentInsideFiles
-[       OK ] ScannerTest.SearchesContentInsideFiles (0 ms)
-[----------] 1 test from ScannerTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"ScannerTest.SearchesContentInsideFiles" end time: Apr 23 14:18 -03
-"ScannerTest.SearchesContentInsideFiles" time elapsed: 00:00:00
-----------------------------------------------------------
-
-28/31 Testing: SmaliParserTest.ExtractsMethodsCorrectly
-28/31 Test: SmaliParserTest.ExtractsMethodsCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_smali_parser" "--gtest_filter=SmaliParserTest.ExtractsMethodsCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SmaliParserTest.ExtractsMethodsCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SmaliParserTest.ExtractsMethodsCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SmaliParserTest
-[ RUN      ] SmaliParserTest.ExtractsMethodsCorrectly
-[       OK ] SmaliParserTest.ExtractsMethodsCorrectly (0 ms)
-[----------] 1 test from SmaliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SmaliParserTest.ExtractsMethodsCorrectly" end time: Apr 23 14:18 -03
-"SmaliParserTest.ExtractsMethodsCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-29/31 Testing: SmaliParserTest.HandlesEmptyOrInvalidFile
-29/31 Test: SmaliParserTest.HandlesEmptyOrInvalidFile
-Command: "/home/trindade/Projetos/scout++/build/test_smali_parser" "--gtest_filter=SmaliParserTest.HandlesEmptyOrInvalidFile" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"SmaliParserTest.HandlesEmptyOrInvalidFile" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = SmaliParserTest.HandlesEmptyOrInvalidFile
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from SmaliParserTest
-[ RUN      ] SmaliParserTest.HandlesEmptyOrInvalidFile
-[       OK ] SmaliParserTest.HandlesEmptyOrInvalidFile (0 ms)
-[----------] 1 test from SmaliParserTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"SmaliParserTest.HandlesEmptyOrInvalidFile" end time: Apr 23 14:18 -03
-"SmaliParserTest.HandlesEmptyOrInvalidFile" time elapsed: 00:00:00
-----------------------------------------------------------
-
-30/31 Testing: XrefTest.FindsMethodCallersCorrectly
-30/31 Test: XrefTest.FindsMethodCallersCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_xref" "--gtest_filter=XrefTest.FindsMethodCallersCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"XrefTest.FindsMethodCallersCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = XrefTest.FindsMethodCallersCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from XrefTest
-[ RUN      ] XrefTest.FindsMethodCallersCorrectly
-[       OK ] XrefTest.FindsMethodCallersCorrectly (0 ms)
-[----------] 1 test from XrefTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"XrefTest.FindsMethodCallersCorrectly" end time: Apr 23 14:18 -03
-"XrefTest.FindsMethodCallersCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-31/31 Testing: XrefTest.FindsClassCallersCorrectly
-31/31 Test: XrefTest.FindsClassCallersCorrectly
-Command: "/home/trindade/Projetos/scout++/build/test_xref" "--gtest_filter=XrefTest.FindsClassCallersCorrectly" "--gtest_also_run_disabled_tests"
-Directory: /home/trindade/Projetos/scout++/build
-"XrefTest.FindsClassCallersCorrectly" start time: Apr 23 14:18 -03
-Output:
-----------------------------------------------------------
-Running main() from /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/src/gtest_main.cc
-Note: Google Test filter = XrefTest.FindsClassCallersCorrectly
-[==========] Running 1 test from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 1 test from XrefTest
-[ RUN      ] XrefTest.FindsClassCallersCorrectly
-[       OK ] XrefTest.FindsClassCallersCorrectly (0 ms)
-[----------] 1 test from XrefTest (0 ms total)
-
-[----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"XrefTest.FindsClassCallersCorrectly" end time: Apr 23 14:18 -03
-"XrefTest.FindsClassCallersCorrectly" time elapsed: 00:00:00
-----------------------------------------------------------
-
-End testing: Apr 23 14:18 -03
+End testing: Apr 23 22:37 -03

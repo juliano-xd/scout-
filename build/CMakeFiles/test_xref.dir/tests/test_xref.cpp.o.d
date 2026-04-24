@@ -293,16 +293,23 @@ CMakeFiles/test_xref.dir/tests/test_xref.cpp.o: \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest-typed-test.h \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest_pred_impl.h \
  /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include/gtest/gtest_prod.h \
- /home/trindade/Projetos/scout++/include/analysis/xref.hpp \
+ /home/trindade/Projetos/scout++/include/engines/xref_search_engine.hpp \
+ /home/trindade/Projetos/scout++/include/engines/i_search_engine.hpp \
  /usr/include/c++/15.2.1/filesystem /usr/include/c++/15.2.1/bits/fs_fwd.h \
  /usr/include/c++/15.2.1/bits/fs_path.h /usr/include/c++/15.2.1/codecvt \
  /usr/include/c++/15.2.1/bits/fs_dir.h \
- /usr/include/c++/15.2.1/bits/fs_ops.h /usr/include/c++/15.2.1/fstream \
- /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
- /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
- /usr/include/c++/15.2.1/bits/fstream.tcc \
- /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \
- /usr/include/c++/15.2.1/execution \
+ /usr/include/c++/15.2.1/bits/fs_ops.h /usr/include/c++/15.2.1/chrono \
+ /usr/include/c++/15.2.1/bits/chrono_io.h \
+ /home/trindade/Projetos/scout++/include/utils/sexpr.hpp \
+ /home/trindade/Projetos/scout++/include/core/analysis_context.hpp \
+ /home/trindade/Projetos/scout++/include/utils/mmap_file.hpp \
+ /usr/include/fcntl.h /usr/include/bits/fcntl.h \
+ /usr/include/bits/fcntl-linux.h /usr/include/bits/types/struct_iovec.h \
+ /usr/include/linux/falloc.h /usr/include/linux/openat2.h \
+ /usr/include/bits/openat2.h /usr/include/sys/mman.h \
+ /usr/include/bits/mman.h /usr/include/bits/mman-map-flags-generic.h \
+ /usr/include/bits/mman-linux.h /usr/include/bits/mman-shared.h \
+ /usr/include/bits/mman_ext.h /usr/include/c++/15.2.1/execution \
  /usr/include/c++/15.2.1/pstl/glue_execution_defs.h \
  /usr/include/c++/15.2.1/pstl/algorithm_impl.h \
  /usr/include/c++/15.2.1/algorithm \
@@ -326,4 +333,8 @@ CMakeFiles/test_xref.dir/tests/test_xref.cpp.o: \
  /usr/include/c++/15.2.1/pstl/glue_algorithm_impl.h \
  /usr/include/c++/15.2.1/pstl/numeric_fwd.h \
  /usr/include/c++/15.2.1/pstl/glue_numeric_impl.h \
- /usr/include/c++/15.2.1/pstl/glue_memory_impl.h
+ /usr/include/c++/15.2.1/pstl/glue_memory_impl.h \
+ /usr/include/c++/15.2.1/fstream \
+ /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
+ /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
+ /usr/include/c++/15.2.1/bits/fstream.tcc

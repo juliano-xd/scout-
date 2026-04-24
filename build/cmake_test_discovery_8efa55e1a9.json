@@ -1,0 +1,82 @@
+{
+  "tests": 14,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "ClassSearchEngine",
+      "tests": 14,
+      "testsuite": [
+        {
+          "name": "ConstructorAndName",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 70
+        },
+        {
+          "name": "SearchExactDalvikNotation",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 76
+        },
+        {
+          "name": "SearchSubstringClassName",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 94
+        },
+        {
+          "name": "SearchPartialPackageName",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 118
+        },
+        {
+          "name": "SearchNonExistentClass",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 134
+        },
+        {
+          "name": "SearchWithMaxResultsLimit",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 149
+        },
+        {
+          "name": "SearchEmptyQuery",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 164
+        },
+        {
+          "name": "SearchInvalidDirectory",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 179
+        },
+        {
+          "name": "GetStats",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 194
+        },
+        {
+          "name": "SupportsConfig",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 211
+        },
+        {
+          "name": "DalvikNotationDetection",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 217
+        },
+        {
+          "name": "NormalizeDalvik",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 226
+        },
+        {
+          "name": "RegistryIntegration",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 237
+        },
+        {
+          "name": "FactoryFunction",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_class_search_engine.cpp",
+          "line": 250
+        }
+      ]
+    }
+  ]
+}

@@ -63,28 +63,72 @@ CMAKE_BINARY_DIR = /home/trindade/Projetos/scout++/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/scout_lib.dir/all
 all: CMakeFiles/scout.dir/all
 all: CMakeFiles/test_filesystem.dir/all
-all: CMakeFiles/test_sexpr.dir/all
 all: CMakeFiles/test_cli_parser.dir/all
 all: CMakeFiles/test_scanner.dir/all
 all: CMakeFiles/test_smali_parser.dir/all
 all: CMakeFiles/test_xref.dir/all
+all: CMakeFiles/test_class_search_engine.dir/all
+all: CMakeFiles/test_content_search_engine.dir/all
+all: CMakeFiles/test_xref_search_engine.dir/all
+all: CMakeFiles/test_xref_advanced.dir/all
+all: CMakeFiles/test_sexpr.dir/all
+all: CMakeFiles/test_sexpr_edge.dir/all
 all: CMakeFiles/run_benchmarks.dir/all
+all: CMakeFiles/test_new_engines.dir/all
+all: CMakeFiles/test_manifest_massive.dir/all
+all: CMakeFiles/test_class_inspector_massive.dir/all
+all: CMakeFiles/test_deobf_massive.dir/all
+all: CMakeFiles/test_xref_massive.dir/all
+all: CMakeFiles/test_ui_mapper_massive.dir/all
+all: CMakeFiles/test_search_massive.dir/all
+all: CMakeFiles/test_res_map_massive.dir/all
+all: CMakeFiles/test_cfg_massive.dir/all
+all: CMakeFiles/test_sexpr_massive.dir/all
+all: CMakeFiles/test_cli_massive.dir/all
+all: CMakeFiles/test_class_search_massive.dir/all
+all: CMakeFiles/test_batch_massive.dir/all
+all: CMakeFiles/test_brain_massive.dir/all
+all: CMakeFiles/test_variable_tracker.dir/all
+all: CMakeFiles/test_variable_tracker_massive.dir/all
 all: _deps/nlohmann_json-build/all
 all: _deps/googletest-build/all
 all: _deps/googlebenchmark-build/all
 .PHONY : all
 
 # The main recursive "codegen" target.
+codegen: CMakeFiles/scout_lib.dir/codegen
 codegen: CMakeFiles/scout.dir/codegen
 codegen: CMakeFiles/test_filesystem.dir/codegen
-codegen: CMakeFiles/test_sexpr.dir/codegen
 codegen: CMakeFiles/test_cli_parser.dir/codegen
 codegen: CMakeFiles/test_scanner.dir/codegen
 codegen: CMakeFiles/test_smali_parser.dir/codegen
 codegen: CMakeFiles/test_xref.dir/codegen
+codegen: CMakeFiles/test_class_search_engine.dir/codegen
+codegen: CMakeFiles/test_content_search_engine.dir/codegen
+codegen: CMakeFiles/test_xref_search_engine.dir/codegen
+codegen: CMakeFiles/test_xref_advanced.dir/codegen
+codegen: CMakeFiles/test_sexpr.dir/codegen
+codegen: CMakeFiles/test_sexpr_edge.dir/codegen
 codegen: CMakeFiles/run_benchmarks.dir/codegen
+codegen: CMakeFiles/test_new_engines.dir/codegen
+codegen: CMakeFiles/test_manifest_massive.dir/codegen
+codegen: CMakeFiles/test_class_inspector_massive.dir/codegen
+codegen: CMakeFiles/test_deobf_massive.dir/codegen
+codegen: CMakeFiles/test_xref_massive.dir/codegen
+codegen: CMakeFiles/test_ui_mapper_massive.dir/codegen
+codegen: CMakeFiles/test_search_massive.dir/codegen
+codegen: CMakeFiles/test_res_map_massive.dir/codegen
+codegen: CMakeFiles/test_cfg_massive.dir/codegen
+codegen: CMakeFiles/test_sexpr_massive.dir/codegen
+codegen: CMakeFiles/test_cli_massive.dir/codegen
+codegen: CMakeFiles/test_class_search_massive.dir/codegen
+codegen: CMakeFiles/test_batch_massive.dir/codegen
+codegen: CMakeFiles/test_brain_massive.dir/codegen
+codegen: CMakeFiles/test_variable_tracker.dir/codegen
+codegen: CMakeFiles/test_variable_tracker_massive.dir/codegen
 codegen: _deps/nlohmann_json-build/codegen
 codegen: _deps/googletest-build/codegen
 codegen: _deps/googlebenchmark-build/codegen
@@ -97,14 +141,36 @@ preinstall: _deps/googlebenchmark-build/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/scout_lib.dir/clean
 clean: CMakeFiles/scout.dir/clean
 clean: CMakeFiles/test_filesystem.dir/clean
-clean: CMakeFiles/test_sexpr.dir/clean
 clean: CMakeFiles/test_cli_parser.dir/clean
 clean: CMakeFiles/test_scanner.dir/clean
 clean: CMakeFiles/test_smali_parser.dir/clean
 clean: CMakeFiles/test_xref.dir/clean
+clean: CMakeFiles/test_class_search_engine.dir/clean
+clean: CMakeFiles/test_content_search_engine.dir/clean
+clean: CMakeFiles/test_xref_search_engine.dir/clean
+clean: CMakeFiles/test_xref_advanced.dir/clean
+clean: CMakeFiles/test_sexpr.dir/clean
+clean: CMakeFiles/test_sexpr_edge.dir/clean
 clean: CMakeFiles/run_benchmarks.dir/clean
+clean: CMakeFiles/test_new_engines.dir/clean
+clean: CMakeFiles/test_manifest_massive.dir/clean
+clean: CMakeFiles/test_class_inspector_massive.dir/clean
+clean: CMakeFiles/test_deobf_massive.dir/clean
+clean: CMakeFiles/test_xref_massive.dir/clean
+clean: CMakeFiles/test_ui_mapper_massive.dir/clean
+clean: CMakeFiles/test_search_massive.dir/clean
+clean: CMakeFiles/test_res_map_massive.dir/clean
+clean: CMakeFiles/test_cfg_massive.dir/clean
+clean: CMakeFiles/test_sexpr_massive.dir/clean
+clean: CMakeFiles/test_cli_massive.dir/clean
+clean: CMakeFiles/test_class_search_massive.dir/clean
+clean: CMakeFiles/test_batch_massive.dir/clean
+clean: CMakeFiles/test_brain_massive.dir/clean
+clean: CMakeFiles/test_variable_tracker.dir/clean
+clean: CMakeFiles/test_variable_tracker_massive.dir/clean
 clean: _deps/nlohmann_json-build/clean
 clean: _deps/googletest-build/clean
 clean: _deps/googlebenchmark-build/clean
@@ -237,18 +303,50 @@ _deps/nlohmann_json-build/clean:
 .PHONY : _deps/nlohmann_json-build/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/scout_lib.dir
+
+# All Build rule for target.
+CMakeFiles/scout_lib.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=34,35,36,37,38,39,40,41,42,43,44,45,46,47 "Built target scout_lib"
+.PHONY : CMakeFiles/scout_lib.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/scout_lib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 14
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/scout_lib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/scout_lib.dir/rule
+
+# Convenience name for target.
+scout_lib: CMakeFiles/scout_lib.dir/rule
+.PHONY : scout_lib
+
+# codegen rule for target.
+CMakeFiles/scout_lib.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=34,35,36,37,38,39,40,41,42,43,44,45,46,47 "Finished codegen for target scout_lib"
+.PHONY : CMakeFiles/scout_lib.dir/codegen
+
+# clean rule for target.
+CMakeFiles/scout_lib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout_lib.dir/build.make CMakeFiles/scout_lib.dir/clean
+.PHONY : CMakeFiles/scout_lib.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/scout.dir
 
 # All Build rule for target.
-CMakeFiles/scout.dir/all:
+CMakeFiles/scout.dir/all: CMakeFiles/scout_lib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout.dir/build.make CMakeFiles/scout.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout.dir/build.make CMakeFiles/scout.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=33,34 "Built target scout"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=32,33 "Built target scout"
 .PHONY : CMakeFiles/scout.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/scout.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 16
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/scout.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
 .PHONY : CMakeFiles/scout.dir/rule
@@ -260,7 +358,7 @@ scout: CMakeFiles/scout.dir/rule
 # codegen rule for target.
 CMakeFiles/scout.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scout.dir/build.make CMakeFiles/scout.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=33,34 "Finished codegen for target scout"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=32,33 "Finished codegen for target scout"
 .PHONY : CMakeFiles/scout.dir/codegen
 
 # clean rule for target.
@@ -276,7 +374,7 @@ CMakeFiles/test_filesystem.dir/all: _deps/googletest-build/googletest/CMakeFiles
 CMakeFiles/test_filesystem.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_filesystem.dir/build.make CMakeFiles/test_filesystem.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_filesystem.dir/build.make CMakeFiles/test_filesystem.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=37,38 "Built target test_filesystem"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=67,68 "Built target test_filesystem"
 .PHONY : CMakeFiles/test_filesystem.dir/all
 
 # Build rule for subdir invocation for target.
@@ -293,46 +391,13 @@ test_filesystem: CMakeFiles/test_filesystem.dir/rule
 # codegen rule for target.
 CMakeFiles/test_filesystem.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_filesystem.dir/build.make CMakeFiles/test_filesystem.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=37,38 "Finished codegen for target test_filesystem"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=67,68 "Finished codegen for target test_filesystem"
 .PHONY : CMakeFiles/test_filesystem.dir/codegen
 
 # clean rule for target.
 CMakeFiles/test_filesystem.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_filesystem.dir/build.make CMakeFiles/test_filesystem.dir/clean
 .PHONY : CMakeFiles/test_filesystem.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/test_sexpr.dir
-
-# All Build rule for target.
-CMakeFiles/test_sexpr.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
-CMakeFiles/test_sexpr.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=41,42 "Built target test_sexpr"
-.PHONY : CMakeFiles/test_sexpr.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/test_sexpr.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_sexpr.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
-.PHONY : CMakeFiles/test_sexpr.dir/rule
-
-# Convenience name for target.
-test_sexpr: CMakeFiles/test_sexpr.dir/rule
-.PHONY : test_sexpr
-
-# codegen rule for target.
-CMakeFiles/test_sexpr.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=41,42 "Finished codegen for target test_sexpr"
-.PHONY : CMakeFiles/test_sexpr.dir/codegen
-
-# clean rule for target.
-CMakeFiles/test_sexpr.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/clean
-.PHONY : CMakeFiles/test_sexpr.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/test_cli_parser.dir
@@ -342,7 +407,7 @@ CMakeFiles/test_cli_parser.dir/all: _deps/googletest-build/googletest/CMakeFiles
 CMakeFiles/test_cli_parser.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_parser.dir/build.make CMakeFiles/test_cli_parser.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_parser.dir/build.make CMakeFiles/test_cli_parser.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=35,36 "Built target test_cli_parser"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=61,62 "Built target test_cli_parser"
 .PHONY : CMakeFiles/test_cli_parser.dir/all
 
 # Build rule for subdir invocation for target.
@@ -359,7 +424,7 @@ test_cli_parser: CMakeFiles/test_cli_parser.dir/rule
 # codegen rule for target.
 CMakeFiles/test_cli_parser.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_parser.dir/build.make CMakeFiles/test_cli_parser.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=35,36 "Finished codegen for target test_cli_parser"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=61,62 "Finished codegen for target test_cli_parser"
 .PHONY : CMakeFiles/test_cli_parser.dir/codegen
 
 # clean rule for target.
@@ -371,16 +436,17 @@ CMakeFiles/test_cli_parser.dir/clean:
 # Target rules for target CMakeFiles/test_scanner.dir
 
 # All Build rule for target.
+CMakeFiles/test_scanner.dir/all: CMakeFiles/scout_lib.dir/all
 CMakeFiles/test_scanner.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 CMakeFiles/test_scanner.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scanner.dir/build.make CMakeFiles/test_scanner.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scanner.dir/build.make CMakeFiles/test_scanner.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=39,40 "Built target test_scanner"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=75,76 "Built target test_scanner"
 .PHONY : CMakeFiles/test_scanner.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test_scanner.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_scanner.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
 .PHONY : CMakeFiles/test_scanner.dir/rule
@@ -392,7 +458,7 @@ test_scanner: CMakeFiles/test_scanner.dir/rule
 # codegen rule for target.
 CMakeFiles/test_scanner.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scanner.dir/build.make CMakeFiles/test_scanner.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=39,40 "Finished codegen for target test_scanner"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=75,76 "Finished codegen for target test_scanner"
 .PHONY : CMakeFiles/test_scanner.dir/codegen
 
 # clean rule for target.
@@ -408,7 +474,7 @@ CMakeFiles/test_smali_parser.dir/all: _deps/googletest-build/googletest/CMakeFil
 CMakeFiles/test_smali_parser.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_smali_parser.dir/build.make CMakeFiles/test_smali_parser.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_smali_parser.dir/build.make CMakeFiles/test_smali_parser.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=43,44 "Built target test_smali_parser"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=85,86 "Built target test_smali_parser"
 .PHONY : CMakeFiles/test_smali_parser.dir/all
 
 # Build rule for subdir invocation for target.
@@ -425,7 +491,7 @@ test_smali_parser: CMakeFiles/test_smali_parser.dir/rule
 # codegen rule for target.
 CMakeFiles/test_smali_parser.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_smali_parser.dir/build.make CMakeFiles/test_smali_parser.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=43,44 "Finished codegen for target test_smali_parser"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=85,86 "Finished codegen for target test_smali_parser"
 .PHONY : CMakeFiles/test_smali_parser.dir/codegen
 
 # clean rule for target.
@@ -437,16 +503,17 @@ CMakeFiles/test_smali_parser.dir/clean:
 # Target rules for target CMakeFiles/test_xref.dir
 
 # All Build rule for target.
+CMakeFiles/test_xref.dir/all: CMakeFiles/scout_lib.dir/all
 CMakeFiles/test_xref.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 CMakeFiles/test_xref.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref.dir/build.make CMakeFiles/test_xref.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref.dir/build.make CMakeFiles/test_xref.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=45,46 "Built target test_xref"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=93,94 "Built target test_xref"
 .PHONY : CMakeFiles/test_xref.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test_xref.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_xref.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
 .PHONY : CMakeFiles/test_xref.dir/rule
@@ -458,7 +525,7 @@ test_xref: CMakeFiles/test_xref.dir/rule
 # codegen rule for target.
 CMakeFiles/test_xref.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref.dir/build.make CMakeFiles/test_xref.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=45,46 "Finished codegen for target test_xref"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=93,94 "Finished codegen for target test_xref"
 .PHONY : CMakeFiles/test_xref.dir/codegen
 
 # clean rule for target.
@@ -467,18 +534,223 @@ CMakeFiles/test_xref.dir/clean:
 .PHONY : CMakeFiles/test_xref.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/test_class_search_engine.dir
+
+# All Build rule for target.
+CMakeFiles/test_class_search_engine.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_class_search_engine.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_class_search_engine.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=55,56 "Built target test_class_search_engine"
+.PHONY : CMakeFiles/test_class_search_engine.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_class_search_engine.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_class_search_engine.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_class_search_engine.dir/rule
+
+# Convenience name for target.
+test_class_search_engine: CMakeFiles/test_class_search_engine.dir/rule
+.PHONY : test_class_search_engine
+
+# codegen rule for target.
+CMakeFiles/test_class_search_engine.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=55,56 "Finished codegen for target test_class_search_engine"
+.PHONY : CMakeFiles/test_class_search_engine.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_class_search_engine.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_engine.dir/build.make CMakeFiles/test_class_search_engine.dir/clean
+.PHONY : CMakeFiles/test_class_search_engine.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_content_search_engine.dir
+
+# All Build rule for target.
+CMakeFiles/test_content_search_engine.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_content_search_engine.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_content_search_engine.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=63,64 "Built target test_content_search_engine"
+.PHONY : CMakeFiles/test_content_search_engine.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_content_search_engine.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_content_search_engine.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_content_search_engine.dir/rule
+
+# Convenience name for target.
+test_content_search_engine: CMakeFiles/test_content_search_engine.dir/rule
+.PHONY : test_content_search_engine
+
+# codegen rule for target.
+CMakeFiles/test_content_search_engine.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=63,64 "Finished codegen for target test_content_search_engine"
+.PHONY : CMakeFiles/test_content_search_engine.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_content_search_engine.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_content_search_engine.dir/build.make CMakeFiles/test_content_search_engine.dir/clean
+.PHONY : CMakeFiles/test_content_search_engine.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_xref_search_engine.dir
+
+# All Build rule for target.
+CMakeFiles/test_xref_search_engine.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_xref_search_engine.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_xref_search_engine.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=99,100 "Built target test_xref_search_engine"
+.PHONY : CMakeFiles/test_xref_search_engine.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_xref_search_engine.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_xref_search_engine.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_xref_search_engine.dir/rule
+
+# Convenience name for target.
+test_xref_search_engine: CMakeFiles/test_xref_search_engine.dir/rule
+.PHONY : test_xref_search_engine
+
+# codegen rule for target.
+CMakeFiles/test_xref_search_engine.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=99,100 "Finished codegen for target test_xref_search_engine"
+.PHONY : CMakeFiles/test_xref_search_engine.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_xref_search_engine.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_search_engine.dir/build.make CMakeFiles/test_xref_search_engine.dir/clean
+.PHONY : CMakeFiles/test_xref_search_engine.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_xref_advanced.dir
+
+# All Build rule for target.
+CMakeFiles/test_xref_advanced.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_xref_advanced.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_xref_advanced.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=95,96 "Built target test_xref_advanced"
+.PHONY : CMakeFiles/test_xref_advanced.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_xref_advanced.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_xref_advanced.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_xref_advanced.dir/rule
+
+# Convenience name for target.
+test_xref_advanced: CMakeFiles/test_xref_advanced.dir/rule
+.PHONY : test_xref_advanced
+
+# codegen rule for target.
+CMakeFiles/test_xref_advanced.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=95,96 "Finished codegen for target test_xref_advanced"
+.PHONY : CMakeFiles/test_xref_advanced.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_xref_advanced.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_advanced.dir/build.make CMakeFiles/test_xref_advanced.dir/clean
+.PHONY : CMakeFiles/test_xref_advanced.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_sexpr.dir
+
+# All Build rule for target.
+CMakeFiles/test_sexpr.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_sexpr.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_sexpr.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=79,80 "Built target test_sexpr"
+.PHONY : CMakeFiles/test_sexpr.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_sexpr.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_sexpr.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_sexpr.dir/rule
+
+# Convenience name for target.
+test_sexpr: CMakeFiles/test_sexpr.dir/rule
+.PHONY : test_sexpr
+
+# codegen rule for target.
+CMakeFiles/test_sexpr.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=79,80 "Finished codegen for target test_sexpr"
+.PHONY : CMakeFiles/test_sexpr.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_sexpr.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr.dir/build.make CMakeFiles/test_sexpr.dir/clean
+.PHONY : CMakeFiles/test_sexpr.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_sexpr_edge.dir
+
+# All Build rule for target.
+CMakeFiles/test_sexpr_edge.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_sexpr_edge.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_sexpr_edge.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=81,82 "Built target test_sexpr_edge"
+.PHONY : CMakeFiles/test_sexpr_edge.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_sexpr_edge.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_sexpr_edge.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_sexpr_edge.dir/rule
+
+# Convenience name for target.
+test_sexpr_edge: CMakeFiles/test_sexpr_edge.dir/rule
+.PHONY : test_sexpr_edge
+
+# codegen rule for target.
+CMakeFiles/test_sexpr_edge.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=81,82 "Finished codegen for target test_sexpr_edge"
+.PHONY : CMakeFiles/test_sexpr_edge.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_sexpr_edge.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_edge.dir/build.make CMakeFiles/test_sexpr_edge.dir/clean
+.PHONY : CMakeFiles/test_sexpr_edge.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/run_benchmarks.dir
 
 # All Build rule for target.
+CMakeFiles/run_benchmarks.dir/all: CMakeFiles/scout_lib.dir/all
 CMakeFiles/run_benchmarks.dir/all: _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=31,32 "Built target run_benchmarks"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=30,31 "Built target run_benchmarks"
 .PHONY : CMakeFiles/run_benchmarks.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/run_benchmarks.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 35
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/run_benchmarks.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
 .PHONY : CMakeFiles/run_benchmarks.dir/rule
@@ -490,7 +762,7 @@ run_benchmarks: CMakeFiles/run_benchmarks.dir/rule
 # codegen rule for target.
 CMakeFiles/run_benchmarks.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_benchmarks.dir/build.make CMakeFiles/run_benchmarks.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=31,32 "Finished codegen for target run_benchmarks"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=30,31 "Finished codegen for target run_benchmarks"
 .PHONY : CMakeFiles/run_benchmarks.dir/codegen
 
 # clean rule for target.
@@ -499,13 +771,557 @@ CMakeFiles/run_benchmarks.dir/clean:
 .PHONY : CMakeFiles/run_benchmarks.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/test_new_engines.dir
+
+# All Build rule for target.
+CMakeFiles/test_new_engines.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_new_engines.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_new_engines.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=71,72 "Built target test_new_engines"
+.PHONY : CMakeFiles/test_new_engines.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_new_engines.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_new_engines.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_new_engines.dir/rule
+
+# Convenience name for target.
+test_new_engines: CMakeFiles/test_new_engines.dir/rule
+.PHONY : test_new_engines
+
+# codegen rule for target.
+CMakeFiles/test_new_engines.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=71,72 "Finished codegen for target test_new_engines"
+.PHONY : CMakeFiles/test_new_engines.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_new_engines.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_new_engines.dir/build.make CMakeFiles/test_new_engines.dir/clean
+.PHONY : CMakeFiles/test_new_engines.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_manifest_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_manifest_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_manifest_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_manifest_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=69,70 "Built target test_manifest_massive"
+.PHONY : CMakeFiles/test_manifest_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_manifest_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_manifest_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_manifest_massive.dir/rule
+
+# Convenience name for target.
+test_manifest_massive: CMakeFiles/test_manifest_massive.dir/rule
+.PHONY : test_manifest_massive
+
+# codegen rule for target.
+CMakeFiles/test_manifest_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=69,70 "Finished codegen for target test_manifest_massive"
+.PHONY : CMakeFiles/test_manifest_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_manifest_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_manifest_massive.dir/build.make CMakeFiles/test_manifest_massive.dir/clean
+.PHONY : CMakeFiles/test_manifest_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_class_inspector_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_class_inspector_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_class_inspector_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_class_inspector_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=53,54 "Built target test_class_inspector_massive"
+.PHONY : CMakeFiles/test_class_inspector_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_class_inspector_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_class_inspector_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_class_inspector_massive.dir/rule
+
+# Convenience name for target.
+test_class_inspector_massive: CMakeFiles/test_class_inspector_massive.dir/rule
+.PHONY : test_class_inspector_massive
+
+# codegen rule for target.
+CMakeFiles/test_class_inspector_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=53,54 "Finished codegen for target test_class_inspector_massive"
+.PHONY : CMakeFiles/test_class_inspector_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_class_inspector_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_inspector_massive.dir/build.make CMakeFiles/test_class_inspector_massive.dir/clean
+.PHONY : CMakeFiles/test_class_inspector_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_deobf_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_deobf_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_deobf_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_deobf_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=65,66 "Built target test_deobf_massive"
+.PHONY : CMakeFiles/test_deobf_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_deobf_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_deobf_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_deobf_massive.dir/rule
+
+# Convenience name for target.
+test_deobf_massive: CMakeFiles/test_deobf_massive.dir/rule
+.PHONY : test_deobf_massive
+
+# codegen rule for target.
+CMakeFiles/test_deobf_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=65,66 "Finished codegen for target test_deobf_massive"
+.PHONY : CMakeFiles/test_deobf_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_deobf_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_deobf_massive.dir/build.make CMakeFiles/test_deobf_massive.dir/clean
+.PHONY : CMakeFiles/test_deobf_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_xref_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_xref_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_xref_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_xref_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=97,98 "Built target test_xref_massive"
+.PHONY : CMakeFiles/test_xref_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_xref_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_xref_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_xref_massive.dir/rule
+
+# Convenience name for target.
+test_xref_massive: CMakeFiles/test_xref_massive.dir/rule
+.PHONY : test_xref_massive
+
+# codegen rule for target.
+CMakeFiles/test_xref_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=97,98 "Finished codegen for target test_xref_massive"
+.PHONY : CMakeFiles/test_xref_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_xref_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_xref_massive.dir/build.make CMakeFiles/test_xref_massive.dir/clean
+.PHONY : CMakeFiles/test_xref_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_ui_mapper_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_ui_mapper_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_ui_mapper_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_ui_mapper_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=87,88 "Built target test_ui_mapper_massive"
+.PHONY : CMakeFiles/test_ui_mapper_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_ui_mapper_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_ui_mapper_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_ui_mapper_massive.dir/rule
+
+# Convenience name for target.
+test_ui_mapper_massive: CMakeFiles/test_ui_mapper_massive.dir/rule
+.PHONY : test_ui_mapper_massive
+
+# codegen rule for target.
+CMakeFiles/test_ui_mapper_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=87,88 "Finished codegen for target test_ui_mapper_massive"
+.PHONY : CMakeFiles/test_ui_mapper_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_ui_mapper_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ui_mapper_massive.dir/build.make CMakeFiles/test_ui_mapper_massive.dir/clean
+.PHONY : CMakeFiles/test_ui_mapper_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_search_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_search_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_search_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_search_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=77,78 "Built target test_search_massive"
+.PHONY : CMakeFiles/test_search_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_search_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_search_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_search_massive.dir/rule
+
+# Convenience name for target.
+test_search_massive: CMakeFiles/test_search_massive.dir/rule
+.PHONY : test_search_massive
+
+# codegen rule for target.
+CMakeFiles/test_search_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=77,78 "Finished codegen for target test_search_massive"
+.PHONY : CMakeFiles/test_search_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_search_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_massive.dir/build.make CMakeFiles/test_search_massive.dir/clean
+.PHONY : CMakeFiles/test_search_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_res_map_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_res_map_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_res_map_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_res_map_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=73,74 "Built target test_res_map_massive"
+.PHONY : CMakeFiles/test_res_map_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_res_map_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_res_map_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_res_map_massive.dir/rule
+
+# Convenience name for target.
+test_res_map_massive: CMakeFiles/test_res_map_massive.dir/rule
+.PHONY : test_res_map_massive
+
+# codegen rule for target.
+CMakeFiles/test_res_map_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=73,74 "Finished codegen for target test_res_map_massive"
+.PHONY : CMakeFiles/test_res_map_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_res_map_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_res_map_massive.dir/build.make CMakeFiles/test_res_map_massive.dir/clean
+.PHONY : CMakeFiles/test_res_map_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_cfg_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_cfg_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_cfg_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_cfg_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=51,52 "Built target test_cfg_massive"
+.PHONY : CMakeFiles/test_cfg_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_cfg_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_cfg_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_cfg_massive.dir/rule
+
+# Convenience name for target.
+test_cfg_massive: CMakeFiles/test_cfg_massive.dir/rule
+.PHONY : test_cfg_massive
+
+# codegen rule for target.
+CMakeFiles/test_cfg_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=51,52 "Finished codegen for target test_cfg_massive"
+.PHONY : CMakeFiles/test_cfg_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_cfg_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cfg_massive.dir/build.make CMakeFiles/test_cfg_massive.dir/clean
+.PHONY : CMakeFiles/test_cfg_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_sexpr_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_sexpr_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_sexpr_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_sexpr_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=83,84 "Built target test_sexpr_massive"
+.PHONY : CMakeFiles/test_sexpr_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_sexpr_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_sexpr_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_sexpr_massive.dir/rule
+
+# Convenience name for target.
+test_sexpr_massive: CMakeFiles/test_sexpr_massive.dir/rule
+.PHONY : test_sexpr_massive
+
+# codegen rule for target.
+CMakeFiles/test_sexpr_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=83,84 "Finished codegen for target test_sexpr_massive"
+.PHONY : CMakeFiles/test_sexpr_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_sexpr_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sexpr_massive.dir/build.make CMakeFiles/test_sexpr_massive.dir/clean
+.PHONY : CMakeFiles/test_sexpr_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_cli_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_cli_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_cli_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_cli_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=59,60 "Built target test_cli_massive"
+.PHONY : CMakeFiles/test_cli_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_cli_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_cli_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_cli_massive.dir/rule
+
+# Convenience name for target.
+test_cli_massive: CMakeFiles/test_cli_massive.dir/rule
+.PHONY : test_cli_massive
+
+# codegen rule for target.
+CMakeFiles/test_cli_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=59,60 "Finished codegen for target test_cli_massive"
+.PHONY : CMakeFiles/test_cli_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_cli_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cli_massive.dir/build.make CMakeFiles/test_cli_massive.dir/clean
+.PHONY : CMakeFiles/test_cli_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_class_search_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_class_search_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_class_search_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_class_search_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=57,58 "Built target test_class_search_massive"
+.PHONY : CMakeFiles/test_class_search_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_class_search_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_class_search_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_class_search_massive.dir/rule
+
+# Convenience name for target.
+test_class_search_massive: CMakeFiles/test_class_search_massive.dir/rule
+.PHONY : test_class_search_massive
+
+# codegen rule for target.
+CMakeFiles/test_class_search_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=57,58 "Finished codegen for target test_class_search_massive"
+.PHONY : CMakeFiles/test_class_search_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_class_search_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_class_search_massive.dir/build.make CMakeFiles/test_class_search_massive.dir/clean
+.PHONY : CMakeFiles/test_class_search_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_batch_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_batch_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_batch_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_batch_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=48,49 "Built target test_batch_massive"
+.PHONY : CMakeFiles/test_batch_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_batch_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_batch_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_batch_massive.dir/rule
+
+# Convenience name for target.
+test_batch_massive: CMakeFiles/test_batch_massive.dir/rule
+.PHONY : test_batch_massive
+
+# codegen rule for target.
+CMakeFiles/test_batch_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=48,49 "Finished codegen for target test_batch_massive"
+.PHONY : CMakeFiles/test_batch_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_batch_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batch_massive.dir/build.make CMakeFiles/test_batch_massive.dir/clean
+.PHONY : CMakeFiles/test_batch_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_brain_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_brain_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_brain_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_brain_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=50 "Built target test_brain_massive"
+.PHONY : CMakeFiles/test_brain_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_brain_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 19
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_brain_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_brain_massive.dir/rule
+
+# Convenience name for target.
+test_brain_massive: CMakeFiles/test_brain_massive.dir/rule
+.PHONY : test_brain_massive
+
+# codegen rule for target.
+CMakeFiles/test_brain_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=50 "Finished codegen for target test_brain_massive"
+.PHONY : CMakeFiles/test_brain_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_brain_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_brain_massive.dir/build.make CMakeFiles/test_brain_massive.dir/clean
+.PHONY : CMakeFiles/test_brain_massive.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_variable_tracker.dir
+
+# All Build rule for target.
+CMakeFiles/test_variable_tracker.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_variable_tracker.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_variable_tracker.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=89,90 "Built target test_variable_tracker"
+.PHONY : CMakeFiles/test_variable_tracker.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_variable_tracker.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_variable_tracker.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_variable_tracker.dir/rule
+
+# Convenience name for target.
+test_variable_tracker: CMakeFiles/test_variable_tracker.dir/rule
+.PHONY : test_variable_tracker
+
+# codegen rule for target.
+CMakeFiles/test_variable_tracker.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=89,90 "Finished codegen for target test_variable_tracker"
+.PHONY : CMakeFiles/test_variable_tracker.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_variable_tracker.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker.dir/build.make CMakeFiles/test_variable_tracker.dir/clean
+.PHONY : CMakeFiles/test_variable_tracker.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_variable_tracker_massive.dir
+
+# All Build rule for target.
+CMakeFiles/test_variable_tracker_massive.dir/all: CMakeFiles/scout_lib.dir/all
+CMakeFiles/test_variable_tracker_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+CMakeFiles/test_variable_tracker_massive.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=91,92 "Built target test_variable_tracker_massive"
+.PHONY : CMakeFiles/test_variable_tracker_massive.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_variable_tracker_massive.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_variable_tracker_massive.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_variable_tracker_massive.dir/rule
+
+# Convenience name for target.
+test_variable_tracker_massive: CMakeFiles/test_variable_tracker_massive.dir/rule
+.PHONY : test_variable_tracker_massive
+
+# codegen rule for target.
+CMakeFiles/test_variable_tracker_massive.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=91,92 "Finished codegen for target test_variable_tracker_massive"
+.PHONY : CMakeFiles/test_variable_tracker_massive.dir/codegen
+
+# clean rule for target.
+CMakeFiles/test_variable_tracker_massive.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_variable_tracker_massive.dir/build.make CMakeFiles/test_variable_tracker_massive.dir/clean
+.PHONY : CMakeFiles/test_variable_tracker_massive.dir/clean
+
+#=============================================================================
 # Target rules for target _deps/googletest-build/googlemock/CMakeFiles/gmock.dir
 
 # All Build rule for target.
 _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=23,24 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=22,23 "Built target gmock"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -522,7 +1338,7 @@ gmock: _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=23,24 "Finished codegen for target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=22,23 "Finished codegen for target gmock"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/codegen
 
 # clean rule for target.
@@ -538,7 +1354,7 @@ _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all: _deps/googletes
 _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=25,26 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=24,25 "Built target gmock_main"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -555,7 +1371,7 @@ gmock_main: _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=25,26 "Finished codegen for target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=24,25 "Finished codegen for target gmock_main"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/codegen
 
 # clean rule for target.
@@ -570,7 +1386,7 @@ _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/clean:
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=27,28 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=26,27 "Built target gtest"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -587,7 +1403,7 @@ gtest: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=27,28 "Finished codegen for target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=26,27 "Finished codegen for target gtest"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest.dir/codegen
 
 # clean rule for target.
@@ -602,7 +1418,7 @@ _deps/googletest-build/googletest/CMakeFiles/gtest.dir/clean:
 _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=29,30 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=28,29 "Built target gtest_main"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -619,7 +1435,7 @@ gtest_main: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=29,30 "Finished codegen for target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=28,29 "Finished codegen for target gtest_main"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/codegen
 
 # clean rule for target.
@@ -634,12 +1450,12 @@ _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/clean:
 _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/all:
 	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 "Built target benchmark"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 "Built target benchmark"
 .PHONY : _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/all
 
 # Build rule for subdir invocation for target.
 _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 20
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 19
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
 .PHONY : _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/rule
@@ -651,7 +1467,7 @@ benchmark: _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/rule
 # codegen rule for target.
 _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 "Finished codegen for target benchmark"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 "Finished codegen for target benchmark"
 .PHONY : _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/codegen
 
 # clean rule for target.
@@ -666,12 +1482,12 @@ _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/clean:
 _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/all: _deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=21,22 "Built target benchmark_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=20,21 "Built target benchmark_main"
 .PHONY : _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/all
 
 # Build rule for subdir invocation for target.
 _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 21
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/trindade/Projetos/scout++/build/CMakeFiles 0
 .PHONY : _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/rule
@@ -683,7 +1499,7 @@ benchmark_main: _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/ru
 # codegen rule for target.
 _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/build.make _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=21,22 "Finished codegen for target benchmark_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=20,21 "Finished codegen for target benchmark_main"
 .PHONY : _deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/codegen
 
 # clean rule for target.

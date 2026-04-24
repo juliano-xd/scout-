@@ -77,6 +77,7 @@ namespace utils {
         }
 
         bool is_open() const { return data_ != nullptr; }
+        size_t size() const { return size_; }
         std::string_view view() const {
             return {static_cast<const char*>(data_), size_};
         }

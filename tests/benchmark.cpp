@@ -65,7 +65,7 @@ BENCHMARK_F(ScoutFixture, SearchContentString)(benchmark::State& state) {
     config.search_type = "string";
 
     for (auto _ : state) {
-        auto res = engine.search(test_dir, config);
+        auto res = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
         benchmark::DoNotOptimize(res);
     }
 }
@@ -77,7 +77,7 @@ BENCHMARK_F(ScoutFixture, SearchContentRegex)(benchmark::State& state) {
     config.search_type = "regex";
 
     for (auto _ : state) {
-        auto res = engine.search(test_dir, config);
+        auto res = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
         benchmark::DoNotOptimize(res);
     }
 }
@@ -88,7 +88,7 @@ BENCHMARK_F(ScoutFixture, XrefEngineCallers)(benchmark::State& state) {
     config.query = "Lcom/example/Target;->importantMethod()Z";
     
     for (auto _ : state) {
-        auto res = engine.search(test_dir, config);
+        auto res = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
         benchmark::DoNotOptimize(res);
     }
 }

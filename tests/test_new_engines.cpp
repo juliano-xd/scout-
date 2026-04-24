@@ -52,14 +52,14 @@ TEST_F(NewEnginesTest, ResourceMappingWorks) {
     // Test ID lookup
     engines::SearchConfig config;
     config.query = "0x7f0b0001";
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     ASSERT_EQ(results.size(), 1);
     EXPECT_EQ(results[0].line_content, "string/app_name");
 
     // Test Name lookup
     config.query = "btn_login";
-    results = engine.search(test_dir, config);
+    results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     ASSERT_EQ(results.size(), 1);
     EXPECT_EQ(results[0].context, "0x7f0b0002");
 }
@@ -70,7 +70,7 @@ TEST_F(NewEnginesTest, CFGGenerationWorks) {
     engines::SearchConfig config;
     config.query = "Lcom/example/Target;->complexMethod(Z)V";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     ASSERT_EQ(results.size(), 1);
     // Verificar se contém S-Expression com blocos

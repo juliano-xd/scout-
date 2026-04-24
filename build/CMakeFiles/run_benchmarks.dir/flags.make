@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DBENCHMARK_STATIC_DEFINE
 
-CXX_INCLUDES = -I/home/trindade/Projetos/scout++/include -I/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/include
+CXX_INCLUDES = -I/home/trindade/Projetos/scout++/include -I/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-src/include -I/home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include
 
 CXX_FLAGS = -std=gnu++26
 

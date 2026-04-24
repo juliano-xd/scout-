@@ -4,6 +4,7 @@ run_benchmarks: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o \
   CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.o \
   _deps/googlebenchmark-build/src/libbenchmark.a \
+  libscout_lib.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/librt.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libm.so \
@@ -42,6 +43,8 @@ run_benchmarks: \
 CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.o:
 
 _deps/googlebenchmark-build/src/libbenchmark.a:
+
+libscout_lib.a:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/librt.a:
 

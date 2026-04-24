@@ -1,0 +1,47 @@
+{
+  "tests": 7,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "XrefAdvancedTest",
+      "tests": 7,
+      "testsuite": [
+        {
+          "name": "RecursiveXrefDepth2",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_advanced.cpp",
+          "line": 50
+        },
+        {
+          "name": "OpcodeFiltering",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_advanced.cpp",
+          "line": 75
+        },
+        {
+          "name": "MultiOpcodeFiltering",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_advanced.cpp",
+          "line": 91
+        },
+        {
+          "name": "RegisterExtraction",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_advanced.cpp",
+          "line": 104
+        },
+        {
+          "name": "FindsCallees",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_advanced.cpp",
+          "line": 115
+        },
+        {
+          "name": "TaintAnalysisLite",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_advanced.cpp",
+          "line": 129
+        },
+        {
+          "name": "AccessClassification",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref_advanced.cpp",
+          "line": 151
+        }
+      ]
+    }
+  ]
+}

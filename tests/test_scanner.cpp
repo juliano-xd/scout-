@@ -104,16 +104,16 @@ TEST_F(ScannerTest, SearchesContentInsideFiles) {
     config.query = "0x42";
     config.search_type = "string";
 
-    auto results_num = engine.search(test_dir, config);
+    auto results_num = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     EXPECT_EQ(results_num.size(), 2);
 
     config.query = "string_123";
-    auto results_str = engine.search(test_dir, config);
+    auto results_str = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     EXPECT_EQ(results_str.size(), 1);
 
     config.query = "MAGIC_\\w+";
     config.search_type = "regex";
-    auto results_rgx = engine.search(test_dir, config);
+    auto results_rgx = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     EXPECT_EQ(results_rgx.size(), 1);
 }
 

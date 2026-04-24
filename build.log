@@ -1,0 +1,109 @@
+==> Configurando e compilando o Scout++...
+CMake Warning (dev) at /usr/share/cmake/Modules/FetchContent.cmake:1386 (message):
+  The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy CMP0135 is
+  not set.  The policy's OLD behavior will be used.  When using a URL
+  download, the timestamps of extracted files should preferably be that of
+  the time of extraction, otherwise code that depends on the extracted
+  contents might not be rebuilt if the URL changes.  The OLD behavior
+  preserves the timestamps from the archive instead, but this is usually not
+  what you want.  Update your project to the NEW behavior or specify the
+  DOWNLOAD_EXTRACT_TIMESTAMP option with a value of true to avoid this
+  robustness issue.
+Call Stack (most recent call first):
+  CMakeLists.txt:10 (FetchContent_Declare)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Using the multi-header code from /home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include/
+CMake Warning (dev) at /usr/share/cmake/Modules/FetchContent.cmake:1386 (message):
+  The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy CMP0135 is
+  not set.  The policy's OLD behavior will be used.  When using a URL
+  download, the timestamps of extracted files should preferably be that of
+  the time of extraction, otherwise code that depends on the extracted
+  contents might not be rebuilt if the URL changes.  The OLD behavior
+  preserves the timestamps from the archive instead, but this is usually not
+  what you want.  Update your project to the NEW behavior or specify the
+  DOWNLOAD_EXTRACT_TIMESTAMP option with a value of true to avoid this
+  robustness issue.
+Call Stack (most recent call first):
+  CMakeLists.txt:34 (FetchContent_Declare)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Deprecation Warning at build/_deps/googletest-src/CMakeLists.txt:4 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Deprecation Warning at build/_deps/googletest-src/googlemock/CMakeLists.txt:39 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Deprecation Warning at build/_deps/googletest-src/googletest/CMakeLists.txt:49 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Warning (dev) at /usr/share/cmake/Modules/FetchContent.cmake:1386 (message):
+  The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy CMP0135 is
+  not set.  The policy's OLD behavior will be used.  When using a URL
+  download, the timestamps of extracted files should preferably be that of
+  the time of extraction, otherwise code that depends on the extracted
+  contents might not be rebuilt if the URL changes.  The OLD behavior
+  preserves the timestamps from the archive instead, but this is usually not
+  what you want.  Update your project to the NEW behavior or specify the
+  DOWNLOAD_EXTRACT_TIMESTAMP option with a value of true to avoid this
+  robustness issue.
+Call Stack (most recent call first):
+  CMakeLists.txt:41 (FetchContent_Declare)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Failed to find LLVM FileCheck
+-- git version: v0.0.0-dirty normalized to 0.0.0
+-- Google Benchmark version: 1.8.3
+-- Performing Test HAVE_STD_REGEX -- success
+-- Performing Test HAVE_GNU_POSIX_REGEX -- failed to compile
+-- Performing Test HAVE_POSIX_REGEX -- success
+-- Performing Test HAVE_STEADY_CLOCK -- success
+-- Performing Test HAVE_PTHREAD_AFFINITY -- success
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/trindade/Projetos/scout++/build
+make[1]: Entrando no diretório '/home/trindade/Projetos/scout++/build'
+
+[  4%] Built target gtest
+[  6%] Linking CXX executable scout
+[ 47%] Built target benchmark
+[ 56%] Built target gtest_main
+[ 56%] Built target gmock
+[ 60%] Built target run_benchmarks
+[ 64%] Built target benchmark_main
+[ 68%] Built target test_filesystem
+[ 72%] Built target test_scanner
+[ 77%] Built target test_xref
+[ 85%] Built target test_cli_parser
+[ 85%] Built target test_smali_parser
+[ 89%] Built target gmock_main
+/usr/bin/ld: CMakeFiles/scout.dir/src/main.cpp.o: na função "main":
+main.cpp:(.text+0x62a): undefined reference to `utils::buscar_arquivo_recursivo(std::filesystem::__cxx11::path const&, std::basic_string_view<char, std::char_traits<char> >)'
+/usr/bin/ld: CMakeFiles/scout.dir/src/engines/xref_search_engine.cpp.o: na função "engines::XrefSearchEngine::search(std::filesystem::__cxx11::path const&, engines::SearchConfig const&)::{lambda()#1}::operator()() const::{lambda(std::filesystem::__cxx11::path const&)#1}::operator()(std::filesystem::__cxx11::path const&) const":
+xref_search_engine.cpp:(.text+0x9ae): undefined reference to `engines::XrefSearchEngine::contains_target(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+/usr/bin/ld: xref_search_engine.cpp:(.text+0xb26): undefined reference to `engines::XrefSearchEngine::is_system_class(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+collect2: error: ld returned 1 exit status
+make[3]: *** [CMakeFiles/scout.dir/build.make:165: scout] Error 1
+make[2]: *** [CMakeFiles/Makefile2:242: CMakeFiles/scout.dir/all] Error 2
+make[1]: *** [Makefile:146: all] Error 2
+make[1]: Saindo do diretório '/home/trindade/Projetos/scout++/build'
+
+make: *** [Makefile:10: build] Error 2

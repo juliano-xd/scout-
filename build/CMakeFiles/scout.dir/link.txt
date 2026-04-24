@@ -1,1 +1,1 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/scout.dir/link.d CMakeFiles/scout.dir/src/main.cpp.o -o scout
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/scout.dir/link.d CMakeFiles/scout.dir/src/main.cpp.o -o scout  libscout_lib.a

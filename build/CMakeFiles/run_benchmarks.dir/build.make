@@ -97,6 +97,7 @@ run_benchmarks: CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.o
 run_benchmarks: CMakeFiles/run_benchmarks.dir/build.make
 run_benchmarks: CMakeFiles/run_benchmarks.dir/compiler_depend.ts
 run_benchmarks: _deps/googlebenchmark-build/src/libbenchmark.a
+run_benchmarks: libscout_lib.a
 run_benchmarks: CMakeFiles/run_benchmarks.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable run_benchmarks"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/run_benchmarks.dir/link.txt --verbose=$(VERBOSE)

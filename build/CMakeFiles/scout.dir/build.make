@@ -96,6 +96,7 @@ scout_EXTERNAL_OBJECTS =
 scout: CMakeFiles/scout.dir/src/main.cpp.o
 scout: CMakeFiles/scout.dir/build.make
 scout: CMakeFiles/scout.dir/compiler_depend.ts
+scout: libscout_lib.a
 scout: CMakeFiles/scout.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable scout"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/scout.dir/link.txt --verbose=$(VERBOSE)

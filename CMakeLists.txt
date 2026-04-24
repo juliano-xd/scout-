@@ -23,6 +23,13 @@ add_library(scout_lib
     src/engines/xref_search_engine.cpp
     src/engines/resource_mapping_engine.cpp
     src/engines/cfg_engine.cpp
+    src/engines/manifest_engine.cpp
+    src/engines/class_inspector_engine.cpp
+    src/engines/ui_mapper_engine.cpp
+    src/engines/deobf_engine.cpp
+    src/engines/variable_tracker_engine.cpp
+    src/engines/dominator_analyzer.cpp
+    src/engines/register_engines.cpp
     src/formatters/sexpr_formatter.cpp
 
 )
@@ -111,3 +118,65 @@ gtest_discover_tests(test_sexpr_edge)
 add_executable(test_new_engines tests/test_new_engines.cpp)
 target_link_libraries(test_new_engines GTest::gtest_main scout_lib)
 gtest_discover_tests(test_new_engines)
+
+# Massive Test Suites (100 tests per module)
+add_executable(test_manifest_massive tests/test_manifest_massive.cpp)
+target_link_libraries(test_manifest_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_manifest_massive)
+
+add_executable(test_class_inspector_massive tests/test_class_inspector_massive.cpp)
+target_link_libraries(test_class_inspector_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_class_inspector_massive)
+
+add_executable(test_deobf_massive tests/test_deobf_massive.cpp)
+target_link_libraries(test_deobf_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_deobf_massive)
+
+add_executable(test_xref_massive tests/test_xref_massive.cpp)
+target_link_libraries(test_xref_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_xref_massive)
+
+add_executable(test_ui_mapper_massive tests/test_ui_mapper_massive.cpp)
+target_link_libraries(test_ui_mapper_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_ui_mapper_massive)
+
+add_executable(test_search_massive tests/test_search_massive.cpp)
+target_link_libraries(test_search_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_search_massive)
+
+add_executable(test_res_map_massive tests/test_res_map_massive.cpp)
+target_link_libraries(test_res_map_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_res_map_massive)
+
+add_executable(test_cfg_massive tests/test_cfg_massive.cpp)
+target_link_libraries(test_cfg_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_cfg_massive)
+
+add_executable(test_sexpr_massive tests/test_sexpr_massive.cpp)
+target_link_libraries(test_sexpr_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_sexpr_massive)
+
+add_executable(test_cli_massive tests/test_cli_massive.cpp)
+target_link_libraries(test_cli_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_cli_massive)
+
+add_executable(test_class_search_massive tests/test_class_search_massive.cpp)
+target_link_libraries(test_class_search_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_class_search_massive)
+
+add_executable(test_batch_massive tests/test_batch_massive.cpp)
+target_link_libraries(test_batch_massive GTest::gtest_main scout_lib)
+gtest_discover_tests(test_batch_massive)
+
+add_executable(test_brain_massive tests/test_brain_massive.cpp)
+target_link_libraries(test_brain_massive PRIVATE scout_lib GTest::gtest_main)
+
+add_executable(test_variable_tracker tests/test_variable_tracker.cpp)
+target_link_libraries(test_variable_tracker PRIVATE scout_lib GTest::gtest_main)
+
+add_executable(test_variable_tracker_massive tests/test_variable_tracker_massive.cpp)
+target_link_libraries(test_variable_tracker_massive PRIVATE scout_lib GTest::gtest_main)
+
+gtest_discover_tests(test_brain_massive)
+gtest_discover_tests(test_variable_tracker)
+gtest_discover_tests(test_variable_tracker_massive)

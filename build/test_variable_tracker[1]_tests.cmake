@@ -1,0 +1,3 @@
+add_test([=[VariableTrackerTest.TrackLifetimeAcrossMethods]=]  [==[/home/trindade/Projetos/scout++/build/test_variable_tracker]==] [==[--gtest_filter=VariableTrackerTest.TrackLifetimeAcrossMethods]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[VariableTrackerTest.TrackLifetimeAcrossMethods]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_variable_tracker.cpp:28]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  test_variable_tracker_TESTS VariableTrackerTest.TrackLifetimeAcrossMethods)

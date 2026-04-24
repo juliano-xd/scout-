@@ -22,9 +22,10 @@ namespace engines {
     }
 
     std::vector<SearchResult> ClassSearchEngine::search(
-        const std::filesystem::path& root_dir,
+        core::AnalysisContext& ctx,
         const SearchConfig& config
     ) {
+        auto& root_dir = ctx.root_dir();
         std::vector<SearchResult> results;
         
         if (config.query.empty()) {

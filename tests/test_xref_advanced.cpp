@@ -54,7 +54,7 @@ TEST_F(XrefAdvancedTest, RecursiveXrefDepth2) {
     engines::SearchConfig config;
     config.query = "Lcom/example/A;->targetMethod()V";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     // Depth 1: B calling A
     // Depth 2: C calling B
@@ -79,7 +79,7 @@ TEST_F(XrefAdvancedTest, OpcodeFiltering) {
     engines::SearchConfig config;
     config.query = "Lcom/example/A;";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     // Only D should be found because it uses sget-object
     // B uses invoke-virtual, so it should be filtered out
@@ -95,7 +95,7 @@ TEST_F(XrefAdvancedTest, MultiOpcodeFiltering) {
     engines::SearchConfig config;
     config.query = "Lcom/example/A;";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     // Found B (invoke-virtual) and D (sget-object)
     ASSERT_EQ(results.size(), 2);
@@ -106,7 +106,7 @@ TEST_F(XrefAdvancedTest, RegisterExtraction) {
     engines::SearchConfig config;
     config.query = "Lcom/example/A;->targetMethod()V";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     ASSERT_EQ(results.size(), 1);
     EXPECT_TRUE(results[0].context.find("regs:{p0}") != std::string::npos);
@@ -119,7 +119,7 @@ TEST_F(XrefAdvancedTest, FindsCallees) {
     engines::SearchConfig config;
     config.query = "Lcom/example/B;->callerOfA()V";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     // B calls A
     ASSERT_EQ(results.size(), 1);
@@ -141,7 +141,7 @@ TEST_F(XrefAdvancedTest, TaintAnalysisLite) {
     engines::SearchConfig config;
     config.query = "Lcom/example/A;->targetMethod(Ljava/lang/String;)V";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     ASSERT_EQ(results.size(), 1);
     EXPECT_TRUE(results[0].context.find("taint:SECRET_API_KEY") != std::string::npos);
@@ -154,7 +154,7 @@ TEST_F(XrefAdvancedTest, AccessClassification) {
     engines::SearchConfig config;
     config.query = "Lcom/example/A;";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     // Find D.smali (sget)
     bool found_d = false;

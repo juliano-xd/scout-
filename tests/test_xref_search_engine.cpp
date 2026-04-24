@@ -109,7 +109,7 @@ TEST(XrefSearchEngine, EmptyQueryReturnsEmpty) {
 
     SearchConfig cfg;
     cfg.query = "";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
     EXPECT_TRUE(results.empty());
 
     cleanup_test_structure(temp_dir);
@@ -120,7 +120,7 @@ TEST(XrefSearchEngine, InvalidDirectoryReturnsEmpty) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;";
-    auto results = engine.search("/nonexistent/path/12345", cfg);
+    auto results = ([&](){ core::AnalysisContext ctx("/nonexistent/path/12345"); return engine.search(ctx, cfg); })();
     EXPECT_TRUE(results.empty());
 }
 
@@ -132,7 +132,7 @@ TEST(XrefSearchEngine, FindsCallers) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;->checkPassword";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     EXPECT_GE(results.size(), 1u);
 
@@ -158,7 +158,7 @@ TEST(XrefSearchEngine, FindsReferenceToClass) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/SecretManager;";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     // AuthManager.checkPassword chama SecretManager.getKey
     EXPECT_GE(results.size(), 1u);
@@ -175,7 +175,7 @@ TEST(XrefSearchEngine, FilterSystemClassesByDefault) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     // Não deve ter resultados cujo caller_class começa com "Landroid/"
     for (const auto& r : results) {
@@ -193,7 +193,7 @@ TEST(XrefSearchEngine, IncludesSystemClassesWhenEnabled) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     // Agora deve incluir a referência de Landroid/system/SystemClass
     bool found_system = false;
@@ -216,7 +216,7 @@ TEST(XrefSearchEngine, MaxResultsRespected) {
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;";
     cfg.max_results = 1;
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     EXPECT_LE(results.size(), 1u);
 
@@ -231,7 +231,7 @@ TEST(XrefSearchEngine, StatsAreUpdatedAfterSearch) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;->checkPassword";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     auto stats = engine.get_stats();
     // matches_found deve refletir o que foi encontrado
@@ -248,7 +248,7 @@ TEST(XrefSearchEngine, ResultContextContainsBothClassAndMethod) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;->checkPassword";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     for (const auto& r : results) {
         // Contexto deve estar no formato "class->method [type]"
@@ -268,7 +268,7 @@ TEST(XrefSearchEngine, DirectionCallersOnlyFindsCallers) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/AuthManager;->checkPassword";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     for (const auto& r : results) {
         // Com direction=callers, o xref_type deve ser "caller"
@@ -285,7 +285,7 @@ TEST(XrefSearchEngine, EngineNameInResults) {
 
     SearchConfig cfg;
     cfg.query = "Lcom/example/SecretManager;";
-    auto results = engine.search(temp_dir, cfg);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, cfg); })();
 
     for (const auto& r : results) {
         EXPECT_EQ(r.engine_name, "xref");

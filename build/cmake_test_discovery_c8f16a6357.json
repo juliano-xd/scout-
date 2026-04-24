@@ -1,40 +1,60 @@
 {
-  "tests": 6,
+  "tests": 10,
   "name": "AllTests",
   "testsuites": [
     {
-      "name": "SexprTest",
-      "tests": 6,
+      "name": "SExprFormatterTest",
+      "tests": 10,
       "testsuite": [
         {
-          "name": "HandlesNullAndBooleans",
+          "name": "NameAndExtension",
           "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
-          "line": 7
+          "line": 18
         },
         {
-          "name": "HandlesNumbers",
+          "name": "FormatSearchResults",
           "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
-          "line": 13
+          "line": 24
         },
         {
-          "name": "HandlesStringsAndEscaping",
+          "name": "FormatStatus",
           "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
-          "line": 19
+          "line": 39
         },
         {
-          "name": "HandlesArrays",
+          "name": "FormatRawNode",
           "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
-          "line": 26
+          "line": 49
         },
         {
-          "name": "HandlesObjects",
+          "name": "FormatList",
           "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
-          "line": 34
+          "line": 58
         },
         {
-          "name": "HandlesNestedStructures",
+          "name": "PrettyMode",
           "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
-          "line": 43
+          "line": 70
+        },
+        {
+          "name": "MetadataOnByDefault",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 83
+        },
+        {
+          "name": "MetadataCanBeDisabled",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 90
+        },
+        {
+          "name": "XrefResults",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 98
+        },
+        {
+          "name": "EmptyResultsValidSExpr",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_sexpr.cpp",
+          "line": 110
         }
       ]
     }

@@ -1,0 +1,5 @@
+if(EXISTS "/home/trindade/Projetos/scout++/build/test_ui_mapper_massive[1]_tests.cmake")
+  include("/home/trindade/Projetos/scout++/build/test_ui_mapper_massive[1]_tests.cmake")
+else()
+  add_test(test_ui_mapper_massive_NOT_BUILT test_ui_mapper_massive_NOT_BUILT)
+endif()

@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/test_cli_massive.dir/link.d CMakeFiles/test_cli_massive.dir/tests/test_cli_massive.cpp.o -o test_cli_massive  lib/libgtest_main.a libscout_lib.a lib/libgtest.a

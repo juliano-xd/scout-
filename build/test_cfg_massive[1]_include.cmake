@@ -1,0 +1,5 @@
+if(EXISTS "/home/trindade/Projetos/scout++/build/test_cfg_massive[1]_tests.cmake")
+  include("/home/trindade/Projetos/scout++/build/test_cfg_massive[1]_tests.cmake")
+else()
+  add_test(test_cfg_massive_NOT_BUILT test_cfg_massive_NOT_BUILT)
+endif()

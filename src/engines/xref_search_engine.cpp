@@ -79,21 +79,24 @@ namespace engines {
     }
 
     void XrefSearchEngine::update_context(std::string_view trimmed_line, ParseContext& ctx) {
-        if (trimmed_line.starts_with(".class ")) {
-            size_t last_space = trimmed_line.find_last_of(' ');
-            if (last_space != std::string_view::npos) {
-                std::string_view class_name = trimmed_line.substr(last_space + 1);
-                ctx.current_class = std::string(class_name);
+        if (trimmed_line.find(".class ") != std::string_view::npos) {
+            size_t pos = trimmed_line.find_last_of(' ');
+            if (pos != std::string_view::npos) {
+                ctx.current_class = std::string(trimmed_line.substr(pos + 1));
             }
-        } else if (trimmed_line.starts_with(".method ")) {
-            std::string_view sig = trimmed_line.substr(8);
-            size_t paren_pos = sig.find('(');
-            if (paren_pos != std::string_view::npos) {
-                size_t last_space = sig.find_last_of(' ', paren_pos);
-                if (last_space != std::string_view::npos) sig = sig.substr(last_space + 1);
+        } else if (trimmed_line.find(".method ") != std::string_view::npos) {
+            size_t paren = trimmed_line.find('(');
+            if (paren != std::string_view::npos) {
+                size_t method_start = trimmed_line.find(".method ");
+                std::string_view sig = trimmed_line.substr(method_start + 8);
+                size_t space = sig.find_last_of(' ', paren - (method_start + 8));
+                if (space != std::string_view::npos) {
+                    ctx.current_method = std::string(sig.substr(space + 1));
+                } else {
+                    ctx.current_method = std::string(sig);
+                }
             }
-            ctx.current_method = std::string(sig);
-        } else if (trimmed_line == ".end method") {
+        } else if (trimmed_line.find(".end method") != std::string_view::npos) {
             ctx.current_method.clear();
         }
         ctx.line_number++;
@@ -325,9 +328,18 @@ namespace engines {
     }
 
     std::vector<SearchResult> XrefSearchEngine::search(
-        const std::filesystem::path& root_dir,
+        core::AnalysisContext& ctx,
         const SearchConfig& config
     ) {
+        auto root_dir = ctx.root_dir();
+        // Sincronizar configurações internas com o config recebido
+        direction_ = config.direction;
+        include_system_ = config.include_system;
+        depth_ = config.search_depth;
+        if (!config.filter_opcodes.empty()) {
+            filter_opcodes_ = config.filter_opcodes;
+        }
+
         if (direction_ == "callees") {
             return search_callees(root_dir, config.query, config);
         }

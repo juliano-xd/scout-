@@ -97,6 +97,7 @@ test_sexpr: CMakeFiles/test_sexpr.dir/tests/test_sexpr.cpp.o
 test_sexpr: CMakeFiles/test_sexpr.dir/build.make
 test_sexpr: CMakeFiles/test_sexpr.dir/compiler_depend.ts
 test_sexpr: lib/libgtest_main.a
+test_sexpr: libscout_lib.a
 test_sexpr: lib/libgtest.a
 test_sexpr: CMakeFiles/test_sexpr.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_sexpr"

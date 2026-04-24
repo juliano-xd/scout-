@@ -1,0 +1,87 @@
+{
+  "tests": 15,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "ContentSearchEngine",
+      "tests": 15,
+      "testsuite": [
+        {
+          "name": "ConstructorAndName",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 107
+        },
+        {
+          "name": "SearchStringLiteral",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 113
+        },
+        {
+          "name": "SearchStringCaseInsensitive",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 140
+        },
+        {
+          "name": "SearchRegex",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 164
+        },
+        {
+          "name": "SearchIntegerDecimal",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 181
+        },
+        {
+          "name": "SearchIntegerHex",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 207
+        },
+        {
+          "name": "SearchContextTracking",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 231
+        },
+        {
+          "name": "SearchMaxResultsLimit",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 255
+        },
+        {
+          "name": "SearchEmptyQuery",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 270
+        },
+        {
+          "name": "SearchInvalidDirectory",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 285
+        },
+        {
+          "name": "GetStats",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 300
+        },
+        {
+          "name": "SupportsConfig",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 319
+        },
+        {
+          "name": "ParallelExecution",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 325
+        },
+        {
+          "name": "RegistryIntegration",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 348
+        },
+        {
+          "name": "FactoryFunction",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_content_search_engine.cpp",
+          "line": 359
+        }
+      ]
+    }
+  ]
+}

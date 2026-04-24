@@ -120,7 +120,7 @@ TEST(ContentSearchEngine, SearchStringLiteral) {
     // config.search_type não é usado explicitamente, mas o motor detecta pelo uso
     // Para este teste, assumimos busca por string literal
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     ASSERT_GE(results.size(), 1);
     // Deve encontrar a linha com "password_check" em AuthManager.checkPassword
@@ -146,7 +146,7 @@ TEST(ContentSearchEngine, SearchStringCaseInsensitive) {
     config.max_results = 100;
     config.case_sensitive = false;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     // Deve encontrar mesmo com case insensitive
     bool found = false;
@@ -170,7 +170,7 @@ TEST(ContentSearchEngine, SearchRegex) {
     config.max_results = 100;
     config.search_type = "regex";
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     // Deve encontrar múltiplas linhas com const-string
     ASSERT_GE(results.size(), 3); // Pelo menos 3 const-strings nos arquivos de teste
@@ -186,7 +186,7 @@ TEST(ContentSearchEngine, SearchIntegerDecimal) {
     config.query = "0x1"; // Valor hexadecimal que aparece em vários lugares
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     // Deve encontrar linhas com 0x1 (ex: const/16 v1, 0x1)
     ASSERT_GE(results.size(), 1);
@@ -212,7 +212,7 @@ TEST(ContentSearchEngine, SearchIntegerHex) {
     config.query = "0x7f0a0001"; // Resource ID hexadecimal
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     // Deve encontrar em LoginActivity.smali
     bool found = false;
@@ -236,7 +236,7 @@ TEST(ContentSearchEngine, SearchContextTracking) {
     config.query = "invoke-static";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     // Verificar que o contexto (método atual) é rastreado corretamente
     bool found_in_check_password = false;
@@ -260,7 +260,7 @@ TEST(ContentSearchEngine, SearchMaxResultsLimit) {
     config.query = "const"; // Muitas ocorrências
     config.max_results = 2; // Limite baixo
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     EXPECT_LE(results.size(), 2);
     
@@ -275,7 +275,7 @@ TEST(ContentSearchEngine, SearchEmptyQuery) {
     config.query = "";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     EXPECT_TRUE(results.empty());
     
@@ -290,7 +290,7 @@ TEST(ContentSearchEngine, SearchInvalidDirectory) {
     config.query = "test";
     config.max_results = 100;
     
-    auto results = engine.search(invalid_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(invalid_dir); return engine.search(ctx, config); })();
     
     EXPECT_TRUE(results.empty());
 }
@@ -305,7 +305,7 @@ TEST(ContentSearchEngine, GetStats) {
     config.query = "const";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     auto stats = engine.get_stats();
     
     EXPECT_GE(stats.files_scanned, 1); // Pelo menos 1 arquivo escaneado
@@ -332,8 +332,8 @@ TEST(ContentSearchEngine, ParallelExecution) {
     config.max_results = 1000;
     
     // Executar múltiplas buscas paralelas (o motor internamente usa std::execution::par_unseq)
-    auto results1 = engine.search(temp_dir, config);
-    auto results2 = engine.search(temp_dir, config);
+    auto results1 = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
+    auto results2 = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     // Ambos devem retornar resultados consistentes
     EXPECT_EQ(results1.size(), results2.size());

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "i_search_engine.hpp"
+#include "core/analysis_context.hpp"
 #include <memory>
 #include <unordered_map>
 #include <functional>

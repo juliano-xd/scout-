@@ -1,0 +1,22 @@
+{
+  "tests": 2,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "NewEnginesTest",
+      "tests": 2,
+      "testsuite": [
+        {
+          "name": "ResourceMappingWorks",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_new_engines.cpp",
+          "line": 49
+        },
+        {
+          "name": "CFGGenerationWorks",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_new_engines.cpp",
+          "line": 67
+        }
+      ]
+    }
+  ]
+}

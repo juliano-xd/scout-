@@ -1,179 +1,164 @@
 #include "engines/cfg_engine.hpp"
-#include "core/scanner.hpp"
-#include "utils/filesystem.hpp"
+#include "core/analysis_context.hpp"
 #include "utils/string_utils.hpp"
-#include "utils/mmap_file.hpp"
+#include "utils/sexpr.hpp"
+#include <vector>
+#include <unordered_map>
 #include <chrono>
-#include <sstream>
-#include <set>
 
 namespace engines {
 
-    std::vector<BasicBlock> CFGEngine::analyze_method(const std::filesystem::path& file, const std::string& method_sig) {
-        std::vector<BasicBlock> blocks;
-        utils::MappedFile mfile(file);
-        if (!mfile.is_open()) return blocks;
-
-        utils::LineIterator it(mfile.view());
-        std::string_view line;
-        bool in_method = false;
-        std::vector<std::string> method_lines;
-        size_t start_ln = 0;
-        size_t current_ln = 0;
-
-        while (it.next(line)) {
-            current_ln++;
-            std::string_view trimmed = utils::trim(line);
-            if (trimmed.starts_with(".method ") && trimmed.find(method_sig) != std::string_view::npos) {
-                in_method = true;
-                start_ln = current_ln;
-                continue;
-            }
-            if (in_method) {
-                if (trimmed == ".end method") {
-                    in_method = false;
-                    break;
-                }
-                method_lines.push_back(std::string(trimmed));
-            }
-        }
-
-        if (method_lines.empty()) return blocks;
-
-        // Identificar líderes (início de blocos básicos)
-        std::set<size_t> leaders;
-        leaders.insert(0); // Primeira instrução é líder
-
-        for (size_t i = 0; i < method_lines.size(); ++i) {
-            const std::string& l = method_lines[i];
-            if (l.empty() || l[0] == '.') continue;
-
-            if (l.starts_with("goto") || l.starts_with("if-") || l.starts_with("return") || l.starts_with("throw")) {
-                // Instrução após um jump/return é líder
-                if (i + 1 < method_lines.size()) leaders.insert(i + 1);
-                
-                // Alvo de um jump é líder (precisamos encontrar a label)
-                if (l.find(':') != std::string::npos) {
-                    size_t colon = l.find_last_of(':');
-                    std::string label = l.substr(colon);
-                    for (size_t j = 0; j < method_lines.size(); ++j) {
-                        if (method_lines[j] == label) {
-                            leaders.insert(j);
-                            break;
-                        }
-                    }
-                }
-            }
-            // Labels são líderes
-            if (l.starts_with(":")) leaders.insert(i);
-        }
-
-        // Criar blocos
-        std::vector<size_t> sorted_leaders(leaders.begin(), leaders.end());
-        for (size_t i = 0; i < sorted_leaders.size(); ++i) {
-            BasicBlock bb;
-            bb.id = "BB" + std::to_string(i);
-            bb.start_line = sorted_leaders[i];
-            size_t end = (i + 1 < sorted_leaders.size()) ? sorted_leaders[i + 1] : method_lines.size();
-            bb.end_line = end;
-
-            for (size_t j = bb.start_line; j < end; ++j) {
-                bb.instructions.push_back(method_lines[j]);
-            }
-            blocks.push_back(std::move(bb));
-        }
-
-        // Resolver sucessores
-        for (size_t i = 0; i < blocks.size(); ++i) {
-            if (blocks[i].instructions.empty()) continue;
-            const std::string& last = blocks[i].instructions.back();
-
-            if (last.starts_with("return") || last.starts_with("throw")) {
-                continue; // Sem sucessores
-            }
-
-            if (last.starts_with("goto")) {
-                // Apenas sucessor alvo
-                size_t colon = last.find_last_of(':');
-                std::string label = last.substr(colon);
-                for (size_t j = 0; j < blocks.size(); ++j) {
-                    if (!blocks[j].instructions.empty() && blocks[j].instructions[0] == label) {
-                        blocks[i].successors.push_back(blocks[j].id);
-                        break;
-                    }
-                }
-            } else if (last.starts_with("if-")) {
-                // Sucessor alvo + sucessor imediato
-                size_t colon = last.find_last_of(':');
-                std::string label = last.substr(colon);
-                for (size_t j = 0; j < blocks.size(); ++j) {
-                    if (!blocks[j].instructions.empty() && blocks[j].instructions[0] == label) {
-                        blocks[i].successors.push_back(blocks[j].id);
-                        break;
-                    }
-                }
-                if (i + 1 < blocks.size()) blocks[i].successors.push_back(blocks[i + 1].id);
-            } else {
-                // Sucessor imediato
-                if (i + 1 < blocks.size()) blocks[i].successors.push_back(blocks[i + 1].id);
-            }
-        }
-
-        return blocks;
-    }
-
-    std::string CFGEngine::blocks_to_sexpr(const std::vector<BasicBlock>& blocks) {
-        std::stringstream ss;
-        ss << "(cfg (blocks ";
-        for (const auto& b : blocks) {
-            ss << "(block (id \"" << b.id << "\") (instructions ";
-            for (const auto& ins : b.instructions) {
-                if (ins.empty() || ins[0] == '.') continue;
-                ss << "\"" << ins << "\" ";
-            }
-            ss << ") (successors ";
-            for (const auto& s : b.successors) ss << "\"" << s << "\" ";
-            ss << "))";
-        }
-        ss << "))";
-        return ss.str();
+    CFGEngine::CFGEngine() {
+        stats_.total_time = std::chrono::milliseconds(0);
     }
 
     std::vector<SearchResult> CFGEngine::search(
-        const std::filesystem::path& root_dir,
+        core::AnalysisContext& ctx,
         const SearchConfig& config
     ) {
         auto start = std::chrono::high_resolution_clock::now();
         std::vector<SearchResult> results;
 
-        // 1. Identificar classe e método
-        size_t arrow = config.query.find("->");
-        if (arrow == std::string::npos) return results;
+        std::string_view query_view = config.query;
+        size_t arrow = query_view.find("->");
+        if (arrow == std::string_view::npos) return results;
 
-        std::string class_target = config.query.substr(0, arrow);
-        std::string method_target = config.query.substr(arrow + 2);
+        std::string_view class_name = query_view.substr(0, arrow);
+        std::string_view method_sig = query_view.substr(arrow + 2);
 
-        auto file = core::find_class_file(root_dir, class_target);
-        if (!file) return results;
+        std::string_view content = ctx.get_class_content(class_name);
+        if (content.empty()) return results;
 
-        auto blocks = analyze_method(*file, method_target);
+        size_t m_pos = content.find(method_sig);
+        if (m_pos == std::string_view::npos) return results;
+
+        size_t m_start = content.rfind(".method ", m_pos);
+        size_t m_end = content.find(".end method", m_pos);
+        if (m_start == std::string_view::npos || m_end == std::string_view::npos) return results;
+
+        std::string_view body = content.substr(m_start, m_end - m_start);
+        CFG cfg = build_cfg(body);
         
         SearchResult res;
-        res.file_path = *file;
-        res.line_content = blocks_to_sexpr(blocks);
-        res.context = config.query;
-        res.engine_name = this->name();
+        res.engine_name = name();
+        res.file_path = std::string(class_name);
+        
+        auto root = sexpr::form("cfg-report");
+        root.kv("method", sexpr::string(std::string(config.query)));
+        
+        auto blocks_node = sexpr::list();
+        for (const auto& b : cfg.blocks) {
+            auto b_node = sexpr::form("block");
+            b_node.kv("id", sexpr::integer(b.id));
+            auto succs = sexpr::list();
+            for (int s : b.successors) succs.push(sexpr::integer(s));
+            b_node.kv("succ", succs);
+            blocks_node.push(b_node);
+        }
+        root.kv("blocks", blocks_node);
+        res.context = root.to_string();
         results.push_back(std::move(res));
 
         auto end = std::chrono::high_resolution_clock::now();
-        stats_.total_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        stats_.matches_found = results.size();
+        stats_.total_time += std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        stats_.matches_found = 1;
 
         return results;
     }
 
-    std::unique_ptr<ISearchEngine> create_cfg_engine() {
-        return std::make_unique<CFGEngine>();
+    CFG CFGEngine::build_cfg(std::string_view body) {
+        CFG cfg;
+        if (body.empty()) return cfg;
+
+        std::vector<std::string_view> lines;
+        std::vector<size_t> line_start_pos;
+        std::unordered_map<std::string_view, int> label_to_line;
+
+        size_t pos = 0;
+        while (pos < body.size()) {
+            size_t next = body.find('\n', pos);
+            if (next == std::string_view::npos) next = body.size();
+            std::string_view raw_line = body.substr(pos, next - pos);
+            std::string_view line = utils::trim(raw_line);
+            if (!line.empty()) {
+                if (line[0] == ':') label_to_line[line] = lines.size();
+                lines.push_back(line);
+                line_start_pos.push_back(pos);
+            }
+            pos = next + 1;
+        }
+
+        if (lines.empty()) return cfg;
+
+        std::vector<bool> is_leader(lines.size(), false);
+        is_leader[0] = true;
+
+        for (size_t i = 0; i < lines.size(); ++i) {
+            std::string_view line = lines[i];
+            if (line.starts_with("if-") || line.starts_with("goto") || line.starts_with("return") || line.starts_with("throw")) {
+                if (i + 1 < lines.size()) is_leader[i + 1] = true;
+                size_t colon = line.find_last_of(':');
+                if (colon != std::string_view::npos) {
+                    std::string_view target = line.substr(colon);
+                    if (label_to_line.count(target)) is_leader[label_to_line[target]] = true;
+                }
+            }
+        }
+
+        std::vector<int> line_to_block(lines.size(), -1);
+        std::vector<size_t> block_start_line;
+
+        for (size_t i = 0; i < lines.size(); ++i) {
+            if (is_leader[i]) {
+                block_start_line.push_back(i);
+                BasicBlock bb;
+                bb.id = cfg.blocks.size();
+                cfg.blocks.push_back(bb);
+            }
+            line_to_block[i] = cfg.blocks.size() - 1;
+        }
+
+        for (size_t i = 0; i < cfg.blocks.size(); ++i) {
+            size_t start_line = block_start_line[i];
+            size_t end_line = (i + 1 < cfg.blocks.size()) ? block_start_line[i + 1] : lines.size();
+            size_t b_start = line_start_pos[start_line];
+            size_t b_end = (end_line < lines.size()) ? line_start_pos[end_line] : body.size();
+            cfg.blocks[i].code_content = body.substr(b_start, b_end - b_start);
+
+            std::string_view last_line = lines[end_line - 1];
+            if (last_line.starts_with("goto")) {
+                size_t colon = last_line.find_last_of(':');
+                if (colon != std::string_view::npos) {
+                    std::string_view target = last_line.substr(colon);
+                    if (label_to_line.count(target)) {
+                        int succ_bid = line_to_block[label_to_line[target]];
+                        cfg.blocks[i].successors.push_back(succ_bid);
+                        cfg.blocks[succ_bid].predecessors.push_back(i);
+                    }
+                }
+            } else if (last_line.starts_with("if-")) {
+                if (i + 1 < cfg.blocks.size()) {
+                    cfg.blocks[i].successors.push_back(i + 1);
+                    cfg.blocks[i + 1].predecessors.push_back(i);
+                }
+                size_t colon = last_line.find_last_of(':');
+                if (colon != std::string_view::npos) {
+                    std::string_view target = last_line.substr(colon);
+                    if (label_to_line.count(target)) {
+                        int succ_bid = line_to_block[label_to_line[target]];
+                        cfg.blocks[i].successors.push_back(succ_bid);
+                        cfg.blocks[succ_bid].predecessors.push_back(i);
+                    }
+                }
+            } else if (!last_line.starts_with("return") && !last_line.starts_with("throw")) {
+                if (i + 1 < cfg.blocks.size()) {
+                    cfg.blocks[i].successors.push_back(i + 1);
+                    cfg.blocks[i + 1].predecessors.push_back(i);
+                }
+            }
+        }
+
+        return cfg;
     }
 
 } // namespace engines

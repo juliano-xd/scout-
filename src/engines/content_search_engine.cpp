@@ -73,9 +73,10 @@ namespace engines {
     }
 
     std::vector<SearchResult> ContentSearchEngine::search(
-        const std::filesystem::path& root_dir,
+        core::AnalysisContext& ctx,
         const SearchConfig& config
     ) {
+        auto& root_dir = ctx.root_dir();
         std::vector<SearchResult> results;
         if (config.query.empty() || !std::filesystem::exists(root_dir)) return results;
 

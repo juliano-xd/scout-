@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/trindade/Projetos/scout++/include -isystem /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include -isystem /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest
+CXX_INCLUDES = -I/home/trindade/Projetos/scout++/include -I/home/trindade/Projetos/scout++/build/_deps/nlohmann_json-src/include -isystem /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest/include -isystem /home/trindade/Projetos/scout++/build/_deps/googletest-src/googletest
 
 CXX_FLAGS = -std=gnu++26
 

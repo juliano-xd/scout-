@@ -97,6 +97,7 @@ test_xref: CMakeFiles/test_xref.dir/tests/test_xref.cpp.o
 test_xref: CMakeFiles/test_xref.dir/build.make
 test_xref: CMakeFiles/test_xref.dir/compiler_depend.ts
 test_xref: lib/libgtest_main.a
+test_xref: libscout_lib.a
 test_xref: lib/libgtest.a
 test_xref: CMakeFiles/test_xref.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/trindade/Projetos/scout++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_xref"

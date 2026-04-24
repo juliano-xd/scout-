@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "formatters/sexpr_formatter.hpp"
 #include "engines/i_search_engine.hpp"
+#include "core/analysis_context.hpp"
 #include "engines/register_engines.hpp"
 #include "utils/sexpr.hpp"
 #include <filesystem>

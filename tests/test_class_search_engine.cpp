@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "engines/class_search_engine.hpp"
 #include "engines/i_search_engine.hpp"
+#include "core/analysis_context.hpp"
 #include "engines/engine_registry.hpp"
 #include "engines/register_engines.hpp"
 #include <filesystem>
@@ -80,7 +81,7 @@ TEST(ClassSearchEngine, SearchExactDalvikNotation) {
     config.query = "Lcom/example/AuthManager;";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     ASSERT_EQ(results.size(), 1);
     EXPECT_EQ(results[0].file_path.filename().string(), "AuthManager.smali");
@@ -98,7 +99,7 @@ TEST(ClassSearchEngine, SearchSubstringClassName) {
     config.query = "Login";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     ASSERT_GE(results.size(), 1);
     // Deve encontrar LoginActivity.smali
@@ -122,7 +123,7 @@ TEST(ClassSearchEngine, SearchPartialPackageName) {
     config.query = "example";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     // Deve encontrar AuthManager e LoginActivity (ambos em com/example/)
     ASSERT_GE(results.size(), 2);
@@ -138,7 +139,7 @@ TEST(ClassSearchEngine, SearchNonExistentClass) {
     config.query = "Lcom/example/NonExistent;";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     EXPECT_TRUE(results.empty());
     
@@ -153,7 +154,7 @@ TEST(ClassSearchEngine, SearchWithMaxResultsLimit) {
     config.query = "L"; // Vai pegar todas as classes que começam com L (todas)
     config.max_results = 2; // Limite baixo
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     EXPECT_LE(results.size(), 2);
     
@@ -168,7 +169,7 @@ TEST(ClassSearchEngine, SearchEmptyQuery) {
     config.query = "";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     
     EXPECT_TRUE(results.empty());
     
@@ -183,7 +184,7 @@ TEST(ClassSearchEngine, SearchInvalidDirectory) {
     config.query = "Lcom/example/A;";
     config.max_results = 100;
     
-    auto results = engine.search(invalid_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(invalid_dir); return engine.search(ctx, config); })();
     
     EXPECT_TRUE(results.empty());
 }
@@ -198,7 +199,7 @@ TEST(ClassSearchEngine, GetStats) {
     config.query = "Login";
     config.max_results = 100;
     
-    auto results = engine.search(temp_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
     auto stats = engine.get_stats();
     
     EXPECT_GE(stats.matches_found, 0);

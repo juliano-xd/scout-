@@ -1,0 +1,17 @@
+{
+  "tests": 1,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "VariableTrackerTest",
+      "tests": 1,
+      "testsuite": [
+        {
+          "name": "TrackLifetimeAcrossMethods",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_variable_tracker.cpp",
+          "line": 28
+        }
+      ]
+    }
+  ]
+}

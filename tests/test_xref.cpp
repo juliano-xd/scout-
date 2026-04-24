@@ -36,7 +36,7 @@ TEST_F(XrefTest, FindsMethodCallersCorrectly) {
     config.query = "Lcom/example/Target;->importantMethod()Z";
     config.search_type = "string";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     ASSERT_EQ(results.size(), 1);
     EXPECT_EQ(results[0].line_number, 5);
@@ -49,7 +49,7 @@ TEST_F(XrefTest, FindsClassCallersCorrectly) {
     config.query = "Lcom/example/Target;";
     config.search_type = "string";
     
-    auto results = engine.search(test_dir, config);
+    auto results = ([&](){ core::AnalysisContext ctx(test_dir); return engine.search(ctx, config); })();
     
     // We expect 2 references to the Target class in Caller.smali
     ASSERT_EQ(results.size(), 2);

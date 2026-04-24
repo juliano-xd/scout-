@@ -1,6 +1,7 @@
 #pragma once
 
 #include "i_search_engine.hpp"
+#include "core/analysis_context.hpp"
 #include <string>
 #include <vector>
 #include <filesystem>
@@ -32,7 +33,7 @@ namespace engines {
         ~ContentSearchEngine() override = default;
 
         std::vector<SearchResult> search(
-            const std::filesystem::path& root_dir,
+            core::AnalysisContext& ctx,
             const SearchConfig& config
         ) override;
 

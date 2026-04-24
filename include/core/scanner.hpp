@@ -106,4 +106,24 @@ namespace core {
         return results;
     }
 
+    /**
+     * @brief Varre todos os arquivos .smali recursivamente e aplica uma função em paralelo.
+     */
+    template<typename Func>
+    inline void scan_files(const std::filesystem::path& search_dir, Func callback) {
+        if (!std::filesystem::exists(search_dir)) return;
+        auto options = std::filesystem::directory_options::skip_permission_denied;
+        
+        std::vector<std::filesystem::path> files;
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
+            if (entry.is_regular_file() && entry.path().extension() == ".smali") {
+                files.push_back(entry.path());
+            }
+        }
+
+        std::for_each(std::execution::par, files.begin(), files.end(), [&](const std::filesystem::path& p) {
+            callback(p);
+        });
+    }
+
 }

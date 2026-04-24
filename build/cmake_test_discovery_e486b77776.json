@@ -1,0 +1,612 @@
+{
+  "tests": 100,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "MassiveSuite\/BrainMassiveTest",
+      "tests": 100,
+      "testsuite": [
+        {
+          "name": "ApiFrequencyAnalysisTest\/0",
+          "value_param": "0",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/1",
+          "value_param": "1",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/2",
+          "value_param": "2",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/3",
+          "value_param": "3",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/4",
+          "value_param": "4",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/5",
+          "value_param": "5",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/6",
+          "value_param": "6",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/7",
+          "value_param": "7",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/8",
+          "value_param": "8",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/9",
+          "value_param": "9",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/10",
+          "value_param": "10",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/11",
+          "value_param": "11",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/12",
+          "value_param": "12",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/13",
+          "value_param": "13",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/14",
+          "value_param": "14",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/15",
+          "value_param": "15",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/16",
+          "value_param": "16",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/17",
+          "value_param": "17",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/18",
+          "value_param": "18",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/19",
+          "value_param": "19",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/20",
+          "value_param": "20",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/21",
+          "value_param": "21",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/22",
+          "value_param": "22",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/23",
+          "value_param": "23",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/24",
+          "value_param": "24",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/25",
+          "value_param": "25",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/26",
+          "value_param": "26",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/27",
+          "value_param": "27",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/28",
+          "value_param": "28",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/29",
+          "value_param": "29",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/30",
+          "value_param": "30",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/31",
+          "value_param": "31",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/32",
+          "value_param": "32",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/33",
+          "value_param": "33",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/34",
+          "value_param": "34",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/35",
+          "value_param": "35",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/36",
+          "value_param": "36",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/37",
+          "value_param": "37",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/38",
+          "value_param": "38",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/39",
+          "value_param": "39",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/40",
+          "value_param": "40",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/41",
+          "value_param": "41",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/42",
+          "value_param": "42",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/43",
+          "value_param": "43",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/44",
+          "value_param": "44",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/45",
+          "value_param": "45",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/46",
+          "value_param": "46",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/47",
+          "value_param": "47",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/48",
+          "value_param": "48",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/49",
+          "value_param": "49",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/50",
+          "value_param": "50",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/51",
+          "value_param": "51",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/52",
+          "value_param": "52",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/53",
+          "value_param": "53",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/54",
+          "value_param": "54",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/55",
+          "value_param": "55",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/56",
+          "value_param": "56",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/57",
+          "value_param": "57",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/58",
+          "value_param": "58",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/59",
+          "value_param": "59",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/60",
+          "value_param": "60",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/61",
+          "value_param": "61",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/62",
+          "value_param": "62",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/63",
+          "value_param": "63",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/64",
+          "value_param": "64",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/65",
+          "value_param": "65",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/66",
+          "value_param": "66",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/67",
+          "value_param": "67",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/68",
+          "value_param": "68",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/69",
+          "value_param": "69",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/70",
+          "value_param": "70",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/71",
+          "value_param": "71",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/72",
+          "value_param": "72",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/73",
+          "value_param": "73",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/74",
+          "value_param": "74",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/75",
+          "value_param": "75",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/76",
+          "value_param": "76",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/77",
+          "value_param": "77",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/78",
+          "value_param": "78",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/79",
+          "value_param": "79",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/80",
+          "value_param": "80",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/81",
+          "value_param": "81",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/82",
+          "value_param": "82",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/83",
+          "value_param": "83",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/84",
+          "value_param": "84",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/85",
+          "value_param": "85",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/86",
+          "value_param": "86",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/87",
+          "value_param": "87",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/88",
+          "value_param": "88",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/89",
+          "value_param": "89",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/90",
+          "value_param": "90",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/91",
+          "value_param": "91",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/92",
+          "value_param": "92",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/93",
+          "value_param": "93",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/94",
+          "value_param": "94",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/95",
+          "value_param": "95",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/96",
+          "value_param": "96",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/97",
+          "value_param": "97",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/98",
+          "value_param": "98",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        },
+        {
+          "name": "ApiFrequencyAnalysisTest\/99",
+          "value_param": "99",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_brain_massive.cpp",
+          "line": 33
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "tests": 1,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "VariableTrackerMassiveTest",
+      "tests": 1,
+      "testsuite": [
+        {
+          "name": "MassiveLifetimeTracking",
+          "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_variable_tracker_massive.cpp",
+          "line": 33
+        }
+      ]
+    }
+  ]
+}

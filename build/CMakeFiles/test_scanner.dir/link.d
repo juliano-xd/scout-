@@ -4,6 +4,7 @@ test_scanner: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o \
   CMakeFiles/test_scanner.dir/tests/test_scanner.cpp.o \
   lib/libgtest_main.a \
+  libscout_lib.a \
   lib/libgtest.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libm.so \
@@ -42,6 +43,8 @@ test_scanner: \
 CMakeFiles/test_scanner.dir/tests/test_scanner.cpp.o:
 
 lib/libgtest_main.a:
+
+libscout_lib.a:
 
 lib/libgtest.a:
 

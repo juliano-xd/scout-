@@ -14,7 +14,7 @@
         {
           "name": "FindsClassCallersCorrectly",
           "file": "\/home\/trindade\/Projetos\/scout++\/tests\/test_xref.cpp",
-          "line": 43
+          "line": 46
         }
       ]
     }

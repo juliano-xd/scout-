@@ -1,54 +1,79 @@
 #pragma once
 
-#include "i_search_engine.hpp"
-#include <string>
+#include "engines/i_search_engine.hpp"
 #include <vector>
-#include <map>
-#include <memory>
+#include <string_view>
+#include <unordered_map>
 
 namespace engines {
 
     /**
-     * @brief Bloco básico em um Control Flow Graph.
+     * @brief Representa uma aresta de exceção fatorada (FCFG).
      */
-    struct BasicBlock {
-        std::string id;
-        size_t start_line;
-        size_t end_line;
-        std::vector<std::string> instructions;
-        std::vector<std::string> successors; // IDs dos blocos sucessores
+    struct ExceptionEdge {
+        std::string_view type; // "Ljava/lang/Exception;" ou "" para catchall
+        int target_id;
+        int priority;
     };
 
     /**
-     * @brief Motor para análise de Control Flow Graph (CFG).
+     * @brief Bloco Básico com suporte a fluxo normal e de exceção.
+     */
+    struct BasicBlock {
+        int id;
+        std::string_view code_content;
+        
+        // Fluxo Normal
+        std::vector<int> successors;
+        std::vector<int> predecessors;
+
+        // Fluxo de Exceção
+        std::vector<ExceptionEdge> handlers;
+
+        // Metadados de Fluxo e Dominância
+        int ipd = -1; // Immediate Post-Dominator (Nível 15)
+        bool is_in_try_scope = false;
+        bool contains_peis = false;
+    };
+
+    struct CFG {
+        std::vector<BasicBlock> blocks;
+        int entry_block_id = 0;
+    };
+
+    /**
+     * @brief Especialista em Matemática de Grafos para Dominância.
+     */
+    class DominatorAnalyzer {
+    public:
+        static std::unordered_map<int, int> compute_ipds(CFG& cfg);
+    };
+
+    /**
+     * @brief Motor de construção de Grafos de Controle de Fluxo.
      */
     class CFGEngine : public ISearchEngine {
     public:
-        CFGEngine() = default;
-        ~CFGEngine() override = default;
+        CFGEngine();
 
         std::vector<SearchResult> search(
-            const std::filesystem::path& root_dir,
+            core::AnalysisContext& ctx,
             const SearchConfig& config
         ) override;
 
         std::string name() const override { return "cfg"; }
-        std::string description() const override {
-            return "Gera o Control Flow Graph (CFG) de um método Smali específico.";
-        }
-
+        std::string description() const override { return "Aero-CFG Nível 14: Exception-Aware Factored CFG."; }
         EngineStats get_stats() const override { return stats_; }
 
-        bool supports_config(const SearchConfig& config) const override { return true; }
+        bool supports_config(const SearchConfig& config) const override {
+            return config.query.find("->") != std::string::npos;
+        }
+
+        // Método estático para uso interno por outros motores
+        static CFG build_cfg(std::string_view method_body);
 
     private:
         EngineStats stats_;
-
-        std::vector<BasicBlock> analyze_method(const std::filesystem::path& file, const std::string& method_sig);
-        std::string blocks_to_sexpr(const std::vector<BasicBlock>& blocks);
-        std::string blocks_to_dot(const std::vector<BasicBlock>& blocks);
     };
-
-    std::unique_ptr<ISearchEngine> create_cfg_engine();
 
 } // namespace engines

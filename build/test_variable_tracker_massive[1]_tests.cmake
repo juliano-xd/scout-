@@ -1,0 +1,3 @@
+add_test([=[VariableTrackerMassiveTest.MassiveLifetimeTracking]=]  [==[/home/trindade/Projetos/scout++/build/test_variable_tracker_massive]==] [==[--gtest_filter=VariableTrackerMassiveTest.MassiveLifetimeTracking]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[VariableTrackerMassiveTest.MassiveLifetimeTracking]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_variable_tracker_massive.cpp:33]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  test_variable_tracker_massive_TESTS VariableTrackerMassiveTest.MassiveLifetimeTracking)

@@ -7,6 +7,8 @@
 #include <chrono>
 #include "utils/sexpr.hpp"
 
+namespace core { class AnalysisContext; }
+
 namespace engines {
 
     /**
@@ -47,6 +49,9 @@ namespace engines {
         std::vector<std::string> exclude_dirs;
         bool                     include_system = false;
         int                      search_depth   = 1;
+        std::string              direction      = "both";        // For XREF
+        std::vector<std::string> filter_opcodes;                 // For XREF
+        std::string              var_name;
     };
 
     /**
@@ -75,7 +80,7 @@ namespace engines {
         virtual ~ISearchEngine() = default;
 
         virtual std::vector<SearchResult> search(
-            const std::filesystem::path& root_dir,
+            core::AnalysisContext& ctx,
             const SearchConfig& config
         ) = 0;
 

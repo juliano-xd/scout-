@@ -78,9 +78,10 @@ namespace engines {
     }
 
     std::vector<SearchResult> ResourceMappingEngine::search(
-        const std::filesystem::path& root_dir,
+        core::AnalysisContext& ctx,
         const SearchConfig& config
     ) {
+        auto& root_dir = ctx.root_dir();
         auto start = std::chrono::high_resolution_clock::now();
         load_map(root_dir);
 
