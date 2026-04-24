@@ -2,6 +2,7 @@
 #include "utils/filesystem.hpp"
 #include "utils/string_utils.hpp"
 #include "utils/mmap_file.hpp"
+#include <iostream>
 #include <chrono>
 #include <algorithm>
 #include <mutex>

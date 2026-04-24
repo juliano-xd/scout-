@@ -173,8 +173,10 @@ namespace engines {
         if (m_pos == std::string_view::npos) return {};
 
         size_t start = content.rfind(".method ", m_pos);
+        if (start == std::string_view::npos) return {};
+        
         size_t end = content.find(".end method", m_pos);
-        if (start == std::string_view::npos || end == std::string_view::npos) return {};
+        if (end == std::string_view::npos) return {};
 
         std::string_view body = content.substr(start, end - start);
         
@@ -373,7 +375,10 @@ namespace engines {
                             TrackingState next_state; next_state.current_method = pool_string(target); next_state.depth = depth + 1; 
                             
                             // Nível 16: Se for reflexão ou código externo, aplicamos EPS/EES
-                            if (target.find("java/lang/reflect/Method;->invoke") != std::string::npos || target.find("DexClassLoader") != std::string::npos) {
+                            if (target.find("java/lang/reflect/Method;->invoke") != std::string::npos || 
+                                target.find("ClassLoader;->loadClass") != std::string::npos ||
+                                target.find("DexClassLoader") != std::string::npos ||
+                                target.find("PathClassLoader") != std::string::npos) {
                                 state.last_call_summary.return_tainted = true; // Assumimos incerteza (EIT)
                                 // Opaque Taint: Marcamos como influência externa
                                 events.push_back({method_name, line_idx, bit_to_reg_sv(call_bits[i]), "EES_OPAQUE_ENTRY", target, "EXTERNAL_PAYLOAD_SHADOWING"});

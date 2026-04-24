@@ -61,8 +61,6 @@ namespace core {
             // Varredura inicial ultra-rápida apenas para mapear Lcom/X; -> path
             for (const auto& entry : std::filesystem::recursive_directory_iterator(root_dir_)) {
                 if (entry.is_regular_file() && entry.path().extension() == ".smali") {
-                    // Extrair nome da classe do arquivo de forma preguiçosa ou inferir pelo path
-                    // Para performance extrema, inferimos pelo path relativo aos diretórios 'smali*'
                     std::string path_str = entry.path().string();
                     size_t smali_pos = path_str.find("/smali");
                     if (smali_pos != std::string::npos) {

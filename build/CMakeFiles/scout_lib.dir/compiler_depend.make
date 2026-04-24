@@ -1606,6 +1606,7 @@ CMakeFiles/scout_lib.dir/src/engines/content_search_engine.cpp.o: /home/trindade
   /usr/include/c++/15.2.1/iomanip \
   /usr/include/c++/15.2.1/ios \
   /usr/include/c++/15.2.1/iosfwd \
+  /usr/include/c++/15.2.1/iostream \
   /usr/include/c++/15.2.1/istream \
   /usr/include/c++/15.2.1/iterator \
   /usr/include/c++/15.2.1/limits \
@@ -2033,6 +2034,7 @@ CMakeFiles/scout_lib.dir/src/engines/deobf_engine.cpp.o: /home/trindade/Projetos
   /usr/include/c++/15.2.1/iomanip \
   /usr/include/c++/15.2.1/ios \
   /usr/include/c++/15.2.1/iosfwd \
+  /usr/include/c++/15.2.1/iostream \
   /usr/include/c++/15.2.1/istream \
   /usr/include/c++/15.2.1/iterator \
   /usr/include/c++/15.2.1/limits \
@@ -3564,6 +3566,7 @@ CMakeFiles/scout_lib.dir/src/engines/resource_mapping_engine.cpp.o: /home/trinda
   /usr/include/c++/15.2.1/iomanip \
   /usr/include/c++/15.2.1/ios \
   /usr/include/c++/15.2.1/iosfwd \
+  /usr/include/c++/15.2.1/iostream \
   /usr/include/c++/15.2.1/istream \
   /usr/include/c++/15.2.1/iterator \
   /usr/include/c++/15.2.1/limits \
@@ -5594,6 +5597,8 @@ _deps/nlohmann_json-src/include/nlohmann/detail/json_ref.hpp:
 /usr/include/bits/types/clock_t.h:
 
 /usr/include/c++/15.2.1/bits/stl_queue.h:
+
+/usr/include/c++/15.2.1/iostream:
 
 /usr/include/bits/mathcalls.h:
 

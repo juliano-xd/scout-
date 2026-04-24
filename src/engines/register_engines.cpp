@@ -69,9 +69,9 @@ namespace scout {
         return engines::EngineRegistry::instance().has_engine(name);
     }
 
-    std::string map_search_type_to_engine(const std::string& search_type) {
+    std::string map_search_type_to_engine(const std::string& search_type, const std::string& query) {
         if (search_type == "class" ||
-            (search_type.starts_with('L') && search_type.ends_with(';')))
+            (query.starts_with('L') && query.ends_with(';')))
             return "class";
         if (search_type == "regex"   || search_type == "string" ||
             search_type == "integer" || search_type == "number")

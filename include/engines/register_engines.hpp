@@ -24,6 +24,6 @@ namespace scout {
 
     bool has_engine(const std::string& name);
 
-    std::string map_search_type_to_engine(const std::string& search_type);
+    std::string map_search_type_to_engine(const std::string& search_type, const std::string& query);
 
 } // namespace scout

@@ -189,6 +189,7 @@ namespace cli {
         std::optional<std::string> batch;
         std::string search_type = "regex";
         int search_max = 1000;
+        bool case_sensitive = false;
         std::optional<std::string> brain;
         std::optional<std::string> xref;
         std::optional<std::string> xref_callers;
@@ -203,7 +204,7 @@ namespace cli {
         bool deobf_strings = false;
         std::optional<std::string> translate;
         std::optional<std::string> track_var;
-        std::string track_var_name = "p2";
+        std::string track_var_name = "";
         int track_depth = 10;
         bool introspect_sexpr = false;
         bool ai_help = false;
@@ -212,6 +213,8 @@ namespace cli {
         std::optional<std::string> hook;
         std::optional<std::string> frida;
         std::vector<std::string> obf_types = {"all"};
+        std::vector<std::string> include_dirs;
+        std::vector<std::string> exclude_dirs;
         std::vector<std::string> positional_args;
 
         static std::optional<ScoutConfig> parse(int argc, const char* const* argv) {
@@ -247,6 +250,10 @@ namespace cli {
             parser.add_option("--track-var-name", "", "NAME", "Variável alvo.", "Target variable.", config.track_var_name);
             parser.add_option("--track-depth", "", "INT", "Profundidade de rastreio.", "Tracking depth.", config.track_depth);
             parser.add_flag("--verbose", "-v", "Logs detalhados.", "Verbose logging.", config.verbose);
+            parser.add_option("--search-type", "", "{regex,class,content}", "Tipo de busca.", "Search type.", config.search_type);
+            parser.add_list("--include-dir", "", "DIR", "Restringir busca a diretórios específicos", "Include directories.", config.include_dirs);
+            parser.add_list("--exclude-dir", "", "DIR", "Excluir diretórios da busca", "Exclude directories.", config.exclude_dirs);
+            parser.add_flag("--case-sensitive", "", "Busca case-sensitive.", "Case-sensitive search.", config.case_sensitive);
             parser.add_flag("--detect-obfuscation", "", "Detecta obfuscação.", "Detect obfuscation.", config.detect_obfuscation);
             parser.add_option("--hook", "", "SIGNATURE", "Patching de hook.", "Hook patching.", config.hook);
             parser.add_option("--frida", "", "SIGNATURE", "Script Frida.", "Frida script.", config.frida);

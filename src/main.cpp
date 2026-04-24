@@ -36,15 +36,23 @@ int main(int argc, char** argv) {
             search_query = config.positional_args[0];
 
         if (search_query) {
-            std::string engine_name = scout::map_search_type_to_engine(config.search_type);
+            std::string engine_name = scout::map_search_type_to_engine(config.search_type, *search_query);
             auto engine = scout::create_engine(engine_name);
 
             if (engine) {
                 engines::SearchConfig scfg;
-                scfg.query       = *search_query;
-                scfg.max_results = static_cast<std::size_t>(config.search_max);
+                scfg.query          = *search_query;
+                scfg.search_type    = config.search_type;
+                scfg.case_sensitive = config.case_sensitive;
+                scfg.max_results    = static_cast<std::size_t>(config.search_max);
+                scfg.include_dirs   = config.include_dirs;
+                scfg.exclude_dirs   = config.exclude_dirs;
                 auto results = engine->search(analysis_ctx, scfg);
-                std::cout << formatter->format_search_results(results) << "\n";
+                if (config.machine_sexpr) {
+                    std::cout << formatter->format_search_results(results, sexpr::list({sexpr::keyword("pretty"), sexpr::boolean(true)})) << "\n";
+                } else {
+                    std::cout << formatter->format_search_results(results) << "\n";
+                }
             } else {
                 // Fallback: busca genérica de arquivo por nome
                 for (const auto& entry : fs::recursive_directory_iterator(
@@ -100,7 +108,11 @@ int main(int argc, char** argv) {
                 engines::SearchConfig rcfg;
                 rcfg.query = config.find_resource.value_or("");
                 auto results = engine->search(analysis_ctx, rcfg);
-                std::cout << formatter->format_search_results(results) << "\n";
+                if (config.machine_sexpr) {
+                    std::cout << formatter->format_search_results(results, sexpr::list({sexpr::keyword("pretty"), sexpr::boolean(true)})) << "\n";
+                } else {
+                    std::cout << formatter->format_search_results(results) << "\n";
+                }
             }
         }
 
@@ -170,7 +182,17 @@ int main(int argc, char** argv) {
                 vcfg.var_name = config.track_var_name;
                 vcfg.search_depth = config.track_depth;
                 auto results = engine->search(analysis_ctx, vcfg);
-                std::cout << formatter->format_search_results(results) << "\n";
+                
+                if (config.machine_sexpr) {
+                    // Para o VariableTracker, usamos o formatador causal de alto nível (Nível 16)
+                    // que converte os eventos em uma narrativa de intenção com handles (h1, h2...).
+                    // Como SearchResult encapsula os eventos no context, mas o formatador 
+                    // causal precisa dos eventos brutos, por enquanto vamos imprimir o context
+                    // formatado de forma bonita, ou integrar diretamente se tivermos acesso.
+                    std::cout << formatter->format_search_results(results, sexpr::list({sexpr::keyword("pretty"), sexpr::boolean(true)})) << "\n";
+                } else {
+                    std::cout << formatter->format_search_results(results) << "\n";
+                }
             }
         }
 
