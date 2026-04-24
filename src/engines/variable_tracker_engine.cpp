@@ -6,6 +6,7 @@
 #include "utils/sexpr.hpp"
 #include <algorithm>
 #include <queue>
+#include <unordered_set>
 
 namespace engines {
 
@@ -101,13 +102,22 @@ namespace engines {
         std::string target_query = config.query;
         std::string initial_reg_str = config.var_name;
 
-        if (initial_reg_str.empty() && target_query.find(':') != std::string::npos) {
+        // Suporte a METHOD?0xVALUE ou METHOD:reg
+        if (target_query.find('?') != std::string::npos) {
+            size_t qmark = target_query.find('?');
+            std::string value = target_query.substr(qmark + 1);
+            target_query = target_query.substr(0, qmark);
+            // Sobrescrevemos a query interna para o motor usar na busca de constantes
+            const_cast<engines::SearchConfig&>(config).query = value; 
+        }
+        else if (initial_reg_str.empty() && target_query.find(':') != std::string::npos) {
             size_t colon = target_query.find_last_of(':');
             initial_reg_str = target_query.substr(colon + 1);
             target_query = target_query.substr(0, colon);
         }
 
-        if (target_query.empty() || initial_reg_str.empty()) return results;
+        bool is_const_search = (config.query.find("0x") != std::string::npos);
+        if (target_query.empty() || (initial_reg_str.empty() && !is_const_search)) return results;
 
         analysis_cache_.clear();
         string_pool_.clear();
@@ -115,7 +125,10 @@ namespace engines {
         TrackingState state;
         state.current_method = pool_string(target_query);
         int bit = reg_to_bit(initial_reg_str);
-        if (bit != -1) state.active_regs |= (1ULL << bit);
+        if (bit != -1 && !initial_reg_str.empty()) {
+            state.active_regs |= (1ULL << bit);
+        }
+        // Se a query for hex, não precisamos de registrador inicial, o motor vai achar o const
         
         track_recursive(ctx, state, events, config);
 
@@ -152,7 +165,8 @@ namespace engines {
         std::vector<VariableEvent>& events,
         const SearchConfig& config
     ) {
-        if (state.depth > config.search_depth || (state.active_regs == 0 && state.obj_taint_map.empty() && state.control_taint_stack.empty())) return {};
+        if (state.depth > config.search_depth) return {};
+        if (state.active_regs == 0 && state.obj_taint_map.empty() && state.control_taint_stack.empty() && config.query.empty()) return {};
 
         CacheKey key{state.current_method, state.active_regs};
         if (analysis_cache_.count(key)) {
@@ -185,10 +199,12 @@ namespace engines {
         
         std::unordered_map<int, TrackingState> block_in_states;
         std::unordered_map<int, std::vector<VariableEvent>> block_events_map;
+        std::unordered_set<int> visited_blocks;
         std::queue<int> worklist;
         
         block_in_states[cfg.entry_block_id] = state;
         worklist.push(cfg.entry_block_id);
+        visited_blocks.insert(cfg.entry_block_id);
         
         MethodSummary final_summary;
 
@@ -222,11 +238,19 @@ namespace engines {
             }
 
             for (int sid : block.successors) {
-                if (merge_states(block_in_states[sid], current_out)) worklist.push(sid);
+                bool state_changed = merge_states(block_in_states[sid], current_out);
+                if (state_changed || visited_blocks.find(sid) == visited_blocks.end()) {
+                    visited_blocks.insert(sid);
+                    worklist.push(sid);
+                }
             }
 
             for (const auto& handler : block.handlers) {
-                if (merge_states(block_in_states[handler.target_id], exception_out)) worklist.push(handler.target_id);
+                bool state_changed = merge_states(block_in_states[handler.target_id], exception_out);
+                if (state_changed || visited_blocks.find(handler.target_id) == visited_blocks.end()) {
+                    visited_blocks.insert(handler.target_id);
+                    worklist.push(handler.target_id);
+                }
             }
 
             block_events_map[bid] = std::move(block_events);
@@ -282,9 +306,23 @@ namespace engines {
                 std::string_view target = "const";
                 std::string_view extra = "";
                 
+                // Suporte a rastreio de constante específica (Nível 16)
+                if (line.starts_with("const")) {
+                    size_t last_comma = line.find_last_of(',');
+                    if (last_comma != std::string_view::npos) {
+                        std::string_view val = utils::trim(line.substr(last_comma + 1));
+                        if (val == config.query || (config.query.starts_with("0x") && val == config.query)) {
+                            data_tainted = true;
+                            target = val;
+                            extra = "CONST_SOURCE";
+                        }
+                    }
+                }
+
                 const char* act = "MOVE";
                 if (line.starts_with("i")) act = "LOAD";
                 else if (line.starts_with("a")) act = "LOAD";
+                else if (line.starts_with("const")) act = "CONST";
 
                 if (!line.starts_with("const") && comma != std::string_view::npos) {
                     std::string_view src_r = utils::trim(line.substr(comma + 1));

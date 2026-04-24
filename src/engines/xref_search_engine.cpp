@@ -351,7 +351,9 @@ namespace engines {
         auto options = std::filesystem::directory_options::skip_permission_denied;
         for (const auto& entry : std::filesystem::recursive_directory_iterator(root_dir, options)) {
             if (entry.is_regular_file() && entry.path().extension() == ".smali") {
-                all_files.push_back(entry.path());
+                if (core::is_path_filtered(entry.path(), config.include_dirs, config.exclude_dirs)) {
+                    all_files.push_back(entry.path());
+                }
             }
         }
 

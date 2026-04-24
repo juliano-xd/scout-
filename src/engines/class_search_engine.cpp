@@ -47,12 +47,12 @@ namespace engines {
                 // Modo exato: busca por nome Dalvik completo
                 std::string normalized = normalize_dalvik(query);
                 auto file_opt = core::find_class_file(root_dir, normalized);
-                if (file_opt) {
+                if (file_opt && core::is_path_filtered(*file_opt, config.include_dirs, config.exclude_dirs)) {
                     found_files.push_back(*file_opt);
                 }
             } else {
                 // Modo substring: busca por parte do nome da classe
-                found_files = core::find_classes_containing(root_dir, query);
+                found_files = core::find_classes_containing(root_dir, query, config.include_dirs, config.exclude_dirs);
             }
             
             return found_files;

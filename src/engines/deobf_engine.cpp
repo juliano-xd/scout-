@@ -62,7 +62,7 @@ namespace engines {
                     }
                 }
             }
-        });
+        }, config.include_dirs, config.exclude_dirs);
 
         auto end = std::chrono::high_resolution_clock::now();
         stats_.total_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);

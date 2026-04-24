@@ -42,6 +42,36 @@ namespace core {
     };
 
     /**
+     * @brief Verifica se um caminho deve ser incluído na busca com base nas configurações de diretório.
+     */
+    inline bool is_path_filtered(const std::filesystem::path& p, const std::vector<std::string>& include_dirs, const std::vector<std::string>& exclude_dirs) {
+        if (include_dirs.empty() && exclude_dirs.empty()) return true;
+
+        std::string path_str = p.generic_string();
+        
+        // Se houver inclusões, o caminho deve conter pelo menos uma delas
+        if (!include_dirs.empty()) {
+            bool found = false;
+            for (const auto& inc : include_dirs) {
+                if (path_str.find(inc) != std::string::npos) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+
+        // Se houver exclusões, o caminho não deve conter nenhuma delas
+        for (const auto& exc : exclude_dirs) {
+            if (path_str.find(exc) != std::string::npos) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @brief Busca o arquivo .smali correspondente a uma classe Dalvik (Lcom/ex/A;) ou dot-notation (com.ex.A)
      * @param search_dir Diretório base onde a busca inicia
      * @param dalvik_name Nome da classe a ser buscada
@@ -76,22 +106,25 @@ namespace core {
 
     /**
      * @brief Busca todos os arquivos .smali que contenham o texto especificado no nome da classe.
-     * @param search_dir Diretório base onde a busca inicia
-     * @param query Texto a ser buscado no nome da classe (case sensitive)
-     * @return Vetor de caminhos para os arquivos encontrados
      */
-    inline std::vector<std::filesystem::path> find_classes_containing(const std::filesystem::path& search_dir, std::string_view query) {
+    inline std::vector<std::filesystem::path> find_classes_containing(
+        const std::filesystem::path& search_dir, 
+        std::string_view query,
+        const std::vector<std::string>& include_dirs = {},
+        const std::vector<std::string>& exclude_dirs = {}
+    ) {
         std::vector<std::filesystem::path> results;
         if (!std::filesystem::exists(search_dir)) return results;
 
         auto options = std::filesystem::directory_options::skip_permission_denied;
         std::mutex mtx;
 
-        // Use a more direct recursive scan without pre-collecting all files
         std::vector<std::filesystem::path> files_to_check;
         for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
             if (entry.is_regular_file() && entry.path().extension() == ".smali") {
-                files_to_check.push_back(entry.path());
+                if (is_path_filtered(entry.path(), include_dirs, exclude_dirs)) {
+                    files_to_check.push_back(entry.path());
+                }
             }
         }
 
@@ -110,14 +143,21 @@ namespace core {
      * @brief Varre todos os arquivos .smali recursivamente e aplica uma função em paralelo.
      */
     template<typename Func>
-    inline void scan_files(const std::filesystem::path& search_dir, Func callback) {
+    inline void scan_files(
+        const std::filesystem::path& search_dir, 
+        Func callback,
+        const std::vector<std::string>& include_dirs = {},
+        const std::vector<std::string>& exclude_dirs = {}
+    ) {
         if (!std::filesystem::exists(search_dir)) return;
         auto options = std::filesystem::directory_options::skip_permission_denied;
         
         std::vector<std::filesystem::path> files;
         for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
             if (entry.is_regular_file() && entry.path().extension() == ".smali") {
-                files.push_back(entry.path());
+                if (is_path_filtered(entry.path(), include_dirs, exclude_dirs)) {
+                    files.push_back(entry.path());
+                }
             }
         }
 
