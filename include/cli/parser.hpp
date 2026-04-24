@@ -119,10 +119,10 @@ namespace cli {
             os << "  " << std::left << std::setw(38) << "--brain CLASS" << "Análise estatística de APIs e heurísticas.\n";
             os << "  " << std::left << std::setw(38) << "--ui-mapper ID" << "Vincula layouts XML a classes Smali.\n";
             
-            os << "\nEngines de Fluxo & Auditoria:\n";
+            os << "\nEngines de Fluxo & Auditoria (Aero-Taint Nível 15):\n";
             os << "  " << std::left << std::setw(38) << "--xref TARGET" << "Cross-references (quem chama/é chamado).\n";
-            os << "  " << std::left << std::setw(38) << "--track-var SIGNATURE:REG" << "Rastreamento de lifetime de variáveis (Taint Analysis).\n";
-            os << "  " << std::left << std::setw(38) << "--cfg SIGNATURE" << "Gera Control Flow Graph de um método.\n";
+            os << "  " << std::left << std::setw(38) << "--track-var SIGNATURE:REG" << "Taint Analysis: Rastreio sensível a exceções e fluxo implícito.\n";
+            os << "  " << std::left << std::setw(38) << "--cfg SIGNATURE" << "Gera Grafo de Fluxo Fatorado (FCFG) e Pós-Dominância.\n";
             os << "  " << std::left << std::setw(38) << "--deobf-strings" << "Detecta e decodifica strings ofuscadas.\n";
             
             os << "\nBusca & Recursos:\n";
@@ -141,14 +141,14 @@ namespace cli {
 
         void print_ai_help(std::ostream& os) const {
             os << "(scout:ai-documentation\n";
-            os << "  (version \"1.1\")\n";
-            os << "  (philosophy \"Agent-First Forensic Toolkit.\")\n";
+            os << "  (version \"1.5\")\n";
+            os << "  (philosophy \"Agent-First Forensic Toolkit. Path-sensitive & Exception-aware.\")\n";
             os << "  (capabilities\n";
             os << "    (capability (name \"manifest_analysis\") (flag \"--manifest\") (desc \"Extract entry points and permissions.\"))\n";
             os << "    (capability (name \"class_dna\") (flag \"--inspect-class\") (desc \"Structural introspection of Smali classes.\"))\n";
             os << "    (capability (name \"xref_engine\") (flag \"--xref\") (desc \"Inter-procedural call graph analysis.\"))\n";
-            os << "    (capability (name \"taint_analysis\") (flag \"--track-var\") (desc \"Variable lifetime and data flow tracking.\"))\n";
-            os << "    (capability (name \"control_flow\") (flag \"--cfg\") (desc \"Branching logic visualization.\"))\n";
+            os << "    (capability (name \"taint_analysis\") (flag \"--track-var\") (desc \"Level 15: Path-sensitive Taint with Implicit Flow and Exception Awareness.\"))\n";
+            os << "    (capability (name \"control_flow\") (flag \"--cfg\") (desc \"FCFG and Post-Dominator Tree generation for behavioral logic.\"))\n";
             os << "    (capability (name \"string_deobf\") (flag \"--deobf-strings\") (desc \"Automated decoding of obfuscated strings.\"))\n";
             os << "    (capability (name \"ui_mapping\") (flag \"--ui-mapper\") (desc \"Link resources to code via XML IDs.\"))\n";
             os << "    (capability (name \"resource_recon\") (flag \"--resource-map\") (desc \"Hex ID to name resolution.\"))\n";
@@ -160,8 +160,8 @@ namespace cli {
             os << "    (capability (name \"capability_introspection\") (flag \"--introspect-sexpr\") (desc \"JSON/S-Expr API reflection.\"))\n";
             os << "  )\n";
             os << "  (usage-tips\n";
-            os << "    \"Use --track-var to find where sensitive data (like JIDs or keys) ends up.\"\n";
-            os << "    \"Combine --manifest and --ui-mapper to map the user interaction flow.\"\n";
+            os << "    \"Use --track-var to find implicit data leaks conditioned by tainted branches.\"\n";
+            os << "    \"Combine --cfg and --track-var to audit exception handlers for data residues.\"\n";
             os << "  )\n";
             os << ")\n";
         }
@@ -285,28 +285,16 @@ namespace cli {
             ScoutConfig config;
 
 
-            std::string desc = "Scout - Ferramenta para análise estática, recon, patching e instrumentação de projetos Android em smali.";
+            std::string desc = "Scout++ - Framework de Engenharia Reversa Agent-First em C++26.";
             std::string epilog = R"(Exemplos rápidos:
-  Recon geral:
-    scout --manifest --scan all
+  Taint Analysis (Nível 15):
+    scout --track-var 'Lcom/app/Auth;->login(Ljava/lang/String;)V:p1'
 
-  Investigar uma classe:
-    scout --brain Lcom/example/AuthManager;
+  Gerar FCFG e IPD:
+    scout --cfg 'Lcom/app/Net;->send()V'
 
-  Gerar hook Frida:
-    scout --frida 'Lcom/example/Net;->send([BLjava/lang/String;)Z'
-
-  Aplicar patch estático:
-    scout --hook 'Lcom/example/LoginActivity;->doLogin(Ljava/lang/String;Ljava/lang/String;)V'
-
-  Buscar IDs de recursos e suas definições:
-    scout --scan integers
-
-Ajuda otimizada para IA:
-  scout --ai-help
-
-Introspecção em S-Expression:
-  scout --introspect-sexpr)";
+  Ajuda otimizada para IA:
+    scout --ai-help)";
 
             cli::Parser parser(desc, epilog);
 
@@ -318,15 +306,15 @@ Introspecção em S-Expression:
             parser.add_option("--scan", "{vuln,crypto,strings,integers,all}", "Executa scanners estáticos.", "Run static scanners.", config.scan);
             parser.add_flag("--resource-map", "Mostra o mapeamento de resource IDs encontrados (requer --scan integers).", "Show mapping of found resource IDs (requires --scan integers).", config.resource_map);
             parser.add_option("--find-resource", "RESOURCE_ID", "Encontra uso de um resource ID (ex: 0x7f0b0000).", "Find usage of a resource ID (e.g., 0x7f0b0000).", config.find_resource);
-            parser.add_option("--search", "QUERY", "Busca textual/regex massiva em arquivos Smali com consciência de contexto (Classe/Método).", "High-performance textual/regex search in Smali code with Class/Method context awareness.", config.search);
+            parser.add_option("--search", "QUERY", "Busca textual/regex massiva em arquivos Smali com consciência de contexto.", "High-performance textual/regex search in Smali code.", config.search);
             parser.add_flag("--machine-sexpr", "Output apenas em S-Expression (Agente-Nativo).", "Pure S-Expression output (Agent-Native).", config.machine_sexpr);
 
             parser.add_option("--path", "DIRECTORY", "Caminho do APK descompilado (padrão: dir atual).", "Path to decompiled APK (default: current dir).", config.path);
             parser.add_option("--progress", "{none,basic,detailed}", "Relatório de progresso (padrão: basic).", "Progress reporting level (default: basic).", config.progress);
-            parser.add_flag("--dry-run", "Mostra o que seria feito sem aplicar as mudanças (para --hook).", "Show what would be changed without applying (for --hook).", config.dry_run);
+            parser.add_flag("--dry-run", "Mostra o que seria feito sem aplicar as mudanças.", "Show what would be changed without applying.", config.dry_run);
             parser.add_option("--batch", "FILE", "Executa múltiplos comandos a partir de um arquivo.", "Execute multiple commands from a file.", config.batch);
-            parser.add_option("--search-type", "{regex,string,integer}", "Define o modo de busca (Padrão: regex). Use 'integer' para IDs hexadecimais.", "Defines search mode (Default: regex). Use 'integer' for hex resource IDs.", config.search_type);
-            parser.add_option("--search-in", "DIRS", "Diretórios específicos para buscar (ex: smali,smali_classes2).", "Specific directories to search (e.g., smali,smali_classes2).", config.search_in);
+            parser.add_option("--search-type", "{regex,string,integer}", "Define o modo de busca (Padrão: regex).", "Defines search mode (Default: regex).", config.search_type);
+            parser.add_option("--search-in", "DIRS", "Diretórios específicos para buscar.", "Specific directories to search.", config.search_in);
             parser.add_option("--search-exclude", "DIRS", "Diretórios para excluir da busca.", "Directories to exclude from search.", config.search_exclude);
             parser.add_option("--search-max", "INT", "Número máximo de resultados (padrão: 1000).", "Maximum number of results (default: 1000).", config.search_max);
             parser.add_option("--brain", "CLASS", "Analisa uma classe smali e lista as APIs mais frequentes.", "Analyze a Smali class and list most frequent APIs.", config.brain);
@@ -336,34 +324,34 @@ Introspecção em S-Expression:
             parser.add_option("--xref-fields", "FIELD", "Encontra onde o campo é lido ou escrito (get/put).", "Find where the field is read or written (get/put).", config.xref_fields);
             
             parser.add_option("--xref-direction", "{callers,callees,both}", "Define a direção da análise (Padrão: both).", "Defines analysis direction (Default: both).", config.xref_direction);
-            parser.add_option("--xref-depth", "INT", "Profundidade recursiva para reconstruir cadeias de chamadas (Padrão: 1).", "Recursive depth to reconstruct call chains (Default: 1).", config.xref_depth);
+            parser.add_option("--xref-depth", "INT", "Profundidade recursiva para reconstruir cadeias de chamadas.", "Recursive depth to reconstruct call chains.", config.xref_depth);
             parser.add_flag("--xref-include-system", "Inclui interações com o framework Android no XREF.", "Include Android framework interactions in XREF.", config.xref_include_system);
             parser.add_option("--hook", "METHOD_SIGNATURE", "Aplica patch injetando invoke-static no início do método.", "Apply patch by injecting invoke-static at method start.", config.hook);
             parser.add_option("--frida", "METHOD_SIGNATURE", "Gera script Frida para um método específico.", "Generate Frida script for a specific method.", config.frida);
-            parser.add_option("--cfg", "METHOD_SIGNATURE", "Gera um grafo de fluxo de controle (DOT).", "Generate a Control Flow Graph (DOT/S-Expr).", config.cfg);
-            parser.add_option("--ui-mapper", "ID_OR_NAME", "Vincula IDs de layouts XML a classes Smali (OnClickListener).", "Link XML layout IDs to Smali classes (OnClickListener).", config.ui_mapper);
+            parser.add_option("--cfg", "METHOD_SIGNATURE", "Gera um grafo de fluxo de controle fatorado (FCFG).", "Generate a Factored Control Flow Graph (FCFG).", config.cfg);
+            parser.add_option("--ui-mapper", "ID_OR_NAME", "Vincula IDs de layouts XML a classes Smali.", "Link XML layout IDs to Smali classes.", config.ui_mapper);
             parser.add_option("--inspect-class", "CLASS", "DNA da Classe: introspecção estrutural em S-Expression.", "Class DNA: Structural introspection in S-Expression.", config.inspect_class);
-            parser.add_flag("--deobf-strings", "Detecta strings obfuscadas e localiza algoritmos de decodificação.", "Detect obfuscated strings and locate decoding algorithms.", config.deobf_strings);
+            parser.add_flag("--deobf-strings", "Detecta strings obfuscadas e localiza decodificadores.", "Detect obfuscated strings and locate decoders.", config.deobf_strings);
             parser.add_flag("--reason", "Faz uma síntese lógica das descobertas.", "Synthesize findings logically.", config.reason);
             parser.add_option("--translate", "METHOD_SIGNATURE", "Traduz um método Smali para pseudocódigo.", "Translate Smali method to pseudocode.", config.translate);
-            parser.add_option("--track-var", "METHOD_SIGNATURE", "Rastreia o fluxo de uma variável.", "Track variable flow.", config.track_var);
+            parser.add_option("--track-var", "METHOD_SIGNATURE", "Rastreia o fluxo de uma variável (Nível 15).", "Track variable flow (Level 15).", config.track_var);
             parser.add_list("--list-methods", "CLASS", "Lista os métodos contidos nas classes especificadas.", "List methods in specified classes.", config.list_methods);
-            parser.add_option("--track-var-name", "VARIABLE", "Nome da variável a rastrear (padrão: p2).", "Variable name to track (default: p2).", config.track_var_name);
-            parser.add_option("--track-depth", "DEPTH", "Profundidade para rastreamento (padrão: 10).", "Tracking depth (default: 10).", config.track_depth);
-            parser.add_option("--track-format", "FORMAT", "Formato de output (json, dot, mermaid, both).", "Output format (json, dot, mermaid, both).", config.track_format);
+            parser.add_option("--track-var-name", "VARIABLE", "Nome da variável a rastrear (padrão: p2).", "Variable name to track.", config.track_var_name);
+            parser.add_option("--track-depth", "DEPTH", "Profundidade para rastreamento (padrão: 10).", "Tracking depth.", config.track_depth);
+            parser.add_option("--track-format", "FORMAT", "Formato de output (json, dot, mermaid).", "Output format.", config.track_format);
             parser.add_flag("--detect-obfuscation", "Detecta técnicas de obfuscação.", "Detect obfuscation techniques.", config.detect_obfuscation);
             parser.add_option("--code-metrics", "CLASS_SIGNATURE", "Gera métricas de código.", "Generate code metrics.", config.code_metrics);
-            parser.add_list("--obf-types", "TYPE", "Tipos de detecção de obfuscação (padrão: all).", "Obfuscation detection types (default: all).", config.obf_types);
-            parser.add_option("--obf-depth", "DEPTH", "Profundidade para tracking dinâmico (padrão: 3).", "Depth for dynamic tracking (default: 3).", config.obf_depth);
+            parser.add_list("--obf-types", "TYPE", "Tipos de detecção de obfuscação.", "Obfuscation detection types.", config.obf_types);
+            parser.add_option("--obf-depth", "DEPTH", "Profundidade para tracking dinâmico.", "Depth for dynamic tracking.", config.obf_depth);
             parser.add_option("--analyze-data-flow", "CLASS_SIGNATURE", "Analisa fluxos de dados sensíveis.", "Analyze sensitive data flows.", config.analyze_data_flow);
-            parser.add_option("--data-flow-depth", "DEPTH", "Profundidade para data flow (padrão: 2).", "Depth for data flow (default: 2).", config.data_flow_depth);
-            parser.add_flag("--export", "Força a exportação do scout_report.json.", "Force export of scout_report.json.", config.export_report);
-            parser.add_flag("--introspect-sexpr", "Imprime capacidades em S-Expression e encerra.", "Print S-Expression capabilities and exit.", config.introspect_sexpr);
+            parser.add_option("--data-flow-depth", "DEPTH", "Profundidade para data flow.", "Depth for data flow.", config.data_flow_depth);
+            parser.add_flag("--export", "Força a exportação do relatório.", "Force export of report.", config.export_report);
+            parser.add_flag("--introspect-sexpr", "Imprime capacidades em S-Expression.", "Print S-Expression capabilities.", config.introspect_sexpr);
             parser.add_flag("--generate-hook-class", "Gera a classe smali ScoutHook.", "Generate ScoutHook smali class.", config.generate_hook_class);
             parser.add_list("--patch-manifest", "KEY=VALUE", "Modifica AndroidManifest.xml.", "Modify AndroidManifest.xml.", config.patch_manifest);
             parser.add_option("--scan-rules", "RULES_JSON", "Executa regras de scanner personalizadas.", "Run custom scanner rules.", config.scan_rules);
-            parser.add_option("--graph", "OUTPUT_FILE", "Gera um arquivo DOT com dependências.", "Generate DOT file with dependencies.", config.graph);
-            parser.add_flag("--ai-help", "Mostra a documentação orientada para IA e encerra.", "Show AI-oriented documentation and exit.", config.ai_help);
+            parser.add_option("--graph", "OUTPUT_FILE", "Gera um arquivo DOT com dependências.", "Generate DOT file.", config.graph);
+            parser.add_flag("--ai-help", "Mostra a documentação para IA.", "Show AI-oriented documentation.", config.ai_help);
             parser.add_flag("--verbose", "Ativa logs detalhados.", "Enable detailed logs.", config.verbose);
 
 
