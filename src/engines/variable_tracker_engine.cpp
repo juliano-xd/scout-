@@ -69,7 +69,7 @@ namespace engines {
         return false;
     }
 
-    static bool merge_states(VariableTrackerEngine::TrackingState& target, const VariableTrackerEngine::TrackingState& incoming) {
+    bool VariableTrackerEngine::merge_states(VariableTrackerEngine::TrackingState& target, const VariableTrackerEngine::TrackingState& incoming) {
         bool changed = false;
         
         uint64_t old_regs = target.active_regs;
@@ -183,7 +183,13 @@ namespace engines {
         std::string_view content = ctx.get_class_content(class_name);
         if (content.empty()) return {};
 
-        size_t m_pos = content.find(method_sig);
+        size_t m_pos = content.find(".method ");
+        while (m_pos != std::string_view::npos) {
+            size_t next_line = content.find('\n', m_pos);
+            std::string_view header = content.substr(m_pos, next_line - m_pos);
+            if (header.find(method_sig) != std::string_view::npos) break;
+            m_pos = content.find(".method ", next_line);
+        }
         if (m_pos == std::string_view::npos) return {};
 
         size_t start = content.rfind(".method ", m_pos);
@@ -225,11 +231,11 @@ namespace engines {
             process_method_internal(block.code_content, current_out, exception_out, block_events, ctx, config, state.current_method, state.depth);
 
             // Level 15: Check for tainted branch
-            std::string_view last_line = utils::trim(block.code_content.substr(block.code_content.find_last_of('\n') + 1));
+            std::string_view trimmed_body = utils::trim(block.code_content);
+            size_t last_nl = trimmed_body.find_last_of('\n');
+            std::string_view last_line = (last_nl == std::string_view::npos) ? trimmed_body : utils::trim(trimmed_body.substr(last_nl + 1));
             if (last_line.starts_with("if-")) {
                 bool branch_tainted = false;
-                // Simple heuristic: if any reg is tainted in the block, the branch might be tainted.
-                // In a real implementation, we'd parse the 'if' instruction registers.
                 if (current_in.active_regs != 0) branch_tainted = true; 
 
                 if (branch_tainted && block.ipd != -1) {
@@ -311,9 +317,14 @@ namespace engines {
                     size_t last_comma = line.find_last_of(',');
                     if (last_comma != std::string_view::npos) {
                         std::string_view val = utils::trim(line.substr(last_comma + 1));
-                        if (val == config.query || (config.query.starts_with("0x") && val == config.query)) {
+                        std::string_view normalized_val = val;
+                        if (normalized_val.starts_with('"') && normalized_val.ends_with('"')) {
+                            normalized_val = normalized_val.substr(1, normalized_val.size() - 2);
+                        }
+                        
+                        if (normalized_val == config.query || (config.query.starts_with("0x") && val == config.query)) {
                             data_tainted = true;
-                            target = val;
+                            target = normalized_val;
                             extra = "CONST_SOURCE";
                         }
                     }
@@ -371,7 +382,21 @@ namespace engines {
             else if (line.starts_with("invoke-")) {
                 size_t ob = line.find('{'), cb = line.find('}', ob);
                 if (ob != std::string_view::npos && cb != std::string_view::npos) {
-                    std::string_view target = utils::trim(line.substr(line.find_last_of(' ') + 1));
+                    std::string_view target;
+                    size_t last_space = line.find_last_of(' ');
+                    if (last_space != std::string_view::npos) {
+                        target = utils::trim(line.substr(last_space + 1));
+                    }
+                    // Se o target comecar com {, eh porque pegamos os registradores. Precisamos do token depois da virgula.
+                    if (target.starts_with('{')) {
+                        size_t comma = line.find('}', last_space);
+                        if (comma != std::string_view::npos) {
+                            size_t next_token = line.find_first_not_of(", ", comma + 1);
+                            if (next_token != std::string_view::npos) {
+                                target = utils::trim(line.substr(next_token));
+                            }
+                        }
+                    }
                     std::string_view regs_sv = line.substr(ob + 1, cb - ob - 1);
                     bool is_sink = false; for (auto s : SINKS) if (target.find(s) != std::string_view::npos) { is_sink = true; break; }
                     bool is_san = is_sanitizer(target);

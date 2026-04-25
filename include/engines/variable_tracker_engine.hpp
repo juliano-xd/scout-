@@ -164,7 +164,7 @@ namespace engines {
                                                    const PointsToSet& receiver_aliases,
                                                    std::string_view virtual_method_sig);
 
-    private:
+    public:
         MethodSummary track_recursive(
             core::AnalysisContext& ctx,
             TrackingState& state,
@@ -201,6 +201,9 @@ namespace engines {
         std::string_view pool_string(std::string_view s);
         bool is_sanitizer(std::string_view target);
         bool is_transform(std::string_view target);
+        static bool merge_states(TrackingState& target, const TrackingState& incoming);
+
+    private:
 
         std::unordered_set<std::string> string_pool_;
         std::unordered_map<CacheKey, std::pair<std::vector<VariableEvent>, MethodSummary>, CacheKeyHash> analysis_cache_;

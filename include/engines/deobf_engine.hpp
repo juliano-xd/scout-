@@ -34,12 +34,12 @@ namespace engines {
             return true;
         }
 
+        bool is_suspicious(std::string_view str);
+        std::string decode_simple(std::string_view str);
+
     private:
         EngineStats stats_;
         std::mutex stats_mutex_;
-
-        bool is_suspicious(std::string_view str);
-        std::string decode_simple(std::string_view str);
     };
 
     std::unique_ptr<ISearchEngine> create_deobf_engine();

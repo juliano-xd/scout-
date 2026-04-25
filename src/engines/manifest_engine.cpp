@@ -83,22 +83,31 @@ namespace engines {
             info.permissions.push_back((*i)[1].str());
         }
 
-        // Extrair Componentes (simplificado)
+        // Extrair Componentes (aproximado via regex para capturar bloco e atributos)
         auto extract_components = [&](const std::string& type, const std::string& tag_name) {
-            std::regex comp_reg("<" + tag_name + "([^>]+)>");
+            // Tenta capturar tanto tags auto-contidas <tag /> quanto blocos <tag>...</tag>
+            std::regex comp_reg("<" + tag_name + "([^>]*?)(?:/>|>([\\s\\S]*?)</" + tag_name + ">)");
             auto comp_begin = std::sregex_iterator(full_xml.begin(), full_xml.end(), comp_reg);
             auto comp_end = std::sregex_iterator();
             for (auto i = comp_begin; i != comp_end; ++i) {
-                std::string tag_content = (*i)[1].str();
-                ManifestInfo::Component comp;
-                comp.name = get_attr(tag_content, "android:name");
-                comp.type = type;
-                comp.exported = (get_attr(tag_content, "android:exported") == "true");
+                std::string tag_attrs = (*i)[1].str();
+                std::string tag_body = (i->size() > 2) ? (*i)[2].str() : "";
                 
-                // Extrair ações de intent-filters (aproximado via regex no bloco da tag)
-                // Nota: Em um parser real usaríamos uma árvore, aqui simulamos a busca por <action android:name="..."/>
+                ManifestInfo::Component comp;
+                comp.name = get_attr(tag_attrs, "android:name");
+                comp.type = type;
+                comp.exported = (get_attr(tag_attrs, "android:exported") == "true");
+                
+                // Se não tem exported explícito, mas tem intent-filter, o default é true
+                std::string search_area = tag_attrs + " " + tag_body;
+                if (search_area.find("<intent-filter") != std::string::npos && 
+                    get_attr(tag_attrs, "android:exported").empty()) {
+                    comp.exported = true;
+                }
+
+                // Extrair ações de intent-filters no corpo
                 std::regex action_re("<action[^>]+android:name=\"([^\"]+)\"");
-                auto actions_begin = std::sregex_iterator(tag_content.begin(), tag_content.end(), action_re);
+                auto actions_begin = std::sregex_iterator(search_area.begin(), search_area.end(), action_re);
                 auto actions_end = std::sregex_iterator();
                 for (auto j = actions_begin; j != actions_end; ++j) {
                     comp.intent_filters.push_back((*j)[1].str());

@@ -8,6 +8,15 @@
 
 namespace engines {
 
+    bool DeobfEngine::is_suspicious(std::string_view str) {
+        if (str.length() < 20) return false;
+        return utils::is_base64(str);
+    }
+
+    std::string DeobfEngine::decode_simple(std::string_view str) {
+        return utils::decode_base64(str);
+    }
+
     std::vector<SearchResult> DeobfEngine::search(
         core::AnalysisContext& ctx,
         const SearchConfig& config
@@ -33,13 +42,13 @@ namespace engines {
                 std::string s_line(line);
                 if (std::regex_search(s_line, match, b64_reg)) {
                     std::string match_str = match[1].str();
-                    if (utils::is_base64(match_str)) {
+                    if (is_suspicious(match_str)) {
                         SearchResult res;
                         res.file_path = std::filesystem::relative(path, root_dir);
                         res.line_number = line_num;
                         res.line_content = std::string(line);
                         
-                        std::string decoded = utils::decode_base64(match_str);
+                        std::string decoded = decode_simple(match_str);
                         std::string preview;
                         for (char c : decoded) {
                             if (isprint(c)) preview += c;

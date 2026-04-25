@@ -33,9 +33,7 @@ namespace engines {
             return true;
         }
 
-    private:
-        EngineStats stats_;
-
+    public:
         struct ClassStructure {
             std::string name;
             std::string super;
@@ -46,6 +44,9 @@ namespace engines {
 
         ClassStructure inspect_file(const std::filesystem::path& path);
         sexpr::Node serialize_structure(const ClassStructure& info);
+
+    private:
+        EngineStats stats_;
     };
 
     std::unique_ptr<ISearchEngine> create_class_inspector_engine();

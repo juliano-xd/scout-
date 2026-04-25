@@ -111,7 +111,7 @@ namespace engines {
     }
 
     // Extrai registradores de uma instrução (ex: {p0, v0})
-    std::string_view extract_registers(std::string_view line) {
+    std::string_view XrefSearchEngine::extract_registers(std::string_view line) {
         size_t start = line.find('{');
         size_t end = line.find('}', start);
         if (start != std::string_view::npos && end != std::string_view::npos) {
@@ -121,7 +121,7 @@ namespace engines {
     }
 
     // Classifica o tipo de acesso baseado no opcode
-    std::string classify_access(std::string_view opcode) {
+    std::string XrefSearchEngine::extract_instruction_type(std::string_view opcode) {
         if (opcode.starts_with("invoke-")) return "invoke";
         if (opcode.starts_with("sget") || opcode.starts_with("iget")) return "read";
         if (opcode.starts_with("sput") || opcode.starts_with("iput")) return "write";
@@ -129,7 +129,7 @@ namespace engines {
     }
 
     // Tenta rastrear o valor de um registrador voltando algumas linhas (taint lite)
-    std::string trace_register_value(std::string_view reg, const std::vector<std::string>& history) {
+    std::string XrefSearchEngine::trace_register_value(std::string_view reg, const std::vector<std::string>& history) {
         // Procurar de trás para frente no histórico
         for (auto it = history.rbegin(); it != history.rend(); ++it) {
             std::string_view line = *it;
@@ -153,7 +153,8 @@ namespace engines {
     std::vector<SearchResult> XrefSearchEngine::perform_search(
         const std::vector<std::filesystem::path>& files,
         const std::string& target,
-        const SearchConfig& config
+        const SearchConfig& config,
+        const std::filesystem::path& root_dir
     ) {
         std::vector<SearchResult> results;
         std::mutex mtx;
@@ -202,7 +203,7 @@ namespace engines {
                         }
 
                         SearchResult res;
-                        res.file_path = file_path;
+                        res.file_path = std::filesystem::relative(file_path, root_dir);
                         res.line_number = ctx.line_number;
                         res.line_content = std::string(trimmed);
                         
@@ -213,7 +214,7 @@ namespace engines {
                         }
 
                         std::string regs_str = std::string(extract_registers(trimmed));
-                        std::string access = classify_access(opcode);
+                        std::string access = extract_instruction_type(opcode);
 
                         res.context = ctx.current_class + "->" + ctx.current_method;
                         if (!regs_str.empty()) res.context += " regs:" + regs_str;
@@ -371,7 +372,7 @@ namespace engines {
                     if (processed_targets.count(current_target)) continue;
                     processed_targets.insert(current_target);
 
-                    auto results = perform_search(all_files, current_target, config);
+                    auto results = perform_search(all_files, current_target, config, root_dir);
                     for (auto& r : results) {
                         // Se o resultado já foi encontrado em uma profundidade anterior, ignora
                         std::string context_id = r.file_path.string() + ":" + std::to_string(r.line_number);

@@ -1,4 +1,5 @@
 #include "engines/content_search_engine.hpp"
+#include "core/scanner.hpp"
 #include "utils/filesystem.hpp"
 #include "utils/string_utils.hpp"
 #include "utils/mmap_file.hpp"
@@ -63,6 +64,12 @@ namespace engines {
         size_t pos = 0;
         while ((pos = line.find(normalized_query, pos)) != std::string_view::npos) {
             bool start_ok = (pos == 0 || !std::isalnum(static_cast<unsigned char>(line[pos-1])));
+            
+            // Caso especial: se o prefixo for 'x' e antes tiver '0', ignorar o alnum do 'x'
+            if (!start_ok && pos >= 2 && line[pos-1] == 'x' && line[pos-2] == '0') {
+                start_ok = true;
+            }
+
             if (start_ok) {
                 size_t end = pos + normalized_query.size();
                 bool end_ok = (end == line.size() || !std::isalnum(static_cast<unsigned char>(line[end])));

@@ -120,6 +120,12 @@ namespace engines {
         return results;
     }
 
+    std::string ResourceMappingEngine::resolve_id(uint32_t id) const {
+        auto it = id_to_name_.find(id);
+        if (it != id_to_name_.end()) return it->second;
+        return "";
+    }
+
     std::unique_ptr<ISearchEngine> create_resource_mapping_engine() {
         return std::make_unique<ResourceMappingEngine>();
     }

@@ -34,9 +34,7 @@ namespace engines {
             return true;
         }
 
-    private:
-        EngineStats stats_;
-
+    public:
         struct ManifestInfo {
             std::string package;
             std::vector<std::string> permissions;
@@ -52,6 +50,9 @@ namespace engines {
 
         ManifestInfo parse_manifest(const std::filesystem::path& path);
         sexpr::Node serialize_info(const ManifestInfo& info);
+
+    private:
+        EngineStats stats_;
     };
 
     std::unique_ptr<ISearchEngine> create_manifest_engine();

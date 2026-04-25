@@ -62,14 +62,7 @@ namespace engines {
          */
         void set_enable_taint(bool enable) { enable_taint_ = enable; }
 
-    private:
-        EngineStats stats_;
-        std::string direction_ = "both";
-        bool include_system_ = false;
-        int depth_ = 1;
-        bool enable_taint_ = false;
-        std::vector<std::string> filter_opcodes_;
-
+    public:
         /**
          * @brief Estrutura interna para rastrear contexto durante parsing.
          */
@@ -112,6 +105,16 @@ namespace engines {
          * @brief Verifica se uma classe é do sistema Android.
          */
         static bool is_system_class(std::string_view class_name);
+        static std::string_view extract_registers(std::string_view line);
+        static std::string trace_register_value(std::string_view reg, const std::vector<std::string>& history);
+
+    private:
+        EngineStats stats_;
+        std::string direction_ = "both";
+        bool include_system_ = false;
+        int depth_ = 1;
+        bool enable_taint_ = false;
+        std::vector<std::string> filter_opcodes_;
 
         /**
          * @brief Executa busca XREF em um conjunto de arquivos.
@@ -119,7 +122,8 @@ namespace engines {
         std::vector<SearchResult> perform_search(
             const std::vector<std::filesystem::path>& files,
             const std::string& target,
-            const SearchConfig& config
+            const SearchConfig& config,
+            const std::filesystem::path& root_dir
         );
 
         /**

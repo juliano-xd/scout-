@@ -50,9 +50,7 @@ namespace engines {
             return true;
         }
 
-    private:
-        EngineStats stats_;
-
+    public:
         /**
          * @brief Estrutura interna para rastrear contexto durante parsing de arquivo.
          */
@@ -81,6 +79,9 @@ namespace engines {
          * @brief Verifica se a linha contém o inteiro/hex especificado.
          */
         static bool matches_integer(std::string_view line, std::string_view query);
+
+    private:
+        EngineStats stats_;
     };
 
     /**

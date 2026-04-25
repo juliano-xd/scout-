@@ -35,18 +35,14 @@ namespace engines {
          */
         void load_map(const std::filesystem::path& root_dir);
 
-        /**
-         * @brief Resolve um ID para um nome.
-         */
+        void scan_public_xml(const std::filesystem::path& path);
+        void scan_r_smali(const std::filesystem::path& path);
         std::string resolve_id(uint32_t id) const;
 
     private:
         EngineStats stats_;
         std::map<uint32_t, std::string> id_to_name_;
         bool loaded_ = false;
-
-        void scan_public_xml(const std::filesystem::path& path);
-        void scan_r_smali(const std::filesystem::path& path);
     };
 
     std::unique_ptr<ISearchEngine> create_resource_mapping_engine();

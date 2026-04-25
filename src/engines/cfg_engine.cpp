@@ -129,9 +129,9 @@ namespace engines {
 
             std::string_view last_line = lines[end_line - 1];
             if (last_line.starts_with("goto")) {
-                size_t colon = last_line.find_last_of(':');
+                size_t colon = last_line.find(':');
                 if (colon != std::string_view::npos) {
-                    std::string_view target = last_line.substr(colon);
+                    std::string_view target = utils::trim(last_line.substr(colon));
                     if (label_to_line.count(target)) {
                         int succ_bid = line_to_block[label_to_line[target]];
                         cfg.blocks[i].successors.push_back(succ_bid);
@@ -143,16 +143,16 @@ namespace engines {
                     cfg.blocks[i].successors.push_back(i + 1);
                     cfg.blocks[i + 1].predecessors.push_back(i);
                 }
-                size_t colon = last_line.find_last_of(':');
+                size_t colon = last_line.find(':');
                 if (colon != std::string_view::npos) {
-                    std::string_view target = last_line.substr(colon);
+                    std::string_view target = utils::trim(last_line.substr(colon));
                     if (label_to_line.count(target)) {
                         int succ_bid = line_to_block[label_to_line[target]];
                         cfg.blocks[i].successors.push_back(succ_bid);
                         cfg.blocks[succ_bid].predecessors.push_back(i);
                     }
                 }
-            } else if (!last_line.starts_with("return") && !last_line.starts_with("throw")) {
+            } else if (!last_line.starts_with("return") && !last_line.starts_with("throw") && !last_line.starts_with(".end method")) {
                 if (i + 1 < cfg.blocks.size()) {
                     cfg.blocks[i].successors.push_back(i + 1);
                     cfg.blocks[i + 1].predecessors.push_back(i);
