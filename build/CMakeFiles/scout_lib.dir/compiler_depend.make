@@ -1306,6 +1306,7 @@ CMakeFiles/scout_lib.dir/src/engines/class_search_engine.cpp.o: /home/trindade/P
 
 CMakeFiles/scout_lib.dir/src/engines/content_search_engine.cpp.o: /home/trindade/Projetos/scout++/src/engines/content_search_engine.cpp \
   /home/trindade/Projetos/scout++/include/core/analysis_context.hpp \
+  /home/trindade/Projetos/scout++/include/core/scanner.hpp \
   /home/trindade/Projetos/scout++/include/engines/content_search_engine.hpp \
   /home/trindade/Projetos/scout++/include/engines/i_search_engine.hpp \
   /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \

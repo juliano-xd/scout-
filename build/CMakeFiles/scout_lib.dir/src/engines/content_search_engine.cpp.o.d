@@ -305,6 +305,7 @@ CMakeFiles/scout_lib.dir/src/engines/content_search_engine.cpp.o: \
  /usr/include/c++/15.2.1/pstl/numeric_fwd.h \
  /usr/include/c++/15.2.1/pstl/glue_numeric_impl.h \
  /usr/include/c++/15.2.1/pstl/glue_memory_impl.h \
+ /home/trindade/Projetos/scout++/include/core/scanner.hpp \
  /home/trindade/Projetos/scout++/include/utils/filesystem.hpp \
  /home/trindade/Projetos/scout++/include/utils/string_utils.hpp \
  /usr/include/c++/15.2.1/map /usr/include/c++/15.2.1/bits/stl_multimap.h \
