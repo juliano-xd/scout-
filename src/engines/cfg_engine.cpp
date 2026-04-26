@@ -51,6 +51,18 @@ namespace engines {
         for (const auto& b : cfg.blocks) {
             auto b_node = sexpr::list();
             b_node.push(sexpr::symbol("BB" + std::to_string(b.id)));
+            
+            // Extrair instruções relevantes (opcodes)
+            auto ops_node = sexpr::list();
+            utils::LineIterator it(b.code_content);
+            std::string_view line;
+            while (it.next(line)) {
+                std::string_view trimmed = utils::trim(line);
+                if (trimmed.empty() || trimmed[0] == '.' || trimmed[0] == ':') continue;
+                ops_node.push(sexpr::string(std::string(trimmed)));
+            }
+            b_node.kv("ops", ops_node);
+
             auto succs = sexpr::list();
             for (int s : b.successors) succs.push(sexpr::symbol("BB" + std::to_string(s)));
             b_node.kv("succ", succs);
