@@ -148,8 +148,8 @@ namespace engines {
             const SearchConfig& config
         ) override;
 
-        std::string name() const override { return "track_var"; }
-        std::string description() const override { return "Scout-Alias + Aero-Taint Nível 15: Context-Sensitive Identity Bridge."; }
+        std::string name() const override { return "taint_analysis"; }
+        std::string description() const override { return "Advanced Taint Analysis Engine (Inter-procedural, Implicit Flow, Data Tracking)"; }
         EngineStats get_stats() const override { return stats_; }
 
         bool supports_config(const SearchConfig& config) const override;

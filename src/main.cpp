@@ -174,18 +174,29 @@ int main(int argc, char** argv) {
             }
         }
 
+        if (config.detect_obfuscation) {
+            auto engine = scout::create_engine("deobf");
+            if (engine) {
+                engines::SearchConfig dcfg;
+                dcfg.query = search_query.value_or("");
+                auto results = engine->search(analysis_ctx, dcfg);
+                std::cout << formatter->format_search_results(results) << "\n";
+            }
+        }
+
         if (config.translate) {
-            auto engine = scout::create_engine("translate");
+            auto engine = scout::create_engine("smali_dump");
             if (engine) {
                 engines::SearchConfig tcfg;
                 tcfg.query = *config.translate;
+                tcfg.search_type = "translate";
                 auto results = engine->search(analysis_ctx, tcfg);
                 std::cout << formatter->format_search_results(results) << "\n";
             }
         }
 
         if (config.track_var) {
-            auto engine = scout::create_engine("track_var");
+            auto engine = scout::create_engine("taint_analysis");
             if (engine) {
                 engines::SearchConfig vcfg;
                 vcfg.query = *config.track_var;
@@ -194,11 +205,6 @@ int main(int argc, char** argv) {
                 auto results = engine->search(analysis_ctx, vcfg);
                 
                 if (config.machine_sexpr) {
-                    // Para o VariableTracker, usamos o formatador causal de alto nível (Nível 16)
-                    // que converte os eventos em uma narrativa de intenção com handles (h1, h2...).
-                    // Como SearchResult encapsula os eventos no context, mas o formatador 
-                    // causal precisa dos eventos brutos, por enquanto vamos imprimir o context
-                    // formatado de forma bonita, ou integrar diretamente se tivermos acesso.
                     std::cout << formatter->format_search_results(results, sexpr::list({sexpr::keyword("pretty"), sexpr::boolean(true)})) << "\n";
                 } else {
                     std::cout << formatter->format_search_results(results) << "\n";
@@ -213,7 +219,6 @@ int main(int argc, char** argv) {
         if (config.scan)              emit_pending("scan");
         if (config.hook)              emit_pending("hook");
         if (config.frida)             emit_pending("frida");
-        if (config.detect_obfuscation) emit_pending("detect_obfuscation");
 
 
         // Verbose

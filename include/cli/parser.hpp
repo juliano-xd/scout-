@@ -248,8 +248,8 @@ namespace cli {
             parser.add_option("--inspect-class", "-i", "CLASS", "DNA da Classe.", "Class DNA.", config.inspect_class);
             parser.add_flag("--deobf-strings", "-D", "Decodifica strings.", "Decode strings.", config.deobf_strings);
             parser.add_option("--translate", "", "SIGNATURE", "Traduz para pseudocódigo.", "Translate to pseudocode.", config.translate);
-            parser.add_option("--track-var", "-t", "SIGNATURE", "Taint Analysis (Nível 15).", "Taint Analysis (Level 15).", config.track_var);
-            parser.add_option("--track-var-name", "", "NAME", "Variável alvo.", "Target variable.", config.track_var_name);
+            parser.add_option("--track-var", "-t", "SIGNATURE", "Taint Analysis profunda (Data Flow + Implicit Flow).", "Deep Taint Analysis (Data Flow + Implicit Flow).", config.track_var);
+            parser.add_option("--track-var-name", "", "NAME", "Variável/Registrador alvo (ex: v0, p1).", "Target variable/register.", config.track_var_name);
             parser.add_option("--track-depth", "", "INT", "Profundidade de rastreio.", "Tracking depth.", config.track_depth);
             parser.add_flag("--verbose", "-v", "Logs detalhados.", "Verbose logging.", config.verbose);
             parser.add_option("--search-type", "", "{regex,class,content}", "Tipo de busca.", "Search type.", config.search_type);

@@ -26,7 +26,7 @@ namespace scout {
         static engines::EngineRegistrar<engines::ClassInspectorEngine> _reg_insp("class_inspector");
         static engines::EngineRegistrar<engines::UiMapperEngine>      _reg_ui("ui_mapper");
         static engines::EngineRegistrar<engines::DeobfEngine>         _reg_deobf("deobf");
-        static engines::EngineRegistrar<engines::VariableTrackerEngine> _reg_track("track_var");
+        static engines::EngineRegistrar<engines::VariableTrackerEngine> _reg_track("taint_analysis");
         static engines::EngineRegistrar<engines::SmaliDumpEngine>     _reg_dump("smali_dump");
         static formatters::FormatterRegistrar<formatters::SExprFormatter> _reg_sexpr("sexpr");
     }
@@ -44,7 +44,7 @@ namespace scout {
                    er.has_engine("class_inspector") &&
                    er.has_engine("ui_mapper") &&
                    er.has_engine("deobf") &&
-                   er.has_engine("track_var") &&
+                   er.has_engine("taint_analysis") &&
                    er.has_engine("smali_dump") &&
                    fr.has_formatter("sexpr");
         } catch (...) {
