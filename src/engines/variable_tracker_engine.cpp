@@ -164,7 +164,8 @@ namespace engines {
         core::AnalysisContext& ctx,
         TrackingState& state,
         std::vector<VariableEvent>& events,
-        const SearchConfig& config
+        const SearchConfig& config,
+        std::string_view initial_reg
     ) {
         if (state.depth > config.search_depth) return {};
         if (state.active_regs == 0 && state.obj_taint_map.empty() && state.control_taint_stack.empty() && config.query.empty()) return {};
@@ -221,6 +222,10 @@ namespace engines {
         std::queue<int> worklist;
         
         block_in_states[cfg.entry_block_id] = state;
+        // Se temos registradores iniciais (v0, p1, etc), garantimos que o bloco de entrada os veja
+        block_in_states[cfg.entry_block_id].active_regs = state.active_regs;
+        block_in_states[cfg.entry_block_id].obj_taint_map = state.obj_taint_map;
+        
         worklist.push(cfg.entry_block_id);
         visited_blocks.insert(cfg.entry_block_id);
         
@@ -240,7 +245,7 @@ namespace engines {
             TrackingState exception_out; 
             std::vector<VariableEvent> block_events;
 
-            process_method_internal(block.code_content, current_out, exception_out, block_events, ctx, config, state.current_method, state.depth);
+            process_method_internal(block.code_content, current_out, exception_out, block_events, ctx, config, state.current_method, state.depth, initial_reg);
 
             // Level 15: Check for tainted branch
             std::string_view trimmed_body = utils::trim(block.code_content);
@@ -296,7 +301,8 @@ namespace engines {
         core::AnalysisContext& ctx,
         const SearchConfig& config,
         std::string_view method_name,
-        int depth
+        int depth,
+        std::string_view initial_reg
     ) {
         size_t pos = 0; int line_idx = 0;
         state.last_call_summary = {};
@@ -332,8 +338,14 @@ namespace engines {
                 std::string_view target = "const";
                 std::string_view extra = "";
                 
+                // Se o registrador de destino for o que queremos rastrear inicialmente, marcamos como manchado
+                if (initial_reg == dst_r) {
+                    data_tainted = true;
+                    extra = "INITIAL_REG_SOURCE";
+                }
+
                 // Suporte a rastreio de constante específica (Nível 16)
-                if (line.starts_with("const")) {
+                if (!config.query.empty() && line.starts_with("const")) {
                     size_t last_comma = line.find_last_of(',');
                     if (last_comma != std::string_view::npos) {
                         std::string_view val = utils::trim(line.substr(last_comma + 1));
@@ -355,10 +367,11 @@ namespace engines {
                 else if (line.starts_with("a")) act = "LOAD";
                 else if (line.starts_with("const")) act = "CONST";
 
+                int s_bit = -1;
                 if (!line.starts_with("const") && comma != std::string_view::npos) {
                     std::string_view src_r = utils::trim(line.substr(comma + 1));
                     target = src_r;
-                    int s_bit = reg_to_bit(src_r);
+                    s_bit = reg_to_bit(src_r);
                     if (s_bit != -1 && (state.active_regs & (1ULL << s_bit))) {
                         data_tainted = true;
                         extra = src_r;
@@ -376,12 +389,16 @@ namespace engines {
                     }
                 }
 
-                if (data_tainted || pc_tainted) {
+                if (data_tainted || pc_tainted || (s_bit != -1 && (state.active_regs & (1ULL << s_bit)))) {
                     state.active_regs |= (1ULL << d_bit);
                     events.push_back({method_name, line_idx, bit_to_reg_sv(d_bit), act, target, pc_tainted ? "IMPLICIT" : extra});
                 } else {
-                    state.active_regs &= ~(1ULL << d_bit);
-                    state.obj_taint_map.erase(d_bit);
+                    // Se não for uma instrução const (que limpa o registrador com novo valor)
+                    // ou se for um move de algo não manchado, limpamos a mancha.
+                    if (line.starts_with("const") || comma != std::string_view::npos) {
+                         state.active_regs &= ~(1ULL << d_bit);
+                         state.obj_taint_map.erase(d_bit);
+                    }
                 }
             }
             else if (line.starts_with("iput") || line.starts_with("sput") || line.starts_with("aput")) {
@@ -468,7 +485,7 @@ namespace engines {
                             } else {
                                 next_state.active_regs = ((state.active_regs & (1ULL << call_bits[i])) || pc_tainted) ? (1ULL << (32 + i)) : 0;
                                 if (state.obj_taint_map.count(call_bits[i])) next_state.obj_taint_map[32 + i] = state.obj_taint_map[call_bits[i]];
-                                state.last_call_summary = track_recursive(ctx, next_state, events, config);
+                                state.last_call_summary = track_recursive(ctx, next_state, events, config, initial_reg);
                             }
                         }
                     }

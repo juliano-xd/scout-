@@ -169,7 +169,8 @@ namespace engines {
             core::AnalysisContext& ctx,
             TrackingState& state,
             std::vector<VariableEvent>& events,
-            const SearchConfig& config
+            const SearchConfig& config,
+            std::string_view initial_reg = ""
         );
 
         void process_method_internal(
@@ -180,7 +181,8 @@ namespace engines {
             core::AnalysisContext& ctx,
             const SearchConfig& config,
             std::string_view method_name,
-            int depth
+            int depth,
+            std::string_view initial_reg = ""
         );
 
         static int reg_to_bit(std::string_view reg) {
