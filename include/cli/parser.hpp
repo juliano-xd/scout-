@@ -199,6 +199,7 @@ namespace cli {
         int xref_depth = 1;
         bool xref_include_system = false;
         std::optional<std::string> cfg;
+        std::optional<std::string> dump_ast;
         std::optional<std::string> ui_mapper;
         std::optional<std::string> inspect_class;
         bool deobf_strings = false;
@@ -242,6 +243,7 @@ namespace cli {
             parser.add_option("--xref-depth", "-d", "INT", "Profundidade recursiva.", "Recursive depth.", config.xref_depth);
             parser.add_flag("--xref-include-system", "-S", "Inclui APIs do sistema.", "Include system APIs.", config.xref_include_system);
             parser.add_option("--cfg", "-C", "SIGNATURE", "Gera FCFG.", "Generate FCFG.", config.cfg);
+            parser.add_option("--dump-ast", "", "CLASS", "Dump do AST Smali.", "Dump Smali AST.", config.dump_ast);
             parser.add_option("--ui-mapper", "-u", "ID", "Mapeia UI.", "UI mapper.", config.ui_mapper);
             parser.add_option("--inspect-class", "-i", "CLASS", "DNA da Classe.", "Class DNA.", config.inspect_class);
             parser.add_flag("--deobf-strings", "-D", "Decodifica strings.", "Decode strings.", config.deobf_strings);

@@ -220,6 +220,10 @@ TEST(ClassSearchEngine, DalvikNotationDetection) {
     EXPECT_TRUE(ClassSearchEngine::is_dalvik_notation("Ljava/lang/String;"));
     EXPECT_FALSE(ClassSearchEngine::is_dalvik_notation("AuthManager"));
     EXPECT_FALSE(ClassSearchEngine::is_dalvik_notation("Lcom/example/A")); // sem ;
+    EXPECT_FALSE(ClassSearchEngine::is_dalvik_notation("com/example/A;")); // sem L
+    EXPECT_FALSE(ClassSearchEngine::is_dalvik_notation("L;")); // muito curto mas tem L e ;
+    EXPECT_FALSE(ClassSearchEngine::is_dalvik_notation("L"));
+    EXPECT_FALSE(ClassSearchEngine::is_dalvik_notation(";"));
     EXPECT_FALSE(ClassSearchEngine::is_dalvik_notation(""));
 }
 
@@ -227,7 +231,42 @@ TEST(ClassSearchEngine, NormalizeDalvik) {
     EXPECT_EQ(ClassSearchEngine::normalize_dalvik("Lcom/example/A;"), "com/example/A");
     EXPECT_EQ(ClassSearchEngine::normalize_dalvik("com/example/A"), "com/example/A");
     EXPECT_EQ(ClassSearchEngine::normalize_dalvik("Lcom/example/A"), "com/example/A");
+    EXPECT_EQ(ClassSearchEngine::normalize_dalvik("com/example/A;"), "com/example/A");
+    EXPECT_EQ(ClassSearchEngine::normalize_dalvik("L;"), "");
+    EXPECT_EQ(ClassSearchEngine::normalize_dalvik("L"), "");
+    EXPECT_EQ(ClassSearchEngine::normalize_dalvik(";"), "");
     EXPECT_EQ(ClassSearchEngine::normalize_dalvik(""), "");
+}
+
+TEST(ClassSearchEngine, LiteralSearchWithRegexChars) {
+    ClassSearchEngine engine;
+    fs::path temp_dir = create_test_smali_structure();
+    
+    // Query com caracteres que seriam especiais em Regex
+    SearchConfig config;
+    config.query = "Auth.*Manager"; 
+    config.max_results = 100;
+    
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
+    
+    // Não deve encontrar nada, pois busca por substring literal "Auth.*Manager"
+    EXPECT_TRUE(results.empty());
+    
+    cleanup_test_structure(temp_dir);
+}
+
+TEST(ClassSearchEngine, VeryLongQuery) {
+    ClassSearchEngine engine;
+    fs::path temp_dir = create_test_smali_structure();
+    
+    SearchConfig config;
+    config.query = std::string(10000, 'A');
+    config.max_results = 100;
+    
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
+    EXPECT_TRUE(results.empty());
+    
+    cleanup_test_structure(temp_dir);
 }
 
 // ==========================================

@@ -205,6 +205,74 @@ TEST_F(SExprEdgeTest, XrefResultsHeader) {
     EXPECT_NE(out.find(":total 1"),   std::string::npos);
 }
 
+// ==========================================
+// Testes de Robustez e Casos Irreais
+// ==========================================
+
+TEST_F(SExprEdgeTest, DeepNestingStackOverflow) {
+    sexpr::Node root = sexpr::list();
+    sexpr::Node* current = &root;
+    for (int i = 0; i < 1000; ++i) {
+        current->push(sexpr::list());
+        current = &current->items.back();
+    }
+    current->push(sexpr::string("deep"));
+    
+    // Deve serializar sem crashar
+    EXPECT_NO_THROW({
+        std::string out = root.to_string();
+        EXPECT_FALSE(out.empty());
+    });
+}
+
+TEST_F(SExprEdgeTest, NonListPushThrows) {
+    auto n = sexpr::integer(10);
+    EXPECT_THROW(n.push(sexpr::nil()), std::logic_error);
+}
+
+TEST_F(SExprEdgeTest, NonListKvThrows) {
+    auto n = sexpr::string("not a list");
+    EXPECT_THROW(n.kv("key", sexpr::boolean(true)), std::logic_error);
+}
+
+TEST_F(SExprEdgeTest, MalformedOptsFrom) {
+    // Lista com número ímpar de elementos (chave sem valor)
+    auto bad_opts = sexpr::list({sexpr::keyword("pretty")});
+    auto opts = SExprFormatter::Opts::from(bad_opts);
+    // Deve ignorar o item ímpar e usar defaults
+    EXPECT_FALSE(opts.pretty);
+}
+
+TEST_F(SExprEdgeTest, MixedTypeOptsFrom) {
+    // Chave correta, mas valor de tipo errado
+    auto bad_opts = sexpr::list({sexpr::keyword("pretty"), sexpr::integer(123)});
+    auto opts = SExprFormatter::Opts::from(bad_opts);
+    EXPECT_FALSE(opts.pretty);
+}
+
+TEST_F(SExprEdgeTest, NonPrintableCharacters) {
+    std::string binary_data;
+    for (int i = 0; i < 32; ++i) binary_data += static_cast<char>(i);
+    auto n = sexpr::string(binary_data);
+    auto out = formatter.format(n);
+    // Deve conter escapes hexadecimais como \x01, \x02 etc.
+    EXPECT_NE(out.find("\\x01"), std::string::npos);
+    EXPECT_NE(out.find("\\x1f"), std::string::npos);
+}
+
+TEST_F(SExprEdgeTest, HugeIntegers) {
+    long long huge = 9223372036854775807LL; // LLONG_MAX
+    auto n = sexpr::integer(huge);
+    EXPECT_EQ(formatter.format(n), std::to_string(huge));
+}
+
+TEST_F(SExprEdgeTest, HugeFloats) {
+    double huge = 1e308;
+    auto n = sexpr::real(huge);
+    auto out = formatter.format(n);
+    EXPECT_FALSE(out.empty());
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     scout::register_all_components();

@@ -10,7 +10,7 @@ namespace engines {
     namespace {
         // Helper para extrair atributos de tags XML
         std::string get_attr(const std::string& tag, const std::string& attr) {
-            std::regex reg(attr + "=\"([^\"]+)\"");
+            std::regex reg(attr + "\\s*=\\s*['\"]([^'\"]+)['\"]");
             std::smatch match;
             if (std::regex_search(tag, match, reg)) {
                 return match[1].str();

@@ -41,7 +41,7 @@ namespace formatters {
             const sexpr::Node& options = sexpr::nil()
         ) const override;
 
-    private:
+    public:
         struct Opts {
             bool pretty   = false;
             bool compact  = false;
@@ -49,6 +49,8 @@ namespace formatters {
 
             static Opts from(const sexpr::Node& n);
         };
+
+    private:
 
         std::string serialize_results(
             const std::vector<engines::SearchResult>& results,

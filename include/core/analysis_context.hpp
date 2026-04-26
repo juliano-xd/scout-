@@ -6,7 +6,10 @@
 #include <filesystem>
 #include <memory>
 #include <mutex>
+#include <algorithm>
+#include <fstream>
 #include "utils/mmap_file.hpp"
+#include "utils/string_utils.hpp"
 
 namespace core {
 
@@ -58,19 +61,23 @@ namespace core {
         void initialize_smali_index() {
             if (!std::filesystem::exists(root_dir_) || !std::filesystem::is_directory(root_dir_)) return;
 
-            // Varredura inicial ultra-rápida apenas para mapear Lcom/X; -> path
             for (const auto& entry : std::filesystem::recursive_directory_iterator(root_dir_)) {
                 if (entry.is_regular_file() && entry.path().extension() == ".smali") {
-                    std::string path_str = entry.path().string();
-                    size_t smali_pos = path_str.find("/smali");
-                    if (smali_pos != std::string::npos) {
-                        size_t start = path_str.find('/', smali_pos + 1);
-                        if (start != std::string::npos) {
-                            std::string dalvik_name = "L" + path_str.substr(start + 1);
-                            if (dalvik_name.size() > 6) { // .smali suffix
-                                dalvik_name.replace(dalvik_name.size() - 6, 6, ";");
-                                class_index_[dalvik_name] = entry.path();
+                    // Abrir arquivo para ler o cabeçalho .class
+                    std::ifstream file(entry.path());
+                    std::string line;
+                    while (std::getline(file, line)) {
+                        line = utils::trim(line);
+                        if (line.starts_with(".class ")) {
+                            size_t last_space = line.find_last_of(' ');
+                            if (last_space != std::string::npos) {
+                                std::string dalvik_name = std::string(line.substr(last_space + 1));
+                                // Limpar possíveis comentários ou espaços
+                                if (!dalvik_name.empty()) {
+                                    class_index_[dalvik_name] = entry.path();
+                                }
                             }
+                            break;
                         }
                     }
                 }

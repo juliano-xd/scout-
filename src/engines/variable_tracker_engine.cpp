@@ -116,7 +116,8 @@ namespace engines {
             target_query = target_query.substr(0, colon);
         }
 
-        bool is_const_search = (config.query.find("0x") != std::string::npos);
+        // Suporte a rastreio de constante (hex ou string)
+        bool is_const_search = !config.query.empty();
         if (target_query.empty() || (initial_reg_str.empty() && !is_const_search)) return results;
 
         analysis_cache_.clear();
@@ -187,7 +188,18 @@ namespace engines {
         while (m_pos != std::string_view::npos) {
             size_t next_line = content.find('\n', m_pos);
             std::string_view header = content.substr(m_pos, next_line - m_pos);
-            if (header.find(method_sig) != std::string_view::npos) break;
+            
+            // Busca precisa da assinatura: deve ser precedida por espaço e 
+            // opcionalmente conter modificadores, terminando exatamente na assinatura.
+            // Para ser robusto: o nome do método deve estar lá e ser seguido por '('
+            size_t sig_pos = header.find(method_sig);
+            if (sig_pos != std::string_view::npos) {
+                // Verifica se é um match exato (evita a() matching abc())
+                // No Smali, a assinatura no cabeçalho é: [access] name(args)ret
+                // Procuramos por: " name(args)ret"
+                bool preceded_by_space = (sig_pos > 0 && (header[sig_pos-1] == ' ' || header[sig_pos-1] == '\t'));
+                if (preceded_by_space) break;
+            }
             m_pos = content.find(".method ", next_line);
         }
         if (m_pos == std::string_view::npos) return {};
@@ -295,7 +307,15 @@ namespace engines {
             std::string_view line = utils::trim(body.substr(pos, next - pos));
             pos = next + 1; line_idx++;
 
-            if (line.empty() || line[0] == '.') continue;
+            // Ignorar comentários e diretivas
+            if (line.empty() || line[0] == '.' || line[0] == '#') continue;
+
+            // Remover comentários em linha (inline comments)
+            size_t hash_pos = line.find('#');
+            if (hash_pos != std::string_view::npos) {
+                line = utils::trim(line.substr(0, hash_pos));
+                if (line.empty()) continue;
+            }
 
             if (is_PEI_local(line)) merge_states(ex_out, state);
 

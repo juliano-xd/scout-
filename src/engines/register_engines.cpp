@@ -11,6 +11,7 @@
 #include "engines/ui_mapper_engine.hpp"
 #include "engines/deobf_engine.hpp"
 #include "engines/variable_tracker_engine.hpp"
+#include "engines/smali_dump_engine.hpp"
 #include "formatters/sexpr_formatter.hpp"
 
 namespace scout {
@@ -26,6 +27,7 @@ namespace scout {
         static engines::EngineRegistrar<engines::UiMapperEngine>      _reg_ui("ui_mapper");
         static engines::EngineRegistrar<engines::DeobfEngine>         _reg_deobf("deobf");
         static engines::EngineRegistrar<engines::VariableTrackerEngine> _reg_track("track_var");
+        static engines::EngineRegistrar<engines::SmaliDumpEngine>     _reg_dump("smali_dump");
         static formatters::FormatterRegistrar<formatters::SExprFormatter> _reg_sexpr("sexpr");
     }
 
@@ -43,6 +45,7 @@ namespace scout {
                    er.has_engine("ui_mapper") &&
                    er.has_engine("deobf") &&
                    er.has_engine("track_var") &&
+                   er.has_engine("smali_dump") &&
                    fr.has_formatter("sexpr");
         } catch (...) {
             return false;

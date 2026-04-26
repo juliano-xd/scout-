@@ -87,6 +87,46 @@ TEST_F(ScannerTest, FindsNoClassesContainingNonExistentName) {
     EXPECT_TRUE(res.empty());
 }
 
+TEST_F(ScannerTest, PathFiltering) {
+    std::vector<std::string> include = {"com/example"};
+    std::vector<std::string> exclude = {"AuthManager"};
+    
+    std::ofstream(test_dir / "smali/com/example/Auth.smali") << "1";
+    std::ofstream(test_dir / "smali/com/example/AuthManager.smali") << "2";
+    std::ofstream(test_dir / "smali/org/test/Util.smali") << "3";
+
+    EXPECT_TRUE(core::is_path_filtered(test_dir / "smali/com/example/Auth.smali", include, exclude));
+    EXPECT_FALSE(core::is_path_filtered(test_dir / "smali/com/example/AuthManager.smali", include, exclude));
+    EXPECT_FALSE(core::is_path_filtered(test_dir / "smali/org/test/Util.smali", include, exclude));
+}
+
+TEST_F(ScannerTest, HandlesEmptyInputsInParse) {
+    auto info = core::ClassInfo::parse("");
+    EXPECT_EQ(info.class_name, "");
+    EXPECT_EQ(info.package_path, "");
+}
+
+TEST_F(ScannerTest, HandlesMalformedDalvikNames) {
+    auto info = core::ClassInfo::parse("L;"); // Empty name between L and ;
+    EXPECT_EQ(info.class_name, "");
+    EXPECT_EQ(info.package_path, "");
+
+    auto info2 = core::ClassInfo::parse("Labc"); // Missing ;
+    EXPECT_EQ(info2.class_name, "Labc"); // Treated as simple name
+
+    auto info3 = core::ClassInfo::parse("a.b.c."); // Trailing dot
+    EXPECT_EQ(info3.class_name, "");
+}
+
+TEST_F(ScannerTest, ScanFilesParallel) {
+    std::atomic<int> count = 0;
+    core::scan_files(test_dir, [&](const fs::path& p) {
+        count++;
+    });
+    // SetUp creates 3 smali files
+    EXPECT_EQ(count, 3);
+}
+
 #include "engines/content_search_engine.hpp"
 
 TEST_F(ScannerTest, SearchesContentInsideFiles) {

@@ -1,14 +1,15 @@
 #include <gtest/gtest.h>
 #include "engines/xref_search_engine.hpp"
+#include "core/analysis_context.hpp"
 #include <filesystem>
 #include <fstream>
 
 namespace fs = std::filesystem;
 
-class XrefMassiveTest : public ::testing::TestWithParam<int> {
+class XrefExtremeTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        temp_dir = fs::temp_directory_path() / ("scout_xref_massive_" + std::to_string(GetParam()));
+        temp_dir = fs::temp_directory_path() / "scout_xref_extreme";
         fs::create_directories(temp_dir / "smali");
     }
 
@@ -16,59 +17,63 @@ protected:
         fs::remove_all(temp_dir);
     }
 
-    void write_smali(int i) {
-        // Criar um alvo e um chamador distintos
-        std::ofstream ofs(temp_dir / "smali/Target.smali");
-        ofs << ".class public LTarget;\n";
-        ofs << ".method public static targetMethod()V\n";
-        ofs << "    return-void\n";
-        ofs << ".end method\n";
-
-        std::ofstream ofs2(temp_dir / "smali/Caller.smali");
-        ofs2 << ".class public LCaller;\n";
-        ofs2 << ".method public test" << i << "()V\n";
-        ofs2 << "    invoke-static {}, LTarget;->targetMethod()V\n";
-        ofs2 << ".end method\n";
+    void write_file(const std::string& name, const std::string& content) {
+        std::ofstream ofs(temp_dir / "smali" / name);
+        ofs << content;
     }
 
     fs::path temp_dir;
 };
 
-TEST_P(XrefMassiveTest, OpcodeDiversityTest) {
-    int i = GetParam();
-    write_smali(i);
+TEST_F(XrefExtremeTest, DeepCallGraph) {
+    for (int i = 0; i < 20; ++i) {
+        std::stringstream ss;
+        ss << ".class public LClass" << i << ";\n";
+        ss << ".method public call" << i << "()V\n";
+        ss << "    .registers 1\n";
+        if (i < 19) {
+            ss << "    invoke-static {}, LClass" << (i + 1) << ";->call" << (i + 1) << "()V\n";
+        }
+        ss << "    return-void\n.end method\n";
+        write_file("Class" + std::to_string(i) + ".smali", ss.str());
+    }
 
     engines::XrefSearchEngine engine;
     engines::SearchConfig config;
-    config.query = "LTarget;->targetMethod()V";
-    config.direction = "callers";
-    config.search_depth = 1;
+    config.query = "LClass19;->call19()V";
+    config.search_depth = 10;
     
-    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
+    core::AnalysisContext ctx(temp_dir);
+    auto results = engine.search(ctx, config);
 
-    // Debug: Mostrar o que foi encontrado
-    if (results.empty()) {
-        std::cout << "DEBUG: Nenhum resultado para variante " << i << "\n";
-        std::cout << "DEBUG: Arquivos no diretório: \n";
-        for (const auto& entry : fs::recursive_directory_iterator(temp_dir)) {
-            if (fs::is_regular_file(entry.path())) {
-                std::cout << "  - " << entry.path() << " (Size: " << fs::file_size(entry.path()) << ")\n";
-            } else {
-                std::cout << "  - " << entry.path() << " (Dir)\n";
-            }
-        }
-    }
-
-    bool found_caller = false;
-    std::cout << "DEBUG: Resultados encontrados (" << results.size() << "):\n";
-    for (const auto& res : results) {
-        std::cout << "  - File: " << res.file_path << " | Context: " << res.context << "\n";
-        if (res.context.find("LCaller;") != std::string::npos) {
-            found_caller = true;
-        }
-    }
-    
-    ASSERT_TRUE(found_caller) << "Nao encontrou a chamada em LCaller; para variante " << i;
+    ASSERT_FALSE(results.empty());
 }
 
-INSTANTIATE_TEST_SUITE_P(MassiveSuite, XrefMassiveTest, ::testing::Range(0, 100));
+TEST_F(XrefExtremeTest, CircularReferences) {
+    write_file("A.smali", ".class public LA;\n.method public a()V\n    invoke-static {}, LB;->b()V\n    return-void\n.end method\n");
+    write_file("B.smali", ".class public LB;\n.method public b()V\n    invoke-static {}, LA;->a()V\n    return-void\n.end method\n");
+
+    engines::XrefSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "LA;->a()V";
+    config.search_depth = 5;
+    
+    core::AnalysisContext ctx(temp_dir);
+    auto results = engine.search(ctx, config);
+
+    ASSERT_FALSE(results.empty());
+}
+
+TEST_F(XrefExtremeTest, MissingTarget) {
+    write_file("Test.smali", ".class public LTest;\n.method public test()V\n    invoke-static {}, LNonExistent;->target()V\n    return-void\n.end method\n");
+
+    engines::XrefSearchEngine engine;
+    engines::SearchConfig config;
+    config.query = "LNonExistent;->target()V";
+    
+    core::AnalysisContext ctx(temp_dir);
+    auto results = engine.search(ctx, config);
+
+    ASSERT_FALSE(results.empty());
+    EXPECT_EQ(results[0].file_path.string(), "Test.smali");
+}

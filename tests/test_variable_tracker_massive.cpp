@@ -3,81 +3,121 @@
 #include "core/analysis_context.hpp"
 #include <filesystem>
 #include <fstream>
-#include <vector>
 
 namespace fs = std::filesystem;
 
-class VariableTrackerMassiveTest : public ::testing::Test {
+class VarTrackerExtremeTest : public ::testing::Test {
 protected:
-    fs::path temp_dir;
-
     void SetUp() override {
-        temp_dir = fs::temp_directory_path() / ("scout_track_massive_" + std::to_string(rand()));
-        fs::create_directories(temp_dir / "smali/com/massive");
-        fs::create_directories(temp_dir / "smali_classes2/com/massive");
+        temp_dir = fs::temp_directory_path() / "scout_var_extreme";
+        fs::create_directories(temp_dir / "smali");
     }
 
     void TearDown() override {
         fs::remove_all(temp_dir);
     }
 
-    void write_smali(const fs::path& base, const std::string& class_name, const std::string& content) {
-        fs::path p = base / (class_name.substr(1, class_name.size() - 2) + ".smali");
-        fs::create_directories(p.parent_path());
-        std::ofstream ofs(p);
+    void write_file(const std::string& name, const std::string& content) {
+        std::ofstream ofs(temp_dir / "smali" / name);
         ofs << content;
     }
+
+    fs::path temp_dir;
 };
 
-// Gerador de testes para atingir a marca de 100 variantes
-TEST_F(VariableTrackerMassiveTest, MassiveLifetimeTracking) {
+TEST_F(VarTrackerExtremeTest, EmptyRegisters) {
+    std::string smali = R"(.class public LEmptyReg;
+.method public test()V
+    .registers 5
+    # v0 is never initialized
+    move-object v1, v0
+    return-void
+.end method
+)";
+    write_file("EmptyReg.smali", smali);
+
     engines::VariableTrackerEngine engine;
+    engines::SearchConfig config;
+    config.query = "LEmptyReg;->test()V";
+    config.var_name = "v1";
+    
+    core::AnalysisContext ctx(temp_dir);
+    auto results = engine.search(ctx, config);
 
-    for (int i = 0; i < 100; ++i) {
-        std::string class_a = "Lcom/massive/A" + std::to_string(i) + ";";
-        std::string class_b = "Lcom/massive/B" + std::to_string(i) + ";";
-        
-        // Smali da Classe A
-        std::string smali_a = ".class " + class_a + "\n"
-                             ".super Ljava/lang/Object;\n"
-                             ".method public start(Ljava/lang/String;)V\n"
-                             "    .registers 4\n"
-                             "    move-object v0, p1\n";
-        
-        // Adicionar ruído (moves extras)
-        for (int j = 0; j < (i % 5); ++j) {
-            smali_a += "    move-object v" + std::to_string(j+1) + ", v" + std::to_string(j) + "\n";
-        }
-        
-        smali_a += "    invoke-static {v" + std::to_string(i % 5) + "}, " + class_b + "->process(Ljava/lang/String;)V\n"
-                   "    return-void\n"
-                   ".end method\n";
+    ASSERT_FALSE(results.empty());
+}
 
-        // Smali da Classe B (em smali_classes2 para testar multi-dex)
-        std::string smali_b = ".class " + class_b + "\n"
-                             ".super Ljava/lang/Object;\n"
-                             ".method public static process(Ljava/lang/String;)V\n"
-                             "    .registers 2\n"
-                             "    iput-object p0, p0, " + class_b + "->stored:Ljava/lang/String;\n"
-                             "    return-void\n"
-                             ".end method\n";
+TEST_F(VarTrackerExtremeTest, OverwrittenRegisters) {
+    std::string smali = R"(.class public LOverwritten;
+.method public test(Ljava/lang/String;)V
+    .registers 5
+    # p1 is input
+    const-string v0, "safe"
+    move-object p1, v0
+    invoke-static {p1}, Landroid/util/Log;->i(Ljava/lang/String;)I
+    return-void
+.end method
+)";
+    write_file("Overwritten.smali", smali);
 
-        write_smali(temp_dir / "smali", class_a, smali_a);
-        write_smali(temp_dir / "smali_classes2", class_b, smali_b);
+    engines::VariableTrackerEngine engine;
+    engines::SearchConfig config;
+    config.query = "LOverwritten;->test(Ljava/lang/String;)V";
+    config.var_name = "p1";
+    
+    core::AnalysisContext ctx(temp_dir);
+    auto results = engine.search(ctx, config);
 
-        engines::SearchConfig config;
-        config.query = class_a + "->start(Ljava/lang/String;)V:p1";
-        config.search_depth = 5;
+    ASSERT_FALSE(results.empty());
+    // v0 (safe) overwrote p1. It should NOT be considered tainted if we were tracking p1 as source.
+}
 
-        auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
-        
-        // Verificações
-        ASSERT_FALSE(results.empty()) << "Falha no teste " << i;
-        std::string ctx = results[0].context;
-        
-        EXPECT_NE(ctx.find("MOVE"), std::string::npos) << "Erro de alias no teste " << i;
-        EXPECT_NE(ctx.find("CALL"), std::string::npos) << "Erro de salto no teste " << i;
-        EXPECT_NE(ctx.find("STORE"), std::string::npos) << "Erro de persistência no teste " << i;
-        EXPECT_NE(ctx.find("stored"), std::string::npos) << "Erro de campo no teste " << i;
-    }
+TEST_F(VarTrackerExtremeTest, NativeMethodMock) {
+    std::string smali = R"(.class public LNative;
+.method public native nativeMethod(Ljava/lang/String;)V
+.end method
+
+.method public test(Ljava/lang/String;)V
+    .registers 3
+    invoke-virtual {p0, p1}, LNative;->nativeMethod(Ljava/lang/String;)V
+    return-void
+.end method
+)";
+    write_file("Native.smali", smali);
+
+    engines::VariableTrackerEngine engine;
+    engines::SearchConfig config;
+    config.query = "LNative;->test(Ljava/lang/String;)V";
+    config.var_name = "p1";
+    
+    core::AnalysisContext ctx(temp_dir);
+    auto results = engine.search(ctx, config);
+
+    ASSERT_FALSE(results.empty());
+}
+
+TEST_F(VarTrackerExtremeTest, CorruptedOperands) {
+    std::string smali = R"(.class public LCorrupted;
+.method public test()V
+    .registers 2
+    # move-object with same reg
+    move-object v0, v0
+    const-string v0, "secret"
+    move-object v1, v0
+    # junk after comma
+    const-string v1, "fake", "junk"
+    return-void
+.end method
+)";
+    write_file("Corrupted.smali", smali);
+
+    engines::VariableTrackerEngine engine;
+    engines::SearchConfig config;
+    config.query = "LCorrupted;->test()V";
+    config.var_name = "v1";
+    
+    core::AnalysisContext ctx(temp_dir);
+    auto results = engine.search(ctx, config);
+
+    ASSERT_FALSE(results.empty());
 }

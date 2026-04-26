@@ -110,6 +110,73 @@ TEST(ContentSearchEngine, ConstructorAndName) {
     EXPECT_FALSE(engine.description().empty());
 }
 
+TEST(ContentSearchEngine, UpdateContextEdgeCases) {
+    ContentSearchEngine::ParseContext ctx;
+    
+    // Linha vazia não deve mudar nada
+    ContentSearchEngine::update_context("", ctx);
+    EXPECT_EQ(ctx.line_number, 0); 
+    
+    // .class sem nome (ou nome malformado)
+    ContentSearchEngine::update_context(".class ", ctx);
+    EXPECT_EQ(ctx.line_number, 1);
+    
+    // .method sem assinatura
+    ContentSearchEngine::update_context(".method ", ctx);
+    EXPECT_EQ(ctx.line_number, 2);
+    EXPECT_TRUE(ctx.current_method.empty());
+    
+    // .end method sem ter começado um método
+    ctx.current_method = "";
+    ContentSearchEngine::update_context(".end method", ctx);
+    EXPECT_EQ(ctx.line_number, 3);
+    EXPECT_TRUE(ctx.current_method.empty());
+}
+
+TEST(ContentSearchEngine, MatchesIntegerEdgeCases) {
+    // Válidos
+    EXPECT_TRUE(ContentSearchEngine::matches_integer("const v0, 0x1", "0x1"));
+    EXPECT_TRUE(ContentSearchEngine::matches_integer("const v0, 123", "123"));
+    
+    // Inválidos ou borderline
+    EXPECT_FALSE(ContentSearchEngine::matches_integer("const v0, 0x12", "0x1")); // Substring mas não match exato
+    EXPECT_FALSE(ContentSearchEngine::matches_integer("const v01, 1", "0")); // v01 contém 0 mas é alnum
+    EXPECT_TRUE(ContentSearchEngine::matches_integer("const v0, 0x0", "0")); 
+    
+    // Hex sem 0x
+    EXPECT_TRUE(ContentSearchEngine::matches_integer("const v0, 0xabc", "abc"));
+    
+    // String vazia
+    EXPECT_FALSE(ContentSearchEngine::matches_integer("const v0, 0x1", ""));
+}
+
+TEST(ContentSearchEngine, MatchesRegexReDoS) {
+    // Testar se um padrão potencialmente lento (ReDoS) é tratado sem travar o teste
+    std::string long_string(50, 'a');
+    long_string += "!";
+    std::regex redos_pattern("(a+)+b");
+    
+    // Não deve demorar uma eternidade
+    bool matched = ContentSearchEngine::matches_regex(long_string, redos_pattern);
+    EXPECT_FALSE(matched);
+}
+
+TEST(ContentSearchEngine, InvalidRegexSearch) {
+    ContentSearchEngine engine;
+    fs::path temp_dir = create_test_smali_structure();
+    
+    SearchConfig config;
+    config.query = "["; // Regex inválido
+    config.search_type = "regex";
+    
+    auto results = ([&](){ core::AnalysisContext ctx(temp_dir); return engine.search(ctx, config); })();
+    
+    // Deve retornar vazio em vez de crashar
+    EXPECT_TRUE(results.empty());
+    
+    cleanup_test_structure(temp_dir);
+}
+
 TEST(ContentSearchEngine, SearchStringLiteral) {
     ContentSearchEngine engine;
     fs::path temp_dir = create_test_smali_structure();

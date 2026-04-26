@@ -29,6 +29,7 @@ add_library(scout_lib
     src/engines/deobf_engine.cpp
     src/engines/variable_tracker_engine.cpp
     src/engines/dominator_analyzer.cpp
+    src/engines/smali_dump_engine.cpp
     src/engines/register_engines.cpp
     src/formatters/sexpr_formatter.cpp
 
@@ -185,3 +186,31 @@ gtest_discover_tests(test_brain_massive)
 gtest_discover_tests(test_variable_tracker)
 gtest_discover_tests(test_variable_tracker_massive)
 gtest_discover_tests(test_level16_forensics)
+
+# ==========================================
+# Bug Hunting & Audit Tests
+# ==========================================
+add_executable(test_smali_dump tests/test_smali_dump.cpp)
+target_link_libraries(test_smali_dump GTest::gtest_main scout_lib)
+gtest_discover_tests(test_smali_dump)
+
+add_executable(test_bug_manifest_fragile tests/audit/test_bug_manifest_fragile.cpp)
+target_link_libraries(test_bug_manifest_fragile scout_lib GTest::gtest_main)
+gtest_discover_tests(test_bug_manifest_fragile)
+
+add_executable(test_chaos_edge tests/audit/test_chaos_edge.cpp)
+target_link_libraries(test_chaos_edge scout_lib GTest::gtest_main)
+gtest_discover_tests(test_chaos_edge)
+
+# Novas baterias de testes para Utils e Core
+add_executable(test_mmap_file tests/test_mmap_file.cpp)
+target_link_libraries(test_mmap_file GTest::gtest_main scout_lib)
+gtest_discover_tests(test_mmap_file)
+
+add_executable(test_string_utils tests/audit/test_string_utils.cpp)
+target_link_libraries(test_string_utils GTest::gtest_main scout_lib)
+gtest_discover_tests(test_string_utils)
+
+add_executable(test_analysis_context tests/audit/test_analysis_context.cpp)
+target_link_libraries(test_analysis_context GTest::gtest_main scout_lib)
+gtest_discover_tests(test_analysis_context)

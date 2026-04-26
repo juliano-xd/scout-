@@ -102,6 +102,16 @@ int main(int argc, char** argv) {
             }
         }
 
+        if (config.dump_ast) {
+            auto engine = scout::create_engine("smali_dump");
+            if (engine) {
+                engines::SearchConfig dcfg;
+                dcfg.query = *config.dump_ast;
+                auto results = engine->search(analysis_ctx, dcfg);
+                std::cout << formatter->format_search_results(results) << "\n";
+            }
+        }
+
         if (config.resource_map || config.find_resource) {
             auto engine = scout::create_engine("resource_map");
             if (engine) {
