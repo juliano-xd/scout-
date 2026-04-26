@@ -21,12 +21,61 @@ namespace engines {
         core::AnalysisContext& ctx,
         const SearchConfig& config
     ) {
-        auto& root_dir = ctx.root_dir();
         auto start = std::chrono::high_resolution_clock::now();
         std::vector<SearchResult> results;
 
-        // Regexp para detectar strings que parecem Base64 longo (comum em obfuscação)
+        // Se a query for uma classe, fazemos análise estrutural de obfuscação
+        if (config.query.starts_with('L') && config.query.ends_with(';')) {
+            std::string_view content = ctx.get_class_content(config.query);
+            if (!content.empty()) {
+                size_t short_names = 0;
+                size_t total_methods = 0;
+                utils::LineIterator it(content);
+                std::string_view line;
+                while (it.next(line)) {
+                    std::string_view trimmed = utils::trim(line);
+                    if (trimmed.starts_with(".method ")) {
+                        total_methods++;
+                        size_t paren = trimmed.find('(');
+                        if (paren != std::string_view::npos) {
+                            size_t last_space = trimmed.rfind(' ', paren);
+                            if (last_space != std::string_view::npos) {
+                                std::string_view name = trimmed.substr(last_space + 1, paren - last_space - 1);
+                                if (name.length() < 3 && name != "<init>" && name != "<clinit>") {
+                                    short_names++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                bool is_obfuscated = false;
+                if (total_methods > 0 && (static_cast<double>(short_names) / total_methods) > 0.5) {
+                    is_obfuscated = true;
+                }
+                // Se o nome da classe em si for muito curto (descontando pacotes)
+                size_t last_slash = config.query.find_last_of('/');
+                std::string_view class_short_name = (last_slash != std::string_view::npos) ? 
+                    config.query.substr(last_slash + 1) : config.query;
+                if (class_short_name.length() < 5) is_obfuscated = true;
+
+                SearchResult res;
+                res.file_path = std::string(config.query);
+                res.engine_name = name();
+                auto node = sexpr::form("obfuscation-report");
+                node.kv("class", sexpr::string(config.query));
+                node.kv("obfuscated", sexpr::symbol(is_obfuscated ? "true" : "false"));
+                node.kv("short_method_ratio", sexpr::string(std::to_string(total_methods > 0 ? (double)short_names/total_methods : 0)));
+                res.line_content = node.to_string();
+                res.context = res.line_content;
+                results.push_back(std::move(res));
+            }
+        }
+
+        // Continua com a busca por strings Base64 (comportamento original)
+        auto& root_dir = ctx.root_dir();
         std::regex b64_reg("\"([A-Za-z0-9+/]{20,}=*)\"");
+        // ... rest of implementation (reinserting original string scan)
 
         core::scan_files(root_dir, [&](const std::filesystem::path& path) {
             utils::MappedFile mmap(path.string());
