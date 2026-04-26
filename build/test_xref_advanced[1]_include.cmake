@@ -1,5 +1,0 @@
-if(EXISTS "/home/trindade/Projetos/scout++/build/test_xref_advanced[1]_tests.cmake")
-  include("/home/trindade/Projetos/scout++/build/test_xref_advanced[1]_tests.cmake")
-else()
-  add_test(test_xref_advanced_NOT_BUILT test_xref_advanced_NOT_BUILT)
-endif()

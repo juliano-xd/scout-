@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/run_benchmarks.dir/link.d CMakeFiles/run_benchmarks.dir/tests/benchmark.cpp.o -o run_benchmarks  _deps/googlebenchmark-build/src/libbenchmark.a libscout_lib.a -lrt

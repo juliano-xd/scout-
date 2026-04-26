@@ -1,5 +1,0 @@
-if(EXISTS "/home/trindade/Projetos/scout++/build/test_manifest_massive[1]_tests.cmake")
-  include("/home/trindade/Projetos/scout++/build/test_manifest_massive[1]_tests.cmake")
-else()
-  add_test(test_manifest_massive_NOT_BUILT test_manifest_massive_NOT_BUILT)
-endif()

@@ -1,5 +1,0 @@
-if(EXISTS "/home/trindade/Projetos/scout++/build_release/test_cli_parser[1]_tests.cmake")
-  include("/home/trindade/Projetos/scout++/build_release/test_cli_parser[1]_tests.cmake")
-else()
-  add_test(test_cli_parser_NOT_BUILT test_cli_parser_NOT_BUILT)
-endif()

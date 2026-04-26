@@ -1,5 +1,0 @@
-if(EXISTS "/home/trindade/Projetos/scout++/build/test_sexpr_massive[1]_tests.cmake")
-  include("/home/trindade/Projetos/scout++/build/test_sexpr_massive[1]_tests.cmake")
-else()
-  add_test(test_sexpr_massive_NOT_BUILT test_sexpr_massive_NOT_BUILT)
-endif()

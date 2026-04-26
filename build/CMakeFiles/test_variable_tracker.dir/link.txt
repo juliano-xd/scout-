@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/test_variable_tracker.dir/link.d CMakeFiles/test_variable_tracker.dir/tests/test_variable_tracker.cpp.o -o test_variable_tracker  libscout_lib.a lib/libgtest_main.a lib/libgtest.a

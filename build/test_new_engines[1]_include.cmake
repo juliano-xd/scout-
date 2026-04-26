@@ -1,5 +1,0 @@
-if(EXISTS "/home/trindade/Projetos/scout++/build/test_new_engines[1]_tests.cmake")
-  include("/home/trindade/Projetos/scout++/build/test_new_engines[1]_tests.cmake")
-else()
-  add_test(test_new_engines_NOT_BUILT test_new_engines_NOT_BUILT)
-endif()

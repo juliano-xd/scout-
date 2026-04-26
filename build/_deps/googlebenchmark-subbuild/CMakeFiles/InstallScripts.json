@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/trindade/Projetos/scout++/build/_deps/googlebenchmark-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/test_ui_mapper_massive.dir/link.d CMakeFiles/test_ui_mapper_massive.dir/tests/test_ui_mapper_massive.cpp.o -o test_ui_mapper_massive  lib/libgtest_main.a libscout_lib.a lib/libgtest.a

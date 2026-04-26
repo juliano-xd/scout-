@@ -1,5 +1,0 @@
-if(EXISTS "/home/trindade/Projetos/scout++/build/test_content_search_engine[1]_tests.cmake")
-  include("/home/trindade/Projetos/scout++/build/test_content_search_engine[1]_tests.cmake")
-else()
-  add_test(test_content_search_engine_NOT_BUILT test_content_search_engine_NOT_BUILT)
-endif()

@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_cli_parser.dir/link.d CMakeFiles/test_cli_parser.dir/tests/test_cli_parser.cpp.o -o test_cli_parser  lib/libgtest_main.a lib/libgtest.a

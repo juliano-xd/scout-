@@ -1,5 +1,0 @@
-add_test([=[NewEnginesTest.ResourceMappingWorks]=]  [==[/home/trindade/Projetos/scout++/build/test_new_engines]==] [==[--gtest_filter=NewEnginesTest.ResourceMappingWorks]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[NewEnginesTest.ResourceMappingWorks]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_new_engines.cpp:49]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[NewEnginesTest.CFGGenerationWorks]=]  [==[/home/trindade/Projetos/scout++/build/test_new_engines]==] [==[--gtest_filter=NewEnginesTest.CFGGenerationWorks]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[NewEnginesTest.CFGGenerationWorks]=]  PROPERTIES DEF_SOURCE_LINE [==[/home/trindade/Projetos/scout++/tests/test_new_engines.cpp:67]==] WORKING_DIRECTORY [==[/home/trindade/Projetos/scout++/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-set(  test_new_engines_TESTS NewEnginesTest.ResourceMappingWorks NewEnginesTest.CFGGenerationWorks)
