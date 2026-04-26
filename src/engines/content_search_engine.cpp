@@ -140,9 +140,23 @@ namespace engines {
                             result.file_path = file_path;
                             result.line_number = ctx.line_number;
                             result.line_content = std::string(trimmed_line);
-                            result.context = ctx.current_method.empty() 
-                                ? "class:" + ctx.current_class 
-                                : "method:" + ctx.current_method;
+                            
+                            auto context_node = sexpr::list();
+                            context_node.kv("scope", sexpr::string(ctx.current_method.empty() ? "class:" + ctx.current_class : "method:" + ctx.current_method));
+                            
+                            // Tentar extrair info de constante se for uma instrução const
+                            if (trimmed_line.find("const") != std::string_view::npos) {
+                                size_t reg_pos = trimmed_line.find(' ');
+                                size_t comma_pos = trimmed_line.find(',', reg_pos);
+                                if (reg_pos != std::string_view::npos && comma_pos != std::string_view::npos) {
+                                    std::string_view reg = utils::trim(trimmed_line.substr(reg_pos + 1, comma_pos - reg_pos - 1));
+                                    std::string_view val = utils::trim(trimmed_line.substr(comma_pos + 1));
+                                    context_node.kv("const_reg", sexpr::string(std::string(reg)));
+                                    context_node.kv("const_val", sexpr::string(std::string(val)));
+                                }
+                            }
+
+                            result.context = context_node.to_string();
                             result.engine_name = this->name();
                             local_results.push_back(std::move(result));
                         }
