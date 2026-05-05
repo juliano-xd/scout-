@@ -5,6 +5,7 @@
 #include <format>       // C++20/26: Formatação in-place O(N)
 #include <execution>    // C++17/20: std::execution::par_unseq
 #include <system_error> // C++11: Para capturar falhas de I/O no RAII
+#include <atomic>       // C++11: Atomic bool para Short-Circuit lock-free paralelo
 
 #include "../../../include/engines/content_search/content_search_engine.hpp"
 #include "../../../include/core/scanner.hpp"
@@ -59,7 +60,6 @@ namespace engines {
     }
 
     bool ContentSearchEngine::matches_regex(std::string_view line, const std::regex& pattern) {
-        // std::regex continua a ser pesado, mas std::regex_search sobre iteradores de string_view é a abordagem mais segura
         return std::regex_search(line.begin(), line.end(), pattern);
     }
 
@@ -137,11 +137,20 @@ namespace engines {
         }
 
         std::mutex mtx;
+
+        // OPTIMIZAÇÃO: Cancelamento Atómico Paralelo (Short-Circuit Lock-Free)
+        std::atomic<bool> limit_reached{false};
+        const size_t limit = static_cast<size_t>(config.max_results);
+
         auto [_, elapsed] = measure_execution([&]() {
 
             // C++17/20 par_unseq: Vetorização agressiva multi-thread
             std::for_each(std::execution::par_unseq, all_files.begin(), all_files.end(),
                 [&](const std::filesystem::path& file_path) {
+
+                    // EARLY OUT 1: Evita instanciar o MappedFile e alocar RAM se já acabámos
+                    if (limit_reached.load(std::memory_order_relaxed)) return;
+
                     try {
                         // RAII Strict mode: Se o ficheiro não estiver disponível, lança system_error
                         utils::MappedFile mfile(file_path);
@@ -163,6 +172,10 @@ namespace engines {
                         local_results.reserve(8); // Pool de reserva pequena por ficheiro
 
                         while (it.next(line)) {
+                            // EARLY OUT 2: O ficheiro pode ter 50,000 linhas. Aborta a meio se as
+                            // outras threads já preencheram a quota.
+                            if (limit_reached.load(std::memory_order_relaxed)) break;
+
                             update_context(line, parse_ctx);
 
                             bool matched = false;
@@ -216,10 +229,22 @@ namespace engines {
                         // Fusão Thread-Safe dos resultados locais no vector global
                         if (!local_results.empty()) {
                             std::lock_guard<std::mutex> lock(mtx);
+
+                            // EARLY OUT 3: Double Check Locking Pattern garantindo inserção apenas necessária
+                            if (limit_reached.load(std::memory_order_relaxed)) return;
+
                             for (auto& r : local_results) {
-                                if (final_results.size() < static_cast<size_t>(config.max_results)) {
+                                if (final_results.size() < limit) {
                                     final_results.push_back(std::move(r));
-                                } else break;
+
+                                    // Sinaliza as outras threads para abortarem caso o limite feche
+                                    if (final_results.size() >= limit) {
+                                        limit_reached.store(true, std::memory_order_relaxed);
+                                        break;
+                                    }
+                                } else {
+                                    break;
+                                }
                             }
                         }
 

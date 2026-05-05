@@ -9,7 +9,9 @@
 #include <execution>
 #include <mutex>
 #include <system_error>
-#include <span>      // C++20: Zero-cost array passing
+#include <atomic>      // C++11: Para short-circuit lock-free em processamento paralelo
+#include <span>        // C++20: Zero-cost array passing
+#include <type_traits> // C++11/17: Para inspecionar o retorno de lambdas
 
 namespace core {
 
@@ -137,12 +139,14 @@ namespace core {
 
     /**
      * @brief Varre o FS e encontra classes .smali cujo caminho contenha a string especificada.
+     * @details Implementa Short-Circuit Atómico: aborta a pesquisa instantaneamente quando o limite é atingido.
      */
     [[nodiscard]] inline std::vector<std::filesystem::path> find_classes_containing(
         const std::filesystem::path& search_dir,
         std::string_view query,
         std::span<const std::string> include_dirs = {},
-        std::span<const std::string> exclude_dirs = {}
+        std::span<const std::string> exclude_dirs = {},
+        size_t limit = 0 // NOVO: Parâmetro de paragem antecipada (Short-Circuit)
     ) {
         std::vector<std::filesystem::path> results;
         std::error_code ec;
@@ -168,12 +172,30 @@ namespace core {
 
         std::mutex mtx;
 
+        // C++26: Variável atómica para abortar threads no par_unseq imediatamente
+        std::atomic<bool> limit_reached{false};
+
         // Análise textual paralela do caminho (Semântica C++17/20)
         std::for_each(std::execution::par_unseq, files_to_check.begin(), files_to_check.end(),
             [&](const std::filesystem::path& p) {
+                // Short-Circuit Check (memory_order_relaxed custa virtualmente 0 ciclos)
+                if (limit_reached.load(std::memory_order_relaxed)) return;
+
                 if (p.string().find(query) != std::string::npos) {
                     std::lock_guard<std::mutex> lock(mtx);
+
+                    // Double check dentro da secção crítica
+                    if (limit > 0 && results.size() >= limit) {
+                        limit_reached.store(true, std::memory_order_relaxed);
+                        return;
+                    }
+
                     results.push_back(p);
+
+                    // Se atingirmos o limite após inserir, avisa todas as threads para abortarem
+                    if (limit > 0 && results.size() >= limit) {
+                        limit_reached.store(true, std::memory_order_relaxed);
+                    }
                 }
             }
         );
@@ -183,7 +205,7 @@ namespace core {
 
     /**
      * @brief Interface Genérica O(N) que varre .smali recursivamente executando callbacks Paralelas.
-     * @param callback Função invocável (lambda) a aplicar sobre cada std::filesystem::path.
+     * @param callback Função invocável (lambda) a aplicar sobre cada std::filesystem::path. Pode retornar `bool` (false=abortar).
      */
     template<typename Func>
     inline void scan_files(
@@ -213,10 +235,23 @@ namespace core {
             if (ec) ec.clear();
         }
 
+        std::atomic<bool> abort_scan{false};
+
         // Executa a callback invocável através de N threads nativas disponíveis
         std::for_each(std::execution::par_unseq, files.begin(), files.end(),
             [&](const std::filesystem::path& p) {
-                callback(p);
+                // Early Out Global
+                if (abort_scan.load(std::memory_order_relaxed)) return;
+
+                // C++17 constexpr if: Inspeciona em tempo de compilação a assinatura da lambda.
+                // Se ela retornar bool, respeitamos a ordem de short-circuit!
+                if constexpr (std::is_same_v<std::invoke_result_t<Func, const std::filesystem::path&>, bool>) {
+                    if (!callback(p)) {
+                        abort_scan.store(true, std::memory_order_relaxed);
+                    }
+                } else {
+                    callback(p);
+                }
             }
         );
     }

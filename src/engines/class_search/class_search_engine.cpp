@@ -17,7 +17,7 @@ namespace engines {
             const auto end = std::chrono::high_resolution_clock::now();
             return std::make_pair(
                 std::move(result),
-                std::chrono::duration_cast<std::chrono::microseconds>(end - start)
+                std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
             );
         }
     } // anonymous namespace
@@ -40,6 +40,9 @@ namespace engines {
             return results;
         }
 
+        // OPTIMIZAÇÃO: Recuperar o limite antecipadamente
+        const size_t max_items = static_cast<size_t>(config.max_results);
+
         // Executar busca medindo tempo
         auto [search_results, elapsed] = measure_execution([&]() -> std::vector<std::filesystem::path> {
             std::vector<std::filesystem::path> found_files;
@@ -57,8 +60,8 @@ namespace engines {
                     found_files.push_back(std::move(*file_opt));
                 }
             } else {
-                // Modo substring: varredura paralela por parte do nome
-                found_files = core::find_classes_containing(root_dir, query, config.include_dirs, config.exclude_dirs);
+                // Modo substring: varredura paralela com Short-Circuit (max_items)
+                found_files = core::find_classes_containing(root_dir, query, config.include_dirs, config.exclude_dirs, max_items);
             }
 
             return found_files;
@@ -67,8 +70,6 @@ namespace engines {
         // ==========================================
         // Conversão Otimizada de Resultados
         // ==========================================
-        // Pré-alocação controlada: Evita alocar milhares de espaços se max_results for baixo
-        const size_t max_items = static_cast<size_t>(config.max_results);
         results.reserve(std::min(search_results.size(), max_items));
 
         for (auto& file_path : search_results) {
@@ -79,7 +80,6 @@ namespace engines {
             SearchResult result;
 
             // OPTIMIZAÇÃO: stem() extrai instantaneamente o nome ignorando a extensão (.smali)
-            // Substitui completamente a lógica frágil e lenta baseada em string.compare()
             const std::string class_name = file_path.stem().string();
 
             result.file_path = std::move(file_path); // Transferência O(1) de owner

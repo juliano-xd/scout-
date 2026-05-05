@@ -18,12 +18,14 @@ namespace fs = std::filesystem;
 
 int main(int argc, char** argv) {
     try {
-        // Parse de argumentos
+        // Parse de argumentos lock-free e zero-allocation
         auto config_opt = cli::ScoutConfig::parse(argc, argv);
         if (!config_opt) return 0;
 
         const auto& config = *config_opt;
-        const fs::path dir = config.path.value_or(fs::current_path().string());
+
+        // OPTIMIZAÇÃO: Evita alocar current_path().string() na Heap se config.path já existir
+        const fs::path dir = config.path ? fs::path(*config.path) : fs::current_path();
 
         // Instancia o contexto central (Carrega a AST do Smali em memória)
         core::AnalysisContext analysis_ctx(dir);
@@ -31,7 +33,7 @@ int main(int argc, char** argv) {
         // Registrar motores e formatador
         scout::register_all_components();
 
-        // Obter formatador (sempre sexpr)
+        // Obter formatador (sempre sexpr na base do motor)
         auto formatter = scout::create_formatter("sexpr");
         if (!formatter) {
             std::println(stderr, "{}", sexpr::make_error("Falha ao inicializar formatador sexpr").to_string());
@@ -39,17 +41,45 @@ int main(int argc, char** argv) {
         }
 
         // ==========================================
-        // Utilitários Locais (Lambdas de C++14/20)
+        // Infraestrutura de Despacho (Dispatchers)
         // ==========================================
 
-        // Lambda genérica para evitar repetição de código na formatação de saída
-        auto print_results = [&](const auto& results) {
+        // Lambda de formatação unificada (Garante que a flag --machine-sexpr é RESPEITADA por todos)
+        auto print_results = [&](const std::vector<engines::SearchResult>& results) {
             if (config.machine_sexpr) {
-                auto args = sexpr::list({sexpr::keyword("pretty"), sexpr::boolean(true)});
+                const auto args = sexpr::list({sexpr::keyword("pretty"), sexpr::boolean(true)});
                 std::println("{}", formatter->format_search_results(results, args));
             } else {
                 std::println("{}", formatter->format_search_results(results));
             }
+        };
+
+        // Lambda de Alta-Ordem (HOC) para executar qualquer motor com segurança.
+        // C++20: Utiliza Template Param explícito para providenciar um tipo de fallback
+        // (ponteiro de função) quando o modifier não é providenciado pelo chamador,
+        // mitigando o erro de "dedução falhada no auto" sem recorrer ao lento std::function.
+        auto run_standard_module = [&]<typename Func = void(*)(engines::SearchConfig&)>(
+            std::string_view engine_name,
+            std::string_view query = "",
+            Func config_modifier = [](engines::SearchConfig&){}
+        ) {
+            if (auto engine = scout::create_engine(std::string(engine_name))) {
+                engines::SearchConfig scfg;
+
+                // Herança Global de Contexto (Bugfix crítico das versões anteriores)
+                scfg.query        = query;
+                scfg.max_results  = static_cast<std::size_t>(config.search_max);
+                scfg.include_dirs = config.include_dirs;
+                scfg.exclude_dirs = config.exclude_dirs;
+
+                // Aplica modificadores específicos do motor invocado
+                config_modifier(scfg);
+
+                auto results = engine->search(analysis_ctx, scfg);
+                print_results(results);
+                return true;
+            }
+            return false;
         };
 
         auto emit_pending = [&](std::string_view module) {
@@ -60,7 +90,7 @@ int main(int argc, char** argv) {
         };
 
         // ==========================================
-        // Módulo de Busca (Classes / Conteúdo)
+        // Módulo de Busca Primária (Classes / Conteúdo)
         // ==========================================
         std::optional<std::string> search_query = config.search;
         if (!search_query && !config.positional_args.empty()) {
@@ -68,22 +98,15 @@ int main(int argc, char** argv) {
         }
 
         if (search_query) {
-            std::string engine_name = scout::map_search_type_to_engine(config.search_type, *search_query);
+            const std::string engine_name = scout::map_search_type_to_engine(config.search_type, *search_query);
 
-            if (auto engine = scout::create_engine(engine_name)) {
-                engines::SearchConfig scfg;
-                scfg.query          = *search_query;
+            const bool engine_ran = run_standard_module(engine_name, *search_query, [&](auto& scfg) {
                 scfg.search_type    = config.search_type;
                 scfg.case_sensitive = config.case_sensitive;
-                scfg.max_results    = static_cast<std::size_t>(config.search_max);
-                scfg.include_dirs   = config.include_dirs;
-                scfg.exclude_dirs   = config.exclude_dirs;
+            });
 
-                auto results = engine->search(analysis_ctx, scfg);
-                print_results(results);
-            }
-            else {
-                // Fallback: Busca genérica (Blindada contra I/O crashes com error_code)
+            if (!engine_ran) {
+                // Fallback: Busca genérica de sistema de ficheiros com iterador seguro (No-Throw)
                 std::error_code ec;
                 auto it = fs::recursive_directory_iterator(dir, fs::directory_options::skip_permission_denied, ec);
                 const auto end = fs::recursive_directory_iterator();
@@ -95,12 +118,12 @@ int main(int argc, char** argv) {
                             res.file_path   = fs::relative(it->path(), fs::current_path(), ec);
                             res.engine_name = "generic";
 
-                            std::println("{}", formatter->format_search_results({res}));
+                            print_results({res}); // Unificado
                             break;
                         }
                     }
                     it.increment(ec);
-                    if (ec) ec.clear(); // Limpa e ignora directórios corrompidos
+                    if (ec) ec.clear(); // Ignora e salta directórios corrompidos
                 }
             }
         }
@@ -108,18 +131,13 @@ int main(int argc, char** argv) {
         // ==========================================
         // Módulo XREF (Especializado)
         // ==========================================
-        auto run_xref = [&](const std::string& target, std::string direction, const std::vector<std::string>& opcodes = {}) {
-            if (auto engine = scout::create_engine("xref")) {
-                engines::SearchConfig xcfg;
-                xcfg.query = target;
-                xcfg.direction = direction;
+        auto run_xref = [&](const std::string& target, std::string_view direction, const std::vector<std::string>& opcodes = {}) {
+            run_standard_module("xref", target, [&](auto& xcfg) {
+                xcfg.direction      = std::string(direction);
                 xcfg.filter_opcodes = opcodes;
                 xcfg.include_system = config.xref_include_system;
-                xcfg.search_depth = config.xref_depth;
-
-                auto results = engine->search(analysis_ctx, xcfg);
-                std::println("{}", formatter->format_xref_results(results));
-            }
+                xcfg.search_depth   = config.xref_depth;
+            });
         };
 
         if (config.xref)         run_xref(*config.xref, config.xref_direction);
@@ -128,88 +146,52 @@ int main(int argc, char** argv) {
         if (config.xref_fields)  run_xref(*config.xref_fields, "callers", {"get", "put"});
 
         // ==========================================
-        // Módulos Auxiliares de Análise
+        // Módulos Auxiliares de Análise Dinâmica / Estática
         // ==========================================
 
         if (config.cfg) {
-            if (auto engine = scout::create_engine("cfg")) {
-                engines::SearchConfig cfg;
-                cfg.query = *config.cfg;
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, cfg)));
-            }
+            run_standard_module("cfg", *config.cfg);
         }
 
         if (config.dump_ast) {
-            if (auto engine = scout::create_engine("smali_dump")) {
-                engines::SearchConfig dcfg;
-                dcfg.query = *config.dump_ast;
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, dcfg)));
-            }
+            run_standard_module("smali_dump", *config.dump_ast);
         }
 
         if (config.resource_map || config.find_resource) {
-            if (auto engine = scout::create_engine("resource_map")) {
-                engines::SearchConfig rcfg;
-                rcfg.query = config.find_resource.value_or("");
-                print_results(engine->search(analysis_ctx, rcfg));
-            }
+            run_standard_module("resource_map", config.find_resource.value_or(""));
         }
 
         if (config.manifest) {
-            if (auto engine = scout::create_engine("manifest")) {
-                engines::SearchConfig mcfg;
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, mcfg)));
-            }
+            run_standard_module("manifest");
         }
 
         if (config.inspect_class) {
-            if (auto engine = scout::create_engine("class_inspector")) {
-                engines::SearchConfig icfg;
-                icfg.query = *config.inspect_class;
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, icfg)));
-            }
+            run_standard_module("class_inspector", *config.inspect_class);
         }
 
         if (config.ui_mapper) {
-            if (auto engine = scout::create_engine("ui_mapper")) {
-                engines::SearchConfig ucfg;
-                ucfg.query = *config.ui_mapper;
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, ucfg)));
-            }
+            run_standard_module("ui_mapper", *config.ui_mapper);
         }
 
         if (config.deobf_strings) {
-            if (auto engine = scout::create_engine("deobf")) {
-                engines::SearchConfig dcfg;
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, dcfg)));
-            }
+            run_standard_module("deobf");
         }
 
         if (config.detect_obfuscation) {
-            if (auto engine = scout::create_engine("deobf")) {
-                engines::SearchConfig dcfg;
-                dcfg.query = search_query.value_or("");
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, dcfg)));
-            }
+            run_standard_module("deobf", search_query.value_or(""));
         }
 
         if (config.translate) {
-            if (auto engine = scout::create_engine("smali_dump")) {
-                engines::SearchConfig tcfg;
-                tcfg.query = *config.translate;
+            run_standard_module("smali_dump", *config.translate, [](auto& tcfg) {
                 tcfg.search_type = "translate";
-                std::println("{}", formatter->format_search_results(engine->search(analysis_ctx, tcfg)));
-            }
+            });
         }
 
         if (config.track_var) {
-            if (auto engine = scout::create_engine("taint_analysis")) {
-                engines::SearchConfig vcfg;
-                vcfg.query = *config.track_var;
-                vcfg.var_name = config.track_var_name;
+            run_standard_module("taint_analysis", *config.track_var, [&](auto& vcfg) {
+                vcfg.var_name     = config.track_var_name;
                 vcfg.search_depth = config.track_depth;
-                print_results(engine->search(analysis_ctx, vcfg));
-            }
+            });
         }
 
         // ==========================================
@@ -223,7 +205,7 @@ int main(int argc, char** argv) {
         // Output de Debugging/Verbose
         // ==========================================
         if (config.verbose) {
-            // C++26: Geração de string combinada a partir de container, zero-allocation até a chamada final de ranges::to
+            // C++26: Pipeline de Ranges puro. Zero-allocation loop, converte diretamente no final.
             const auto engines = scout::list_available_engines();
             const std::string engines_str = engines
                                           | std::views::join_with(',')
@@ -236,7 +218,7 @@ int main(int argc, char** argv) {
         }
 
     } catch (const std::exception& e) {
-        // Redireciona a formatação de erro para a STDERR de forma Thread-Safe e rápida
+        // Redireciona a formatação de erro para a STDERR garantindo que logs de erro não sujem o STDOUT (pipes de IA)
         std::println(stderr, "{}", sexpr::make_error(e.what()).to_string());
         return 1;
     }
