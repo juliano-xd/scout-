@@ -93,7 +93,23 @@ Para ver todas as opções disponíveis, execute:
 ./build/scout --help
 ```
 
-## 🏗️ Estritetura do Projeto
+## 🛡️ Taint Analysis (Deep Flow)
+
+O Scout++ possui um motor de **Taint Analysis** inter-procedural de nível industrial, capaz de rastrear a propagação de dados sensíveis através de classes e métodos.
+
+**Exemplo: Rastrear um Token desde a sua definição:**
+```bash
+./build/scout -p ~/app --track-var "Lcom/app/Auth;->getToken()Ljava/lang/String;:v0"
+```
+
+## 🚀 Novas Funcionalidades (AI-Enhanced)
+
+1.  **Semantic CFG:** Geração de CFGs contendo os opcodes internos de cada bloco básico.
+2.  **Pseudocode Translator:** Tradução de Smali para lógica estilo C (`--translate`).
+3.  **Obfuscation Detection:** Heurísticas de entropia e análise estrutural de nomes (`--detect-obfuscation`).
+4.  **Enhanced Constant Search:** Extração estruturada de pares Registrador/Valor em buscas de conteúdo.
+
+## 🏗️ Estrutura do Projeto
 
 - `/include` - Cabeçalhos (Headers) do projeto, definindo a arquitetura em módulos (`core`, `engines`, `utils`, `cli`, `formatters`).
 - `/src` - Implementação (.cpp) dos motores e funções centrais.

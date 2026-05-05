@@ -1,6 +1,6 @@
-#include "formatters/sexpr_formatter.hpp"
-#include "utils/sexpr.hpp"
-#include "engines/variable_tracker_engine.hpp"
+#include "../../include/formatters/sexpr_formatter.hpp"
+#include "../../include/utils/sexpr.hpp"
+#include "../../include/engines/variable_tracker/variable_tracker_engine.hpp"
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
@@ -92,15 +92,15 @@ namespace formatters {
 
             for (const auto& ev : events) {
                 // Saliency Filter: Poda de ruído Dalvik
-                if (ev.action == "SINK_LEAK" || ev.action == "TAINT_PROP" || 
+                if (ev.action == "SINK_LEAK" || ev.action == "TAINT_PROP" ||
                     ev.action == "STORE" || ev.extra == "IMPLICIT" || ev.action == "EES_OPAQUE_ENTRY") {
-                    
+
                     auto node = sexpr::form("step");
                     node.kv("type", sexpr::string(std::string(ev.action)));
                     node.kv("loc", sexpr::string(std::string(ev.method) + ":" + std::to_string(ev.line)));
                     node.kv("handle", sexpr::string(get_handle(ev.reg)));
                     node.kv("target", sexpr::string(std::string(ev.target)));
-                    
+
                     if (!ev.extra.empty()) {
                         node.kv("ctx", sexpr::string(std::string(ev.extra)));
                     }

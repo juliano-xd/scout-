@@ -1,18 +1,18 @@
-#include "engines/register_engines.hpp"
-#include "engines/engine_registry.hpp"
-#include "formatters/formatter_registry.hpp"
-#include "engines/class_search_engine.hpp"
-#include "engines/content_search_engine.hpp"
-#include "engines/xref_search_engine.hpp"
-#include "engines/resource_mapping_engine.hpp"
-#include "engines/cfg_engine.hpp"
-#include "engines/manifest_engine.hpp"
-#include "engines/class_inspector_engine.hpp"
-#include "engines/ui_mapper_engine.hpp"
-#include "engines/deobf_engine.hpp"
-#include "engines/variable_tracker_engine.hpp"
-#include "engines/smali_dump_engine.hpp"
-#include "formatters/sexpr_formatter.hpp"
+#include "../../include/engines/register_engines.hpp"
+#include "../../include/engines/engine_registry.hpp"
+#include "../../include/formatters/formatter_registry.hpp"
+#include "../../include/engines/class_search/class_search_engine.hpp"
+#include "../../include/engines/content_search/content_search_engine.hpp"
+#include "../../include/engines/xref_search/xref_search_engine.hpp"
+#include "../../include/engines/resource_mapping/resource_mapping_engine.hpp"
+#include "../../include/engines/cfg/cfg_engine.hpp"
+#include "../../include/engines/manifest/manifest_engine.hpp"
+#include "../../include/engines/class_inspector/class_inspector_engine.hpp"
+#include "../../include/engines/ui_mapper/ui_mapper_engine.hpp"
+#include "../../include/engines/deobf/deobf_engine.hpp"
+#include "../../include/engines/variable_tracker/variable_tracker_engine.hpp"
+#include "../../include/engines/smali_dump/smali_dump_engine.hpp"
+#include "../../include/formatters/sexpr_formatter.hpp"
 
 namespace scout {
 
@@ -26,7 +26,7 @@ namespace scout {
         static engines::EngineRegistrar<engines::ClassInspectorEngine> _reg_insp("class_inspector");
         static engines::EngineRegistrar<engines::UiMapperEngine>      _reg_ui("ui_mapper");
         static engines::EngineRegistrar<engines::DeobfEngine>         _reg_deobf("deobf");
-        static engines::EngineRegistrar<engines::VariableTrackerEngine> _reg_track("track_var");
+        static engines::EngineRegistrar<engines::VariableTrackerEngine> _reg_track("taint_analysis");
         static engines::EngineRegistrar<engines::SmaliDumpEngine>     _reg_dump("smali_dump");
         static formatters::FormatterRegistrar<formatters::SExprFormatter> _reg_sexpr("sexpr");
     }
@@ -44,7 +44,7 @@ namespace scout {
                    er.has_engine("class_inspector") &&
                    er.has_engine("ui_mapper") &&
                    er.has_engine("deobf") &&
-                   er.has_engine("track_var") &&
+                   er.has_engine("taint_analysis") &&
                    er.has_engine("smali_dump") &&
                    fr.has_formatter("sexpr");
         } catch (...) {
