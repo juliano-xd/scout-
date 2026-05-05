@@ -6,164 +6,219 @@
 #include <vector>
 #include <filesystem>
 #include <algorithm>
-#include <fstream>
-#include <regex>
 #include <execution>
 #include <mutex>
+#include <system_error>
+#include <span>      // C++20: Zero-cost array passing
 
 namespace core {
 
+    /**
+     * @brief Utilitário nativo de parsing de nomenclatura de classes Java/Dalvik.
+     * @details Optimizado para minimizar alocações (Heap) operando sobre Views.
+     */
     struct ClassInfo {
         std::string package_path;
         std::string class_name;
         std::string file_name;
-        
-        static ClassInfo parse(std::string_view dalvik_name) {
-            std::string name(dalvik_name);
-            // Remove 'L' prefix and ';' suffix se presentes
-            if (name.size() >= 2 && name.front() == 'L' && name.back() == ';') {
-                name = name.substr(1, name.size() - 2);
+
+        [[nodiscard]] static ClassInfo parse(std::string_view dalvik_name) {
+            // Remove 'L' prefix e ';' suffix se presentes em O(1)
+            if (dalvik_name.size() >= 2 && dalvik_name.front() == 'L' && dalvik_name.back() == ';') {
+                dalvik_name.remove_prefix(1);
+                dalvik_name.remove_suffix(1);
             }
-            // Substitui '.' por '/' para suportar tanto nomeação java quanto dalvik
-            std::replace(name.begin(), name.end(), '.', '/');
-            
+
             ClassInfo info;
-            auto slash_pos = name.find_last_of('/');
-            if (slash_pos != std::string::npos) {
-                info.package_path = name.substr(0, slash_pos);
-                info.class_name = name.substr(slash_pos + 1);
+
+            // Suporta tanto dot-notation (com.ex.A) como slash-notation (com/ex/A)
+            const size_t sep_pos = dalvik_name.find_last_of("./");
+
+            if (sep_pos != std::string_view::npos) {
+                // Aloca apenas a porção do pacote e formata os separadores
+                info.package_path = std::string(dalvik_name.substr(0, sep_pos));
+                std::ranges::replace(info.package_path, '.', '/');
+
+                info.class_name = std::string(dalvik_name.substr(sep_pos + 1));
             } else {
                 info.package_path = "";
-                info.class_name = name;
+                info.class_name = std::string(dalvik_name);
             }
-            info.file_name = info.class_name + ".smali";
+
+            // Evita múltiplas pequenas alocações
+            info.file_name.reserve(info.class_name.size() + 6);
+            info.file_name = info.class_name;
+            info.file_name += ".smali";
+
             return info;
         }
     };
 
     /**
-     * @brief Verifica se um caminho deve ser incluído na busca com base nas configurações de diretório.
+     * @brief Verifica se um caminho deve ser incluído na busca com base em filtros.
+     * @details Utiliza std::span (C++20) para evitar cópias ocultas de std::vector,
+     * e std::ranges para iteração funcional com curto-circuito (Early-Out).
      */
-    inline bool is_path_filtered(const std::filesystem::path& p, const std::vector<std::string>& include_dirs, const std::vector<std::string>& exclude_dirs) {
+    [[nodiscard]] inline bool is_path_filtered(
+        const std::filesystem::path& p,
+        std::span<const std::string> include_dirs,
+        std::span<const std::string> exclude_dirs)
+    {
         if (include_dirs.empty() && exclude_dirs.empty()) return true;
 
-        std::string path_str = p.generic_string();
-        
-        // Se houver inclusões, o caminho deve conter pelo menos uma delas
+        const std::string path_str = p.string();
+
+        // Regra de Inclusão: Caminho deve conter pelo menos UM dos targets
         if (!include_dirs.empty()) {
-            bool found = false;
-            for (const auto& inc : include_dirs) {
-                if (path_str.find(inc) != std::string::npos) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) return false;
+            const bool found_include = std::ranges::any_of(include_dirs, [&](const std::string& inc) {
+                return path_str.find(inc) != std::string::npos;
+            });
+            if (!found_include) return false;
         }
 
-        // Se houver exclusões, o caminho não deve conter nenhuma delas
-        for (const auto& exc : exclude_dirs) {
-            if (path_str.find(exc) != std::string::npos) {
-                return false;
-            }
+        // Regra de Exclusão: Caminho não deve conter NENHUM dos targets
+        if (!exclude_dirs.empty()) {
+            const bool found_exclude = std::ranges::any_of(exclude_dirs, [&](const std::string& exc) {
+                return path_str.find(exc) != std::string::npos;
+            });
+            if (found_exclude) return false;
         }
 
         return true;
     }
 
     /**
-     * @brief Busca o arquivo .smali correspondente a uma classe Dalvik (Lcom/ex/A;) ou dot-notation (com.ex.A)
-     * @param search_dir Diretório base onde a busca inicia
-     * @param dalvik_name Nome da classe a ser buscada
-     * @return Caminho completo para o arquivo .smali, ou nullopt se não for encontrado
+     * @brief Busca o arquivo .smali correspondente a uma classe Dalvik.
+     * @param search_dir Diretório base onde a busca inicia.
+     * @param dalvik_name Nome da classe (ex: Lcom/ex/A; ou com.ex.A).
+     * @return Caminho absoluto, ou nullopt em caso de falha/ausência.
      */
-    inline std::optional<std::filesystem::path> find_class_file(const std::filesystem::path& search_dir, std::string_view dalvik_name) {
-        if (!std::filesystem::exists(search_dir) || !std::filesystem::is_directory(search_dir)) {
+    [[nodiscard]] inline std::optional<std::filesystem::path> find_class_file(
+        const std::filesystem::path& search_dir,
+        std::string_view dalvik_name)
+    {
+        std::error_code ec;
+        if (!std::filesystem::is_directory(search_dir, ec) || ec) {
             return std::nullopt;
         }
 
-        auto info = ClassInfo::parse(dalvik_name);
-        auto options = std::filesystem::directory_options::skip_permission_denied;
+        const auto info = ClassInfo::parse(dalvik_name);
 
-        // Optimized Fast path: Check common Smali directory structures directly
-        static const std::string_view common_dirs[] = {"smali", "smali_classes2", "smali_classes3", "smali_classes4", "smali_classes5"};
-        for (auto d : common_dirs) {
+        // Fast-path: Verifica heurística de diretórios comuns em O(1) antes de fazer o recursive scan
+        static constexpr std::string_view common_dirs[] = {
+            "smali", "smali_classes2", "smali_classes3", "smali_classes4", "smali_classes5", "smali_classes6"
+        };
+
+        for (const auto d : common_dirs) {
             std::filesystem::path p = search_dir / d / info.package_path / info.file_name;
-            if (std::filesystem::exists(p)) return p;
+            if (std::filesystem::exists(p, ec) && !ec) return p;
         }
 
-        // Generic recursive scan for non-standard structures
-        for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
-            if (entry.is_regular_file() && entry.path().filename() == info.file_name) {
-                // Verify package if not empty
-                if (info.package_path.empty()) return entry.path();
-                std::string path_str = entry.path().generic_string();
-                if (path_str.find(info.package_path) != std::string::npos) return entry.path();
+        // Slow-path: Generic recursive scan (com mitigação contra throw de FileSystem)
+        const auto options = std::filesystem::directory_options::skip_permission_denied;
+        auto it = std::filesystem::recursive_directory_iterator(search_dir, options, ec);
+        auto end = std::filesystem::recursive_directory_iterator();
+
+        while (it != end && !ec) {
+            if (it->is_regular_file(ec) && !ec && it->path().filename() == info.file_name) {
+                if (info.package_path.empty()) return it->path();
+
+                const std::string path_str = it->path().string();
+                if (path_str.find(info.package_path) != std::string::npos) {
+                    return it->path();
+                }
             }
+            it.increment(ec);
+            if (ec) ec.clear();
         }
+
         return std::nullopt;
     }
 
     /**
-     * @brief Busca todos os arquivos .smali que contenham o texto especificado no nome da classe.
+     * @brief Varre o FS e encontra classes .smali cujo caminho contenha a string especificada.
      */
-    inline std::vector<std::filesystem::path> find_classes_containing(
-        const std::filesystem::path& search_dir, 
+    [[nodiscard]] inline std::vector<std::filesystem::path> find_classes_containing(
+        const std::filesystem::path& search_dir,
         std::string_view query,
-        const std::vector<std::string>& include_dirs = {},
-        const std::vector<std::string>& exclude_dirs = {}
+        std::span<const std::string> include_dirs = {},
+        std::span<const std::string> exclude_dirs = {}
     ) {
         std::vector<std::filesystem::path> results;
-        if (!std::filesystem::exists(search_dir)) return results;
+        std::error_code ec;
 
-        auto options = std::filesystem::directory_options::skip_permission_denied;
-        std::mutex mtx;
+        if (!std::filesystem::is_directory(search_dir, ec) || ec) return results;
 
         std::vector<std::filesystem::path> files_to_check;
-        for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
-            if (entry.is_regular_file() && entry.path().extension() == ".smali") {
-                if (is_path_filtered(entry.path(), include_dirs, exclude_dirs)) {
-                    files_to_check.push_back(entry.path());
+        files_to_check.reserve(10000); // Mitiga alocações durante listagem pesada do FS
+
+        const auto options = std::filesystem::directory_options::skip_permission_denied;
+        auto it = std::filesystem::recursive_directory_iterator(search_dir, options, ec);
+        auto end = std::filesystem::recursive_directory_iterator();
+
+        while (it != end && !ec) {
+            if (it->is_regular_file(ec) && !ec && it->path().extension() == ".smali") {
+                if (is_path_filtered(it->path(), include_dirs, exclude_dirs)) {
+                    files_to_check.push_back(it->path());
                 }
             }
+            it.increment(ec);
+            if (ec) ec.clear();
         }
 
-        std::for_each(std::execution::par, files_to_check.begin(), files_to_check.end(), [&](const std::filesystem::path& p) {
-            std::string path_str = p.generic_string();
-            if (path_str.find(query) != std::string::npos) {
-                std::lock_guard<std::mutex> lock(mtx);
-                results.push_back(p);
+        std::mutex mtx;
+
+        // Análise textual paralela do caminho (Semântica C++17/20)
+        std::for_each(std::execution::par_unseq, files_to_check.begin(), files_to_check.end(),
+            [&](const std::filesystem::path& p) {
+                if (p.string().find(query) != std::string::npos) {
+                    std::lock_guard<std::mutex> lock(mtx);
+                    results.push_back(p);
+                }
             }
-        });
+        );
 
         return results;
     }
 
     /**
-     * @brief Varre todos os arquivos .smali recursivamente e aplica uma função em paralelo.
+     * @brief Interface Genérica O(N) que varre .smali recursivamente executando callbacks Paralelas.
+     * @param callback Função invocável (lambda) a aplicar sobre cada std::filesystem::path.
      */
     template<typename Func>
     inline void scan_files(
-        const std::filesystem::path& search_dir, 
+        const std::filesystem::path& search_dir,
         Func callback,
-        const std::vector<std::string>& include_dirs = {},
-        const std::vector<std::string>& exclude_dirs = {}
+        std::span<const std::string> include_dirs = {},
+        std::span<const std::string> exclude_dirs = {}
     ) {
-        if (!std::filesystem::exists(search_dir)) return;
-        auto options = std::filesystem::directory_options::skip_permission_denied;
-        
+        std::error_code ec;
+        if (!std::filesystem::is_directory(search_dir, ec) || ec) return;
+
         std::vector<std::filesystem::path> files;
-        for (const auto& entry : std::filesystem::recursive_directory_iterator(search_dir, options)) {
-            if (entry.is_regular_file() && entry.path().extension() == ".smali") {
-                if (is_path_filtered(entry.path(), include_dirs, exclude_dirs)) {
-                    files.push_back(entry.path());
+        files.reserve(20000); // Pre-alloc proativo para APKs grandes
+
+        const auto options = std::filesystem::directory_options::skip_permission_denied;
+        auto it = std::filesystem::recursive_directory_iterator(search_dir, options, ec);
+        auto end = std::filesystem::recursive_directory_iterator();
+
+        // Extração assíncrona do layout de ficheiros sem risco de interrupção I/O
+        while (it != end && !ec) {
+            if (it->is_regular_file(ec) && !ec && it->path().extension() == ".smali") {
+                if (is_path_filtered(it->path(), include_dirs, exclude_dirs)) {
+                    files.push_back(it->path());
                 }
             }
+            it.increment(ec);
+            if (ec) ec.clear();
         }
 
-        std::for_each(std::execution::par, files.begin(), files.end(), [&](const std::filesystem::path& p) {
-            callback(p);
-        });
+        // Executa a callback invocável através de N threads nativas disponíveis
+        std::for_each(std::execution::par_unseq, files.begin(), files.end(),
+            [&](const std::filesystem::path& p) {
+                callback(p);
+            }
+        );
     }
 
-}
+} // namespace core

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "i_search_engine.hpp"
-#include "core/analysis_context.hpp"
 #include <memory>
 #include <unordered_map>
 #include <functional>
@@ -89,7 +88,7 @@ namespace engines {
     /**
      * @brief Helper para registro automático de motores.
      * Usa static initialization para registrar motores automaticamente.
-     * 
+     *
      * Uso: static EngineRegistrar<ClassSearchEngine> registrar("class");
      */
     template<typename EngineType>

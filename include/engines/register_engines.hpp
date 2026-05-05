@@ -1,11 +1,9 @@
 #pragma once
-#include "engines/i_search_engine.hpp"
-#include "core/analysis_context.hpp"
-#include "formatters/i_formatter.hpp"
+#include "i_search_engine.hpp"
+#include "../formatters/i_formatter.hpp"
 #include <string>
 #include <vector>
 #include <memory>
-#include <filesystem>
 
 namespace scout {
 

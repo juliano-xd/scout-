@@ -4,7 +4,6 @@
 #include <vector>
 #include <filesystem>
 #include <fstream>
-#include <optional>
 #include <execution>
 #include <mutex>
 
@@ -76,7 +75,7 @@ namespace analysis {
                         current_method = trimmed_line.substr(8);
                     } else if (trimmed_line == ".end method") {
                         current_method = "";
-                    } 
+                    }
                     // Busca pelo Target (XREF)
                     else if (trimmed_line.find(target_str) != std::string::npos) {
                         local_results.push_back({

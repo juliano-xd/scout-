@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include <ostream>
-#include "utils/sexpr.hpp"
-#include "engines/i_search_engine.hpp"
+#include "../utils/sexpr.hpp"
+#include "../engines/i_search_engine.hpp"
 
 namespace formatters {
 
