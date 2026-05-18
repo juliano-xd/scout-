@@ -221,6 +221,28 @@ namespace engines {
         VariableTrackerEngine::TrackingState& target,
         const VariableTrackerEngine::TrackingState& incoming
     ) {
+        // [O2] Fast path: se active_regs ja contem todos os bits de incoming
+        // e todos os maps de obj/static ja sao subconjunto, pula merge.
+        if ((target.active_regs | incoming.active_regs) == target.active_regs
+            && target.control_taint_stack.size() >= incoming.control_taint_stack.size())
+        {
+            bool subset = true;
+            for (const auto& [reg, fields] : incoming.obj_taint_map) {
+                const auto it = target.obj_taint_map.find(reg);
+                if (it == target.obj_taint_map.end()) { subset = false; break; }
+                for (const auto& f : fields) {
+                    if (!it->second.count(f)) { subset = false; break; }
+                }
+                if (!subset) break;
+            }
+            if (subset) {
+                for (const auto& f : incoming.static_fields_taint) {
+                    if (!target.static_fields_taint.count(f)) { subset = false; break; }
+                }
+            }
+            if (subset) return false;
+        }
+
         bool changed = false;
 
         const uint64_t old_regs = target.active_regs;

@@ -2962,9 +2962,11 @@ CMakeFiles/scout_lib.dir/src/engines/register_engines.cpp.o: /home/trindade/Proj
   /usr/include/c++/15.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/15.2.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/15.2.1/bits/stl_map.h \
+  /usr/include/c++/15.2.1/bits/stl_multiset.h \
   /usr/include/c++/15.2.1/bits/stl_pair.h \
   /usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h \
   /usr/include/c++/15.2.1/bits/stl_relops.h \
+  /usr/include/c++/15.2.1/bits/stl_set.h \
   /usr/include/c++/15.2.1/bits/stl_stack.h \
   /usr/include/c++/15.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.2.1/bits/stl_tree.h \
@@ -3042,6 +3044,7 @@ CMakeFiles/scout_lib.dir/src/engines/register_engines.cpp.o: /home/trindade/Proj
   /usr/include/c++/15.2.1/ranges \
   /usr/include/c++/15.2.1/ratio \
   /usr/include/c++/15.2.1/regex \
+  /usr/include/c++/15.2.1/set \
   /usr/include/c++/15.2.1/shared_mutex \
   /usr/include/c++/15.2.1/span \
   /usr/include/c++/15.2.1/sstream \
@@ -4487,11 +4490,14 @@ CMakeFiles/scout_lib.dir/src/engines/variable_tracker/variable_tracker_engine.cp
   /usr/include/c++/15.2.1/bits/stl_iterator.h \
   /usr/include/c++/15.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/15.2.1/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15.2.1/bits/stl_multiset.h \
   /usr/include/c++/15.2.1/bits/stl_pair.h \
   /usr/include/c++/15.2.1/bits/stl_queue.h \
   /usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h \
   /usr/include/c++/15.2.1/bits/stl_relops.h \
+  /usr/include/c++/15.2.1/bits/stl_set.h \
   /usr/include/c++/15.2.1/bits/stl_tempbuf.h \
+  /usr/include/c++/15.2.1/bits/stl_tree.h \
   /usr/include/c++/15.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/15.2.1/bits/stl_vector.h \
   /usr/include/c++/15.2.1/bits/stream_iterator.h \
@@ -4564,6 +4570,7 @@ CMakeFiles/scout_lib.dir/src/engines/variable_tracker/variable_tracker_engine.cp
   /usr/include/c++/15.2.1/queue \
   /usr/include/c++/15.2.1/ranges \
   /usr/include/c++/15.2.1/ratio \
+  /usr/include/c++/15.2.1/set \
   /usr/include/c++/15.2.1/shared_mutex \
   /usr/include/c++/15.2.1/span \
   /usr/include/c++/15.2.1/sstream \
@@ -5227,9 +5234,12 @@ CMakeFiles/scout_lib.dir/src/formatters/sexpr_formatter.cpp.o: /home/trindade/Pr
   /usr/include/c++/15.2.1/bits/stl_iterator.h \
   /usr/include/c++/15.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/15.2.1/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15.2.1/bits/stl_multiset.h \
   /usr/include/c++/15.2.1/bits/stl_pair.h \
   /usr/include/c++/15.2.1/bits/stl_relops.h \
+  /usr/include/c++/15.2.1/bits/stl_set.h \
   /usr/include/c++/15.2.1/bits/stl_tempbuf.h \
+  /usr/include/c++/15.2.1/bits/stl_tree.h \
   /usr/include/c++/15.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/15.2.1/bits/stl_vector.h \
   /usr/include/c++/15.2.1/bits/stream_iterator.h \
@@ -5292,6 +5302,7 @@ CMakeFiles/scout_lib.dir/src/formatters/sexpr_formatter.cpp.o: /home/trindade/Pr
   /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/15.2.1/pstl/pstl_config.h \
   /usr/include/c++/15.2.1/ratio \
+  /usr/include/c++/15.2.1/set \
   /usr/include/c++/15.2.1/span \
   /usr/include/c++/15.2.1/sstream \
   /usr/include/c++/15.2.1/stdexcept \
@@ -5362,7 +5373,13 @@ CMakeFiles/scout_lib.dir/src/formatters/sexpr_formatter.cpp.o: /home/trindade/Pr
 
 /usr/include/c++/15.2.1/unordered_set:
 
+/usr/include/c++/15.2.1/set:
+
 /usr/include/c++/15.2.1/bits/unordered_set.h:
+
+/usr/include/c++/15.2.1/bits/stl_set.h:
+
+/usr/include/c++/15.2.1/bits/stl_multiset.h:
 
 /home/trindade/Projetos/scout-/include/formatters/sexpr_formatter.hpp:
 
