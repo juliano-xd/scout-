@@ -20,7 +20,7 @@
 
 ## CRITICAL
 
-### C7 — Cache key aliasing via XOR de active_regs e taint_fp
+### C7 — Cache key aliasing via XOR de active_regs e taint_fp (FIXED: 00c30d4)
 
 **Arquivo:** `src/engines/variable_tracker/variable_tracker_engine.cpp:373-382`
 
@@ -42,7 +42,7 @@ estado B, silenciosamente perdendo fluxos de taint.
 
 ---
 
-### C8 — control_taint_stack merge ignora conteúdo, só compara tamanho
+### C8 — control_taint_stack merge ignora conteúdo, só compara tamanho (FIXED: ec66901)
 
 **Arquivo:** `src/engines/variable_tracker/variable_tracker_engine.cpp:226-262`
 
@@ -61,7 +61,7 @@ negativos no implicit flow tracking.
 
 ---
 
-### C9 — string_pool_.clear() invalida todas as string_views de chamadas anteriores
+### C9 — string_pool_.clear() invalida todas as string_views de chamadas anteriores (FIXED: b87e381)
 
 **Arquivo:** `src/engines/variable_tracker/variable_tracker_engine.cpp:302-307`
 
@@ -84,7 +84,7 @@ terá campos `event.method`, `event.reg`, `event.target`, etc., corrompidos.
 
 ---
 
-### C10 — process_method_internal é monolithic (~450 linhas)
+### C10 — process_method_internal é monolithic (~450 linhas) (FIXED: 9948996)
 
 **Arquivo:** `src/engines/variable_tracker/variable_tracker_engine.cpp:554-1010`
 
@@ -322,7 +322,30 @@ de exception handler em `track_recursive` (linhas 507-513) é código morto.
 
 ---
 
-## Issues Já Corrigidas (Commits Anteriores)
+## Notas da Reauditoria (2026-05-18 v2)
+
+### Falsos Alarmes
+
+| ID | Descrição | Motivo |
+|----|-----------|--------|
+| C25 | return handler não verifica obj_taint_map | O código SEMPRE verificou — linhas 1046-1050 |
+| C32 | depth é parâmetro morto | depth é usado em handle_invoke_instruction → track_recursive (linha 1004) |
+
+### Observações Adicionais
+
+- C39: `;-><init>` em PROPAGATORS casa QUALQUER construtor. Toda chamada de construtor com argumento tainted vira propagação para `this`, mesmo construtores default. Falso positivo conhecido após BUG-6.
+- C40: `exception_out` (linha 475) acumula união de N estados PEI do bloco. A sobre-aproximação documentada em C34.
+
+## Issues Corrigidas (Sessão Atual)
+
+| Ticket | Descrição | Commit |
+|--------|-----------|--------|
+| C7 | CacheKey: active_regs e taint_fp separados | `00c30d4` |
+| C8 | merge_states: compara conteúdo, não tamanho | `ec66901` |
+| C9 | Comentário enganoso sobre string_pool_ | `b87e381` |
+| C10 | process_method_internal decomposto em 7 handlers | `9948996` |
+
+## Issues Corrigidas (Sessão Anterior)
 
 | Ticket | Descrição | Commit |
 |--------|-----------|--------|
@@ -331,7 +354,7 @@ de exception handler em `track_recursive` (linhas 507-513) é código morto.
 | C3 | Move semantics em PointsToSet (Rule of 5) | `107c8e5` |
 | C4 | `std::stoi` → `std::from_chars` em reg_to_bit | `9c097d3` |
 | C5 | CacheKey inclui `control_taint_stack` | `825e13b` |
-| C6 | `string_pool_` clearing entre chamadas search() | `6ba5169` |
+| C6 | `string_pool_` clearing entre chamadas search() | `6ba5169` | |
 
 ---
 

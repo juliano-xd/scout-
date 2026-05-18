@@ -147,7 +147,7 @@ namespace engines {
             if (line.empty()) return false;
             switch (line.front()) {
                 case 'i': return line.starts_with("invoke-") || line.starts_with("iget") || line.starts_with("iput");
-                case 'a': return line.starts_with("aget") || line.starts_with("aput");
+                case 'a': return line.starts_with("aget") || line.starts_with("aput") || line.starts_with("array-length");
                 case 's': return line.starts_with("sget") || line.starts_with("sput");
                 case 'd': return line.starts_with("div-");
                 case 'r': return line.starts_with("rem-");
@@ -465,11 +465,7 @@ namespace engines {
 
             TrackingState current_in = block_in_states[bid];
 
-            while (!current_in.control_taint_stack.empty()
-                   && current_in.control_taint_stack.back() == bid)
-            {
-                current_in.control_taint_stack.pop_back();
-            }
+            std::erase(current_in.control_taint_stack, bid);
 
             TrackingState current_out   = current_in;
             TrackingState exception_out;
@@ -658,6 +654,7 @@ namespace engines {
 
                     if (tainted) {
                         state.active_regs |= (1ULL << d_bit);
+                        state.obj_taint_map.erase(d_bit);
                         if (s_bit != -1) {
                             if (const auto it = state.obj_taint_map.find(s_bit);
                                 it != state.obj_taint_map.end())
@@ -722,6 +719,7 @@ namespace engines {
 
                     if (tainted) {
                         state.active_regs |= (1ULL << d_bit);
+                        state.obj_taint_map.erase(d_bit);
                         events.push_back({method_name, line_idx,
                             bit_to_reg_sv(d_bit), action_to_sv(EventAction::CONST_ASSIGN),
                             target, pc_tainted ? "IMPLICIT" : extra});
@@ -769,7 +767,7 @@ namespace engines {
                                     tainted = true;
                                     target  = field;
                                     extra   = obj_r;
-                                } else if (state.active_regs & (1ULL << o_bit)) {
+                                } else if (state.active_regs & (1ULL << o_bit)) { // [C16]
                                     tainted = true;
                                     target  = field;
                                     extra   = obj_r;
@@ -803,6 +801,7 @@ namespace engines {
 
                     if (tainted) {
                         state.active_regs |= (1ULL << d_bit);
+                        state.obj_taint_map.erase(d_bit);
                         events.push_back({method_name, line_idx,
                             bit_to_reg_sv(d_bit), action_to_sv(EventAction::LOAD),
                             target, pc_tainted ? "IMPLICIT" : extra});
@@ -831,8 +830,8 @@ namespace engines {
                 const bool src_tainted =
                     (s_bit != -1 && (state.active_regs & (1ULL << s_bit))) || pc_tainted;
 
-                if (src_tainted) {
-                    if (line.starts_with("iput")) {
+                if (line.starts_with("iput")) {
+                    if (src_tainted) {
                         const size_t second_comma = line.find(',', first_comma + 1);
                         if (second_comma != std::string_view::npos) {
                             const std::string_view obj_r = utils::trim(
@@ -846,24 +845,31 @@ namespace engines {
                                     action_to_sv(EventAction::STORE), field, obj_r});
                             }
                         }
-                    } else if (line.starts_with("sput")) {
+                    }
+                } else if (line.starts_with("sput")) {
+                    if (src_tainted) {
                         const std::string_view field = utils::trim(line.substr(first_comma + 1));
                         state.static_fields_taint.insert(field);
                         events.push_back({method_name, line_idx,
                             bit_to_reg_sv(s_bit != -1 ? s_bit : 0),
                             action_to_sv(EventAction::STORE_STATIC), field, ""});
-                    } else {
-                        const size_t second_comma = line.find(',', first_comma + 1);
-                        if (second_comma != std::string_view::npos) {
-                            const std::string_view arr_r = utils::trim(
-                                line.substr(first_comma + 1, second_comma - first_comma - 1));
-                            const int a_bit = reg_to_bit(arr_r);
-                            if (a_bit != -1) {
-                                state.active_regs |= (1ULL << a_bit);
-                                events.push_back({method_name, line_idx,
-                                    bit_to_reg_sv(s_bit != -1 ? s_bit : 0),
-                                    action_to_sv(EventAction::STORE_ARRAY), "", arr_r});
-                            }
+                    }
+                } else {
+                    const size_t second_comma = line.find(',', first_comma + 1);
+                    if (second_comma != std::string_view::npos) {
+                        const std::string_view arr_r = utils::trim(
+                            line.substr(first_comma + 1, second_comma - first_comma - 1));
+                        const std::string_view idx_r = utils::trim(line.substr(second_comma + 1));
+                        const int a_bit = reg_to_bit(arr_r);
+                        const int i_bit = reg_to_bit(idx_r);
+                        const auto idx_om_it = state.obj_taint_map.find(i_bit);
+                        const bool idx_tainted = (i_bit != -1 && ((state.active_regs & (1ULL << i_bit))
+                            || (idx_om_it != state.obj_taint_map.end() && !idx_om_it->second.empty())));
+                        if (a_bit != -1 && (src_tainted || idx_tainted)) {
+                            state.active_regs |= (1ULL << a_bit);
+                            events.push_back({method_name, line_idx,
+                                bit_to_reg_sv(s_bit != -1 ? s_bit : 0),
+                                action_to_sv(EventAction::STORE_ARRAY), "", arr_r});
                         }
                     }
                 }
@@ -1080,7 +1086,7 @@ namespace engines {
         const std::string_view method_sig  = virtual_method_sig.substr(arrow + 2);
 
         // Simple CHA resolution — sobe a hierarquia até encontrar a implementação.
-        while (class_name != "Ljava/lang/Object;" && !class_name.empty()) {
+        while (!class_name.empty()) {
             const std::string_view content = ctx.get_class_content(class_name);
             if (content.empty()) break;
 
