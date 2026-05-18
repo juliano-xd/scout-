@@ -246,6 +246,43 @@ namespace engines {
         bool is_propagator(std::string_view target); // [BUG-6] substitui is_prop inline
         static bool merge_states(TrackingState& target, const TrackingState& incoming);
 
+        // [C10] Handlers extraídos de process_method_internal
+        void handle_move_result(
+            std::string_view line, int line_idx,
+            TrackingState& state, std::vector<VariableEvent>& events,
+            std::string_view method_name);
+
+        void handle_move_instruction(
+            std::string_view line, int line_idx,
+            TrackingState& state, std::vector<VariableEvent>& events,
+            std::string_view method_name, std::string_view initial_reg);
+
+        void handle_const_instruction(
+            std::string_view line, int line_idx,
+            TrackingState& state, std::vector<VariableEvent>& events,
+            std::string_view method_name, std::string_view initial_reg,
+            const SearchConfig& config);
+
+        void handle_get_instruction(
+            std::string_view line, int line_idx,
+            TrackingState& state, std::vector<VariableEvent>& events,
+            std::string_view method_name, std::string_view initial_reg);
+
+        void handle_put_instruction(
+            std::string_view line, int line_idx,
+            TrackingState& state, std::vector<VariableEvent>& events,
+            std::string_view method_name);
+
+        void handle_invoke_instruction(
+            std::string_view line, int line_idx,
+            TrackingState& state, std::vector<VariableEvent>& events,
+            core::AnalysisContext& ctx, const SearchConfig& config,
+            std::string_view method_name, int depth);
+
+        void handle_return_instruction(
+            std::string_view line,
+            TrackingState& state);
+
     private:
         std::set<std::string, std::less<>> string_pool_;
         std::unordered_map<CacheKey,

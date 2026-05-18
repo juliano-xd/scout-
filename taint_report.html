@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taint Analysis Report</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+h1 { color: #fff; font-size: 1.5em; margin-bottom: 5px; }
+h2 { color: #aaa; font-size: 1em; font-weight: normal; margin-bottom: 20px; }
+.stats { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+.stat-card { background: #16213e; padding: 12px 18px; border-radius: 8px; min-width: 100px; }
+.stat-card .num { font-size: 1.5em; font-weight: bold; color: #fff; }
+.stat-card .label { font-size: 0.8em; color: #888; }
+.action-summary { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.stat-chip { padding: 4px 10px; border-radius: 12px; font-size: 0.8em; color: #fff; }
+.filters { margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.filters input, .filters select { background: #16213e; border: 1px solid #333; color: #e0e0e0; padding: 6px 10px; border-radius: 4px; font-size: 0.9em; }
+.filters label { font-size: 0.85em; color: #aaa; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+th { background: #16213e; color: #888; padding: 8px 10px; text-align: left; position: sticky; top: 0; }
+td { padding: 6px 10px; border-bottom: 1px solid #1a1a3e; }
+tr:hover { background: #1a1a3e; }
+tr.sink-row { background: #3d1a1a !important; }
+tr.sink-row:hover { background: #4d2222 !important; }
+.badge { padding: 2px 8px; border-radius: 10px; font-size: 0.8em; color: #fff; white-space: nowrap; }
+.method-cell { max-width: 400px; overflow: hidden; text-overflow: ellipsis; }
+.target-cell { max-width: 350px; overflow: hidden; text-overflow: ellipsis; color: #aaa; }
+.reg-cell { color: #f1c40f; font-weight: bold; }
+.extra { color: #7f8c8d; font-style: italic; font-size: 0.9em; }
+.controls { margin: 10px 0; }
+.controls button { background: #16213e; border: 1px solid #333; color: #e0e0e0; padding: 6px 14px; border-radius: 4px; cursor: pointer; margin-right: 6px; }
+.controls button:hover { background: #1a1a3e; }
+#event-count { color: #888; font-size: 0.9em; margin-left: 10px; }
+</style>
+</head>
+<body>
+<h1>Taint Analysis Report</h1>
+<h2>Start: unknown</h2>
+
+<div class="stats">
+    <div class="stat-card"><div class="num">132</div><div class="label">Events</div></div>
+    <div class="stat-card"><div class="num">13</div><div class="label">Methods</div></div>
+    <div class="stat-card"><div class="num">1</div><div class="label">Sinks</div></div>
+</div>
+
+<div class="action-summary"><span class="stat-chip" style="background:#4a90d9">CALL: 60</span><span class="stat-chip" style="background:#50b86c">LOAD: 34</span><span class="stat-chip" style="background:#e67e22">STORE: 13</span><span class="stat-chip" style="background:#f39c12">CONST: 9</span><span class="stat-chip" style="background:#95a5a6">MOVE_RESULT: 8</span><span class="stat-chip" style="background:#9b59b6">TAINT_PROP: 7</span><span class="stat-chip" style="background:#e74c3c">SINK_LEAK: 1</span></div>
+
+<div class="filters">
+    <label>Filter:</label>
+    <input type="text" id="filterInput" placeholder="method, reg, target..." oninput="filterTable()">
+    <select id="actionFilter" onchange="filterTable()">
+        <option value="">All actions</option>
+        <option value="CALL">CALL</option><option value="CONST">CONST</option><option value="LOAD">LOAD</option><option value="MOVE_RESULT">MOVE_RESULT</option><option value="SINK_LEAK">SINK_LEAK</option><option value="STORE">STORE</option><option value="TAINT_PROP">TAINT_PROP</option>
+    </select>
+    <label><input type="checkbox" id="sinkOnly" onchange="filterTable()"> Sinks only</label>
+    <span id="event-count"></span>
+</div>
+
+<div class="controls">
+    <button onclick="expandAll()">Expand All</button>
+    <button onclick="collapseAll()">Collapse All</button>
+    <button onclick="scrollToSinks()">Scroll to Sinks</button>
+    <button onclick="document.getElementById('filterInput').value=''; document.getElementById('actionFilter').value=''; document.getElementById('sinkOnly').checked=false; filterTable();">Reset</button>
+</div>
+
+<table id="event-table">
+<thead><tr>
+    <th>#</th><th>Action</th><th>Method</th><th>Line</th><th>Reg</th><th>Target</th><th>Extra</th>
+</tr></thead>
+<tbody>
+
+        <tr class="">
+            <td>1</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->onSuccess()V</td>
+            <td>5</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>2</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/FXF;->A00(Landroid/app/Activity;I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>3</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A00(Landroid/app/Activity;I)V</td>
+            <td>8</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/00C;->A0A(Ljava/lang/Object;I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>4</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A00(Landroid/app/Activity;I)V</td>
+            <td>11</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/FXF;->A03(Landroid/app/Activity;)Z</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>5</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A00(Landroid/app/Activity;I)V</td>
+            <td>2</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">Landroid/app/Activity;->removeDialog(I)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>6</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A00(Landroid/app/Activity;I)V</td>
+            <td>2</td>
+            <td class="reg-cell">p1</td>
+            <td class="target-cell">Landroid/app/Activity;->removeDialog(I)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>7</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>17</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/8re;->A0i:LX/0ve;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>8</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>26</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>9</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>5</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0ve;->A0d:LX/07W;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>10</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>11</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/07W;->A00:Landroid/content/SharedPreferences;</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="">
+            <td>11</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>17</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>12</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>20</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">CALL_RESULT</span></td>
+        </tr>
+        <tr class="">
+            <td>13</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>2</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/0ve;->A1O:LX/0y1;</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>14</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>5</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>15</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>8</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A00:Ljava/lang/String;</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>16</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>11</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/0y1;->A00(LX/0y1;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>17</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>14</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>18</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>17</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A01:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>19</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>20</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A02:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>20</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>23</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A03:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>21</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>26</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A06:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>22</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>29</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A07:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>23</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>32</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A04:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>24</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>35</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>25</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>38</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0y1;->A05:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>26</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>41</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0ve;->A0a:LX/05g;</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>27</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>44</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/05g;->A0T()LX/0dj;</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>28</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>47</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>29</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>50</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0dj;->A04()V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>30</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>2</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0ve;->A0c:LX/0NS;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>31</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>2</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0NS;->A00:LX/0JP;</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="">
+            <td>32</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>5</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0JP;->A02(I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>33</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>2</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/0NS;->A00:LX/0JP;</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="">
+            <td>34</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>5</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0JP;->A03:LX/07W;</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>35</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>8</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/07W;->A00:Landroid/content/SharedPreferences;</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="sink-row">
+            <td>36</td>
+            <td><span class="badge" style="background:#e74c3c">⚠ SINK_LEAK</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>11</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>37</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>26</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0JP;->A04:Z</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>38</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>2</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0JP;->A00:LX/00q;</td>
+            <td><span class="extra">v1</span></td>
+        </tr>
+        <tr class="">
+            <td>39</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/0ve;->A03(LX/0ve;IZ)V</td>
+            <td>5</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/00q;->get()Ljava/lang/Object;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>40</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>29</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A0d:LX/8QO;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>41</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>32</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/8QO;->A04:LX/06e;</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="">
+            <td>42</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>35</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/06e;->A04()Ljava/lang/Object;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>43</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/06e;->A04()Ljava/lang/Object;</td>
+            <td>5</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/06e;->A08:Ljava/lang/Object;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>44</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">LX/06e;->A04()Ljava/lang/Object;</td>
+            <td>2</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>45</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>38</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">CALL_RESULT</span></td>
+        </tr>
+        <tr class="">
+            <td>46</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>2</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/9Xc;->A01:Z</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="">
+            <td>47</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>8</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/8qX;->A00:LX/0Gw;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>48</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/00I;->A0a(I)Z</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>49</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/00I;->A0a(I)Z</td>
+            <td>11</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/00I;->A06(LX/00K;LX/00I;IZ)Z</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>50</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>2</td>
+            <td class="reg-cell">v4</td>
+            <td class="target-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A0d:LX/8QO;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>51</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>5</td>
+            <td class="reg-cell">v5</td>
+            <td class="target-cell">LX/8QO;->A0C:LX/06f;</td>
+            <td><span class="extra">v4</span></td>
+        </tr>
+        <tr class="">
+            <td>52</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>8</td>
+            <td class="reg-cell">v5</td>
+            <td class="target-cell">LX/06e;->A04()Ljava/lang/Object;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>53</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/06e;->A04()Ljava/lang/Object;</td>
+            <td>5</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/06e;->A08:Ljava/lang/Object;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>54</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">LX/06e;->A04()Ljava/lang/Object;</td>
+            <td>2</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>55</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>11</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">CALL_RESULT</span></td>
+        </tr>
+        <tr class="">
+            <td>56</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>2</td>
+            <td class="reg-cell">v3</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>57</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>5</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/9Xc;->A01:Z</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>58</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>8</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/9Xc;->A00:Z</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>59</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>60</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v3</td>
+            <td class="target-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>61</td>
+            <td><span class="badge" style="background:#9b59b6">◆ TAINT_PROP</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>62</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>63</td>
+            <td><span class="badge" style="background:#9b59b6">◆ TAINT_PROP</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>64</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>65</td>
+            <td><span class="badge" style="background:#9b59b6">◆ TAINT_PROP</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>14</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>66</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td>5</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">Ljava/lang/Object;-><init>()V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>67</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td>8</td>
+            <td class="reg-cell">p1</td>
+            <td class="target-cell">LX/9Xc;->A02:Z</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>68</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td>11</td>
+            <td class="reg-cell">p2</td>
+            <td class="target-cell">LX/9Xc;->A01:Z</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>69</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/9Xc;-><init>(ZZZ)V</td>
+            <td>14</td>
+            <td class="reg-cell">p3</td>
+            <td class="target-cell">LX/9Xc;->A00:Z</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>70</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>2</td>
+            <td class="reg-cell">v5</td>
+            <td class="target-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>71</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>2</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>72</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>5</td>
+            <td class="reg-cell">v3</td>
+            <td class="target-cell">LX/06e;->A06:Ljava/lang/Object;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>73</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>12</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/06e;->A09:Ljava/lang/Object;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>74</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>2</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>75</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>2</td>
+            <td class="reg-cell">p1</td>
+            <td class="target-cell">LX/06e;->A09:Ljava/lang/Object;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>76</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>8</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>77</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>11</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/06e;->A07:Ljava/lang/Runnable;</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>78</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>14</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/06i;->A02(Ljava/lang/Runnable;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>79</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/06e;->A0C(Ljava/lang/Object;)V</td>
+            <td>14</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/06i;->A02(Ljava/lang/Runnable;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>80</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>17</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/8QO;->A03:I</td>
+            <td><span class="extra">v4</span></td>
+        </tr>
+        <tr class="">
+            <td>81</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>20</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>82</td>
+            <td><span class="badge" style="background:#9b59b6">◆ TAINT_PROP</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>20</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>83</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>26</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/1ZO;->A1L(Ljava/lang/StringBuilder;Ljava/lang/String;)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>84</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>29</td>
+            <td class="reg-cell">v4</td>
+            <td class="target-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>85</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>8</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/00C;->A0A(Ljava/lang/Object;I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>86</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>21</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0RB;->A00:LX/0RF;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>87</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>24</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/0RF;->A00:LX/0RG;</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="">
+            <td>88</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>33</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0RF;->A01:Ljava/util/Map;</td>
+            <td><span class="extra">v0</span></td>
+        </tr>
+        <tr class="">
+            <td>89</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>36</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>90</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>39</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">CALL_RESULT</span></td>
+        </tr>
+        <tr class="">
+            <td>91</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>6</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>92</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>9</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>93</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>15</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/0gj;->A01:LX/0gj;</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>94</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>2</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>95</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>8</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0So;-><init>(LX/0Sl;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>96</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>8</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/0So;-><init>(LX/0Sl;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>97</td>
+            <td><span class="badge" style="background:#9b59b6">◆ TAINT_PROP</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>8</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/0So;-><init>(LX/0Sl;)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>98</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>11</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/01s;->plus(LX/01s;)LX/01s;</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>99</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>11</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/01s;->plus(LX/01s;)LX/01s;</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>100</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>14</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>101</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>20</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/183;-><init>(LX/01s;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>102</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>20</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/183;-><init>(LX/01s;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>103</td>
+            <td><span class="badge" style="background:#9b59b6">◆ TAINT_PROP</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>20</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/183;-><init>(LX/01s;)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>104</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>23</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/0RB;->A0U(Ljava/lang/AutoCloseable;Ljava/lang/String;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>105</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>23</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/0RB;->A0U(Ljava/lang/AutoCloseable;Ljava/lang/String;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>106</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/182;->A00(LX/0RB;)LX/183;</td>
+            <td>23</td>
+            <td class="reg-cell">v3</td>
+            <td class="target-cell">LX/0RB;->A0U(Ljava/lang/AutoCloseable;Ljava/lang/String;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>107</td>
+            <td><span class="badge" style="background:#95a5a6">● MOVE_RESULT</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>32</td>
+            <td class="reg-cell">v3</td>
+            <td class="target-cell"></td>
+            <td><span class="extra">CALL_RESULT</span></td>
+        </tr>
+        <tr class="">
+            <td>108</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>44</td>
+            <td class="reg-cell">v4</td>
+            <td class="target-cell">LX/ADF;-><init>(Ljava/lang/Object;LX/0fQ;I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>109</td>
+            <td><span class="badge" style="background:#9b59b6">◆ TAINT_PROP</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>44</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/ADF;-><init>(Ljava/lang/Object;LX/0fQ;I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>110</td>
+            <td><span class="badge" style="background:#e67e22">↓ STORE</span></td>
+            <td class="method-cell">LX/ADF;-><init>(Ljava/lang/Object;LX/0fQ;I)V</td>
+            <td>8</td>
+            <td class="reg-cell">p1</td>
+            <td class="target-cell">LX/ADF;->A01:Ljava/lang/Object;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>111</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/ADF;-><init>(Ljava/lang/Object;LX/0fQ;I)V</td>
+            <td>14</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/0fX;-><init>(ILX/0fQ;)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>112</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>47</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/3Yp;->A1E(LX/094;LX/0TD;)LX/0fz;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>113</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>47</td>
+            <td class="reg-cell">v3</td>
+            <td class="target-cell">LX/3Yp;->A1E(LX/094;LX/0TD;)LX/0fz;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>114</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/3Yp;->A1E(LX/094;LX/0TD;)LX/0fz;</td>
+            <td>11</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/0fZ;->A02(Ljava/lang/Integer;LX/01s;LX/094;LX/0TD;)LX/0fz;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>115</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/3Yp;->A1E(LX/094;LX/0TD;)LX/0fz;</td>
+            <td>11</td>
+            <td class="reg-cell">p1</td>
+            <td class="target-cell">LX/0fZ;->A02(Ljava/lang/Integer;LX/01s;LX/094;LX/0TD;)LX/0fz;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>116</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>56</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A0N:LX/00q;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>117</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>59</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">LX/00q;->get()Ljava/lang/Object;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>118</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>83</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/FXF;->A01(Landroid/app/Activity;I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>119</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A01(Landroid/app/Activity;I)V</td>
+            <td>8</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/00C;->A0A(Ljava/lang/Object;I)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>120</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A01(Landroid/app/Activity;I)V</td>
+            <td>11</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/FXF;->A03(Landroid/app/Activity;)Z</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>121</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A01(Landroid/app/Activity;I)V</td>
+            <td>2</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">Landroid/app/Activity;->showDialog(I)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>122</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">LX/FXF;->A01(Landroid/app/Activity;I)V</td>
+            <td>2</td>
+            <td class="reg-cell">p1</td>
+            <td class="target-cell">Landroid/app/Activity;->showDialog(I)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>123</td>
+            <td><span class="badge" style="background:#f39c12">⊕ CONST</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>2</td>
+            <td class="reg-cell">v0</td>
+            <td class="target-cell">const</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>124</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A5L()V</td>
+            <td>2</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>125</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>11</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/0yE;->A04(Landroid/content/Context;)Landroid/content/Intent;</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>126</td>
+            <td><span class="badge" style="background:#50b86c">↑ LOAD</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>17</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/8qX;->A00:LX/0Gw;</td>
+            <td><span class="extra">p0</span></td>
+        </tr>
+        <tr class="">
+            <td>127</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>23</td>
+            <td class="reg-cell">v1</td>
+            <td class="target-cell">LX/00I;->A0a(I)Z</td>
+            <td></td>
+        </tr>
+        <tr class="">
+            <td>128</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>3</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/1ZU;->A0n(Landroid/content/Context;Landroid/content/Intent;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>129</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>3</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/1ZU;->A0n(Landroid/content/Context;Landroid/content/Intent;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>130</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>2</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">LX/1ZU;->A0n(Landroid/content/Context;Landroid/content/Intent;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>131</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>2</td>
+            <td class="reg-cell">v2</td>
+            <td class="target-cell">LX/1ZU;->A0n(Landroid/content/Context;Landroid/content/Intent;)V</td>
+            <td><span class="extra">IMPLICIT</span></td>
+        </tr>
+        <tr class="">
+            <td>132</td>
+            <td><span class="badge" style="background:#4a90d9">→ CALL</span></td>
+            <td class="method-cell">Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;->A12(Lcom/whatsapp/registration/app/phonenumberentry/RegisterPhone;)V</td>
+            <td>2</td>
+            <td class="reg-cell">p0</td>
+            <td class="target-cell">Landroid/app/Activity;->finish()V</td>
+            <td></td>
+        </tr>
+</tbody>
+</table>
+
+<script>
+function filterTable() {
+    const q = document.getElementById('filterInput').value.toLowerCase();
+    const act = document.getElementById('actionFilter').value;
+    const sinkOnly = document.getElementById('sinkOnly').checked;
+    const rows = document.querySelectorAll('#event-table tbody tr');
+    let visible = 0;
+    rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        const action = r.querySelector('.badge')?.textContent.trim().split(' ')[1] || '';
+        const match = (!q || text.includes(q)) && (!act || action === act) && (!sinkOnly || r.classList.contains('sink-row'));
+        r.style.display = match ? '' : 'none';
+        if (match) visible++;
+    });
+    document.getElementById('event-count').textContent = visible + ' / ' + rows.length + ' events';
+}
+function expandAll() { document.querySelectorAll('.method-cell').forEach(c => c.style.whiteSpace = 'normal'); }
+function collapseAll() { document.querySelectorAll('.method-cell').forEach(c => c.style.whiteSpace = 'nowrap'); }
+function scrollToSinks() {
+    const first = document.querySelector('tr.sink-row');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+filterTable();
+</script>
+</body>
+</html>
