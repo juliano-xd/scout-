@@ -50,6 +50,37 @@ namespace engines {
             return *this;
         }
 
+        PointsToSet(PointsToSet&& other) noexcept
+            : count(other.count), is_large(other.is_large) {
+            if (is_large) {
+                storage.large = other.storage.large;
+                other.storage.large = nullptr;
+            } else {
+                for (int i = 0; i < count; ++i)
+                    storage.small[i] = other.storage.small[i];
+            }
+            other.count = 0;
+            other.is_large = false;
+        }
+
+        PointsToSet& operator=(PointsToSet&& other) noexcept {
+            if (this != &other) {
+                if (is_large) delete storage.large;
+                is_large = other.is_large;
+                count = other.count;
+                if (is_large) {
+                    storage.large = other.storage.large;
+                    other.storage.large = nullptr;
+                } else {
+                    for (int i = 0; i < count; ++i)
+                        storage.small[i] = other.storage.small[i];
+                }
+                other.count = 0;
+                other.is_large = false;
+            }
+            return *this;
+        }
+
         void add(LocusID id) {
             if (contains(id)) return;
             if (!is_large) {
