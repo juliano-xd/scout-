@@ -148,15 +148,21 @@ namespace engines {
     struct CacheKey {
         std::string_view method_sig;
         uint64_t reg_mask;
+        uint64_t control_hash = 0;
 
         bool operator==(const CacheKey& other) const {
-            return method_sig == other.method_sig && reg_mask == other.reg_mask;
+            return method_sig == other.method_sig
+                && reg_mask == other.reg_mask
+                && control_hash == other.control_hash;
         }
     };
 
     struct CacheKeyHash {
         std::size_t operator()(const CacheKey& k) const {
-            return std::hash<std::string_view>{}(k.method_sig) ^ (std::hash<uint64_t>{}(k.reg_mask) << 1);
+            std::size_t h = std::hash<std::string_view>{}(k.method_sig);
+            h ^= std::hash<uint64_t>{}(k.reg_mask) << 1;
+            h ^= std::hash<uint64_t>{}(k.control_hash) << 2;
+            return h;
         }
     };
 

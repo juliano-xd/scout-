@@ -347,7 +347,14 @@ namespace engines {
         // [BUG-2] Chave de cache agora inclui fingerprint de obj/static taint.
         const uint64_t taint_fp = compute_taint_fingerprint(
             state.obj_taint_map, state.static_fields_taint);
-        CacheKey key{state.current_method, state.active_regs ^ taint_fp};
+        // [BUG-5] Chave de cache inclui hash de control_taint_stack
+        // para evitar reuso de resultados entre diferentes contextos de
+        // controle (ex: dentro vs fora de um if com taint).
+        uint64_t control_hash = 0;
+        for (const int ctrl : state.control_taint_stack) {
+            control_hash ^= static_cast<uint64_t>(ctrl) * 0x9e3779b97f4a7c15ULL;
+        }
+        CacheKey key{state.current_method, state.active_regs ^ taint_fp, control_hash};
 
         // [PERF-1] Single lookup no cache com `find`.
         if (const auto cache_it = analysis_cache_.find(key); cache_it != analysis_cache_.end()) {
