@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <string_view>
 #include <algorithm>
+#include <charconv>
 
 namespace engines {
 
@@ -217,15 +218,13 @@ namespace engines {
         );
 
         static int reg_to_bit(std::string_view reg) {
-            if (reg.empty()) return -1;
+            if (reg.size() < 2) return -1;
             char prefix = reg[0];
-            try {
-                std::string num_part = std::string(reg.substr(1));
-                if (num_part.empty()) return -1;
-                int val = std::stoi(num_part);
-                if (prefix == 'v') return (val >= 0 && val < 32) ? val : -1;
-                if (prefix == 'p') return (val >= 0 && val < 16) ? 32 + val : -1;
-            } catch (...) {}
+            int val = 0;
+            auto res = std::from_chars(reg.data() + 1, reg.data() + reg.size(), val);
+            if (res.ec != std::errc{}) return -1;
+            if (prefix == 'v') return (val >= 0 && val < 32) ? val : -1;
+            if (prefix == 'p') return (val >= 0 && val < 16) ? 32 + val : -1;
             return -1;
         }
 
