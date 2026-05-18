@@ -379,8 +379,19 @@ namespace engines {
                 const bool preceded_ok = sig_pos > 0
                     && (header[sig_pos - 1] == ' ' || header[sig_pos - 1] == '\t');
                 // [BUG-4] Garante que o método não é prefixo de um nome mais longo.
+                // Se method_sig já contém '(' é uma assinatura completa
+                // (auto-qualificada). Basta verificar que termina em boundary
+                // (fim da linha ou espaço). Caso contrário, é nome simples
+                // e exigimos '(' após.
+                const bool has_full_sig = method_sig.find('(') != std::string_view::npos;
                 const size_t after = sig_pos + method_sig.size();
-                const bool followed_ok = after < header.size() && header[after] == '(';
+                bool followed_ok;
+                if (has_full_sig) {
+                    followed_ok = after >= header.size()
+                        || header[after] == ' ' || header[after] == '\t';
+                } else {
+                    followed_ok = after < header.size() && header[after] == '(';
+                }
                 if (preceded_ok && followed_ok) break;
             }
             m_pos = content.find(".method ", eol);
