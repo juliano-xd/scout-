@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <set>
 #include <string_view>
 #include <algorithm>
 #include <charconv>
@@ -243,7 +244,7 @@ namespace engines {
         static bool merge_states(TrackingState& target, const TrackingState& incoming);
 
     private:
-        std::unordered_set<std::string> string_pool_;
+        std::set<std::string, std::less<>> string_pool_;
         std::unordered_map<CacheKey,
                            std::pair<std::vector<VariableEvent>, MethodSummary>,
                            CacheKeyHash> analysis_cache_;

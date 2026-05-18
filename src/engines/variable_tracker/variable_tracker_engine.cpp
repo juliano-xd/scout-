@@ -193,7 +193,7 @@ namespace engines {
     }
 
     std::string_view VariableTrackerEngine::pool_string(std::string_view s) {
-        auto it = string_pool_.find(std::string(s));
+        auto it = string_pool_.find(s);
         if (it != string_pool_.end()) return *it;
         return *string_pool_.insert(std::string(s)).first;
     }

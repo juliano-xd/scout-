@@ -214,7 +214,10 @@ CMakeFiles/scout_lib.dir/src/engines/variable_tracker/variable_tracker_engine.cp
  /usr/include/c++/15.2.1/bits/node_handle.h \
  /usr/include/c++/15.2.1/bits/erase_if.h \
  /usr/include/c++/15.2.1/unordered_set \
- /usr/include/c++/15.2.1/bits/unordered_set.h \
+ /usr/include/c++/15.2.1/bits/unordered_set.h /usr/include/c++/15.2.1/set \
+ /usr/include/c++/15.2.1/bits/stl_tree.h \
+ /usr/include/c++/15.2.1/bits/stl_set.h \
+ /usr/include/c++/15.2.1/bits/stl_multiset.h \
  /usr/include/c++/15.2.1/algorithm \
  /usr/include/c++/15.2.1/bits/ranges_algo.h \
  /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h \

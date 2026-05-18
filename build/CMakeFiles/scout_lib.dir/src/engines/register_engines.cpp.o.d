@@ -320,6 +320,8 @@ CMakeFiles/scout_lib.dir/src/engines/register_engines.cpp.o: \
  /home/trindade/Projetos/scout-/src/engines/../../include/engines/deobf/deobf_engine.hpp \
  /home/trindade/Projetos/scout-/src/engines/../../include/engines/variable_tracker/variable_tracker_engine.hpp \
  /usr/include/c++/15.2.1/unordered_set \
- /usr/include/c++/15.2.1/bits/unordered_set.h \
+ /usr/include/c++/15.2.1/bits/unordered_set.h /usr/include/c++/15.2.1/set \
+ /usr/include/c++/15.2.1/bits/stl_set.h \
+ /usr/include/c++/15.2.1/bits/stl_multiset.h \
  /home/trindade/Projetos/scout-/src/engines/../../include/engines/smali_dump/smali_dump_engine.hpp \
  /home/trindade/Projetos/scout-/src/engines/../../include/formatters/sexpr_formatter.hpp
