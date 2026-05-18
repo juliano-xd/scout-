@@ -278,8 +278,11 @@ namespace engines {
 
         analysis_cache_.clear();
         in_progress_methods_.clear(); // [BUG-1]
-        // [PERF-3] string_pool_ NÃO é limpa aqui — ela sobrevive entre chamadas
-        // recursivas para maximizar o reuso. Limpa apenas no destrutor / reset externo.
+        string_pool_.clear(); // [BUG-6] Limpa pool entre chamadas de search()
+                              // para evitar crescimento unbounded. As string_views
+                              // retornadas em SearchResult sao invalidadas na
+                              // proxima chamada, mas isso e seguro pois cada invocacao
+                              // de search() e conceitualmente independente.
 
         TrackingState state;
         state.current_method = pool_string(target_query_sv);
