@@ -110,6 +110,7 @@ namespace engines {
         bool return_tainted = false;
         std::unordered_set<std::string_view> return_obj_fields;
         PointsToSet return_aliases;
+        std::unordered_set<std::string_view> modified_static_fields;
     };
 
     struct CacheKey {
@@ -133,10 +134,11 @@ namespace engines {
             std::string_view current_method;
             uint64_t active_regs = 0;
             std::unordered_map<int, std::unordered_set<std::string_view>> obj_taint_map;
-            std::unordered_map<int, PointsToSet> alias_map; // Alias Identity
+            std::unordered_map<int, PointsToSet> alias_map;
             std::vector<int> control_taint_stack;
             int depth = 0;
             MethodSummary last_call_summary;
+            std::unordered_set<std::string_view> static_fields_taint;
         };
 
         VariableTrackerEngine();
@@ -154,9 +156,9 @@ namespace engines {
 
         // Alias & CHA Interface
         PointsToSet get_points_to_set(core::AnalysisContext& ctx,
-                                     std::string_view method_sig,
-                                     uint32_t reg_id,
-                                     uint32_t instruction_offset);
+                                      std::string_view method_sig,
+                                      uint32_t reg_id,
+                                      uint32_t instruction_offset);
 
         std::vector<std::string> devirtualize_call(core::AnalysisContext& ctx,
                                                    const PointsToSet& receiver_aliases,
@@ -187,7 +189,6 @@ namespace engines {
             if (reg.empty()) return -1;
             char prefix = reg[0];
             try {
-                // Handle v0, v1... and p0, p1...
                 std::string num_part = std::string(reg.substr(1));
                 if (num_part.empty()) return -1;
                 int val = std::stoi(num_part);
@@ -201,12 +202,20 @@ namespace engines {
         std::string_view pool_string(std::string_view s);
         bool is_sanitizer(std::string_view target);
         bool is_transform(std::string_view target);
+        bool is_propagator(std::string_view target); // [BUG-6] substitui is_prop inline
         static bool merge_states(TrackingState& target, const TrackingState& incoming);
 
     private:
-
         std::unordered_set<std::string> string_pool_;
-        std::unordered_map<CacheKey, std::pair<std::vector<VariableEvent>, MethodSummary>, CacheKeyHash> analysis_cache_;
+        std::unordered_map<CacheKey,
+                           std::pair<std::vector<VariableEvent>, MethodSummary>,
+                           CacheKeyHash> analysis_cache_;
+
+        // [BUG-1] Conjunto de métodos atualmente em análise no stack de chamadas.
+        // Impede recursão infinita quando o call-graph contém ciclos (A→B→A).
+        // Armazena string_views cujo storage vive em string_pool_, portanto são seguras.
+        std::unordered_set<std::string_view> in_progress_methods_;
+
         EngineStats stats_;
     };
 

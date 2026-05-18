@@ -1,0 +1,8 @@
+CompileFlags:
+  Add:
+    - -std=c++26
+    - -Iinclude
+    - -march=native
+  # Remove any conflicting C++ standard flags that may be present in build configurations
+  Remove:
+    - -std=c++*

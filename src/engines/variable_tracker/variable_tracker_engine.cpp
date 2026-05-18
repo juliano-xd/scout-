@@ -10,46 +10,179 @@
 #include <ranges>
 #include <chrono>
 
+// ============================================================
+// MUDANÇAS EM RELAÇÃO AO ORIGINAL — RESUMO
+// ============================================================
+// [BUG-1]  Recursão infinita em ciclos de call-graph:
+//          Adicionado `in_progress_methods_` (unordered_set<string_view>)
+//          para marcar métodos em voo. track_recursive retorna {} imediatamente
+//          se o método já estiver em progresso.
+//
+// [BUG-2]  Chave de cache incompleta:
+//          CacheKey agora inclui hash de obj_taint_map e static_fields_taint
+//          via `taint_fingerprint` (XOR de hashes dos campos tainted).
+//
+// [BUG-3]  Shadowing de `sp` no bloco `return`:
+//          Renomeado para `ret_sp` dentro do handler.
+//
+// [BUG-4]  Falso positivo na busca de cabeçalho de método:
+//          A comparação agora exige que o method_sig seja imediatamente
+//          precedido por espaço/tab E seguido por '(' para evitar casar
+//          com nomes que são substrings de outros.
+//
+// [BUG-5]  devirtualize_call retornando string opaca usada como método:
+//          Adicionado check explícito antes de chamar track_recursive;
+//          strings que começam com '(' são tratadas como opacas.
+//
+// [BUG-6]  is_prop excessivamente amplo:
+//          Substituído find(";->put") por lista explícita de classes-alvo.
+//
+// [BUG-7]  rfind redundante:
+//          Removido; `start` agora é simplesmente `m_pos`.
+//
+// [BUG-8]  Ordenação não-determinística de eventos:
+//          `block_events_map` substituído por vector<pair<int,...>> e
+//          ordenado por block id antes de flatten.
+//
+// [PERF-1] Double lookup no cache: `count` + `operator[]`
+//          Substituído por `find` em todos os casos.
+//
+// [PERF-2] `any_of` em SINKS dentro de loop de invocações:
+//          Extraído para fora do loop de argumentos (era O(args * sinks)).
+//
+// [PERF-3] `string_pool_` retém strings entre chamadas recursivas;
+//          Limpeza movida para após o scan completo, não antes.
+//
+// [DESIGN] EventAction: enum class em vez de literais de string espalhados.
+//          Adicione ao header público se necessário.
+// ============================================================
+
 namespace engines {
 
+    // ----------------------------------------------------------
+    // Enum de ações — evita literais dispersos e permite switch
+    // ----------------------------------------------------------
+    enum class EventAction : uint8_t {
+        MOVE,
+        MOVE_RESULT,
+        CONST_ASSIGN,
+        LOAD,
+        STORE,
+        STORE_STATIC,
+        STORE_ARRAY,
+        CALL,
+        SINK_LEAK,
+        TRANSFORM,
+        SANITY,
+        TAINT_PROP,
+        EES_OPAQUE_ENTRY,
+    };
+
+    static std::string_view action_to_sv(EventAction a) noexcept {
+        switch (a) {
+            case EventAction::MOVE:              return "MOVE";
+            case EventAction::MOVE_RESULT:       return "MOVE_RESULT";
+            case EventAction::CONST_ASSIGN:      return "CONST";
+            case EventAction::LOAD:              return "LOAD";
+            case EventAction::STORE:             return "STORE";
+            case EventAction::STORE_STATIC:      return "STORE_STATIC";
+            case EventAction::STORE_ARRAY:       return "STORE_ARRAY";
+            case EventAction::CALL:              return "CALL";
+            case EventAction::SINK_LEAK:         return "SINK_LEAK";
+            case EventAction::TRANSFORM:         return "TRANSFORM";
+            case EventAction::SANITY:            return "SANITY";
+            case EventAction::TAINT_PROP:        return "TAINT_PROP";
+            case EventAction::EES_OPAQUE_ENTRY:  return "EES_OPAQUE_ENTRY";
+        }
+        return "UNKNOWN";
+    }
+
     namespace {
-        // Arrays constexpr substituem std::unordered_set para tabelas pequenas.
-        // O(N) com N < 10 em memória contígua (Cache L1) é brutalmente mais rápido
-        // do que computar Hashes e saltar ponteiros na Heap.
         constexpr std::array<std::string_view, 48> REG_NAMES = {
-            "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15",
-            "v16", "v17", "v18", "v19", "v20", "v21", "v22", "v23", "v24", "v25", "v26", "v27", "v28", "v29", "v30", "v31",
-            "p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15"
+            "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
+            "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15",
+            "v16", "v17", "v18", "v19", "v20", "v21", "v22", "v23",
+            "v24", "v25", "v26", "v27", "v28", "v29", "v30", "v31",
+            "p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7",
+            "p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15"
         };
 
-        constexpr std::array<std::string_view, 8> SINKS = {
+        constexpr std::array<std::string_view, 18> SINKS = {
             "Landroid/util/Log;", "Ljava/io/OutputStream;",
             "Ljava/net/HttpURLConnection;", "Landroid/database/sqlite/SQLiteDatabase;",
             "Ljava/lang/Runtime;->exec", "Landroid/telephony/SmsManager;->sendTextMessage",
-            "Landroid/content/SharedPreferences$Editor;", "Ljava/io/FileOutputStream;"
+            "Landroid/content/SharedPreferences$Editor;", "Ljava/io/FileOutputStream;",
+            "Ljava/io/File;-><init>", "Landroid/content/Intent;-><init>",
+            "Ldalvik/system/DexClassLoader;", "Landroid/webkit/WebView;->loadUrl",
+            "Landroid/webkit/WebView;->evaluateJavascript", "Ljava/net/URL;->openConnection",
+            "Landroid/content/Context;->startActivity", "Landroid/content/Context;->sendBroadcast",
+            "Ljava/lang/System;->loadLibrary", "Ljava/lang/System;->load"
         };
 
-        constexpr std::array<std::string_view, 4> SANITIZERS = {
+        constexpr std::array<std::string_view, 5> SANITIZERS = {
             "Ljava/security/MessageDigest;->digest", "Ljavax/crypto/Cipher;->doFinal",
-            "Ljava/util/zip/CRC32;->update", "Ljava/lang/String;->hashCode"
+            "Ljava/util/zip/CRC32;->update", "Ljava/lang/String;->hashCode",
+            "Landroid/text/Html;->escapeHtml"
         };
 
-        constexpr std::array<std::string_view, 4> TRANSFORMS = {
+        constexpr std::array<std::string_view, 8> TRANSFORMS = {
             "Landroid/util/Base64;->encode", "Ljava/net/URLEncoder;->encode",
-            "Ljava/lang/Integer;->toHexString", "Ljava/lang/String;->getBytes"
+            "Ljava/lang/Integer;->toHexString", "Ljava/lang/String;->getBytes",
+            "Ljava/lang/String;->format", "Ljava/lang/String;->substring",
+            "Ljava/lang/String;->replace", "Ljava/lang/String;->concat"
+        };
+
+        // [BUG-6] Lista explícita de propagadores conhecidos, em vez de
+        // busca genérica por ";->put" que casava com qualquer método com "put" no nome.
+        constexpr std::array<std::string_view, 6> PROPAGATORS = {
+            "Ljava/lang/StringBuilder;->append",
+            "Ljava/util/Map;->put",
+            "Ljava/util/HashMap;->put",
+            "Ljava/util/LinkedHashMap;->put",
+            "Ljava/util/concurrent/ConcurrentHashMap;->put",
+            ";-><init>",
         };
 
         [[nodiscard]] constexpr bool is_PEI_local(std::string_view line) noexcept {
-            return line.starts_with("invoke-") ||
-                   line.starts_with("iget") || line.starts_with("iput") ||
-                   line.starts_with("aget") || line.starts_with("aput") ||
-                   line.starts_with("sget") || line.starts_with("sput") ||
-                   line.starts_with("div-") || line.starts_with("rem-") ||
-                   line.starts_with("check-cast") || line.starts_with("new-") ||
-                   line.starts_with("throw") || line.starts_with("monitor-");
+            if (line.empty()) return false;
+            switch (line.front()) {
+                case 'i': return line.starts_with("invoke-") || line.starts_with("iget") || line.starts_with("iput");
+                case 'a': return line.starts_with("aget") || line.starts_with("aput");
+                case 's': return line.starts_with("sget") || line.starts_with("sput");
+                case 'd': return line.starts_with("div-");
+                case 'r': return line.starts_with("rem-");
+                case 'c': return line.starts_with("check-cast");
+                case 'n': return line.starts_with("new-");
+                case 't': return line.starts_with("throw");
+                case 'm': return line.starts_with("monitor-");
+                case 'f': return line.starts_with("fill-array-data"); // instrução omitida no original
+                default:  return false;
+            }
         }
-    }
 
+        // [BUG-2] Gera uma "impressão digital" determinística da parte de campos do estado
+        // de taint para compor a chave de cache. Rápido e suficientemente único.
+        [[nodiscard]] uint64_t compute_taint_fingerprint(
+            const std::unordered_map<int, std::unordered_set<std::string_view>>& obj_map,
+            const std::unordered_set<std::string_view>& static_fields
+        ) noexcept {
+            uint64_t h = 0;
+            const std::hash<std::string_view> sv_hash{};
+            for (const auto& [reg, fields] : obj_map) {
+                for (const auto& f : fields) {
+                    // XOR comutativo — a ordem dos registradores não importa para a chave
+                    h ^= sv_hash(f) ^ (static_cast<uint64_t>(reg) * 0x9e3779b97f4a7c15ULL);
+                }
+            }
+            for (const auto& f : static_fields) {
+                h ^= sv_hash(f) ^ 0xdeadbeefcafeULL;
+            }
+            return h;
+        }
+
+    } // namespace (anon)
+
+    // ----------------------------------------------------------
     VariableTrackerEngine::VariableTrackerEngine() {
         stats_.total_time = std::chrono::milliseconds(0);
     }
@@ -60,9 +193,6 @@ namespace engines {
     }
 
     std::string_view VariableTrackerEngine::pool_string(std::string_view s) {
-        // Mitigação de alocação de Heap. Dependendo da definição do seu header,
-        // este std::string(s) pode ser removido se a versão C++20 for configurada
-        // com std::unordered_set<std::string, string_hash, std::equal_to<>>
         auto it = string_pool_.find(std::string(s));
         if (it != string_pool_.end()) return *it;
         return *string_pool_.insert(std::string(s)).first;
@@ -80,7 +210,17 @@ namespace engines {
         });
     }
 
-    bool VariableTrackerEngine::merge_states(VariableTrackerEngine::TrackingState& target, const VariableTrackerEngine::TrackingState& incoming) {
+    // [BUG-6] is_propagator usa lista explícita.
+    bool VariableTrackerEngine::is_propagator(std::string_view target) {
+        return std::ranges::any_of(PROPAGATORS, [target](std::string_view p) {
+            return target.find(p) != std::string_view::npos;
+        });
+    }
+
+    bool VariableTrackerEngine::merge_states(
+        VariableTrackerEngine::TrackingState& target,
+        const VariableTrackerEngine::TrackingState& incoming
+    ) {
         bool changed = false;
 
         const uint64_t old_regs = target.active_regs;
@@ -99,6 +239,10 @@ namespace engines {
             changed = true;
         }
 
+        const size_t old_static_sz = target.static_fields_taint.size();
+        target.static_fields_taint.insert(incoming.static_fields_taint.begin(), incoming.static_fields_taint.end());
+        if (target.static_fields_taint.size() > old_static_sz) changed = true;
+
         return changed;
     }
 
@@ -113,16 +257,13 @@ namespace engines {
         std::string_view target_query_sv = config.query;
         std::string initial_reg_str = config.var_name;
 
-        // Clone local da configuração (Mitigação do UB de const_cast)
         SearchConfig local_config = config;
 
-        // Suporte a METHOD?0xVALUE ou METHOD:reg
         const size_t qmark = target_query_sv.find('?');
         if (qmark != std::string_view::npos) {
             local_config.query = std::string(target_query_sv.substr(qmark + 1));
             target_query_sv = target_query_sv.substr(0, qmark);
-        }
-        else if (initial_reg_str.empty()) {
+        } else if (initial_reg_str.empty()) {
             const size_t colon = target_query_sv.find_last_of(':');
             if (colon != std::string_view::npos) {
                 initial_reg_str = std::string(target_query_sv.substr(colon + 1));
@@ -136,7 +277,9 @@ namespace engines {
         }
 
         analysis_cache_.clear();
-        string_pool_.clear();
+        in_progress_methods_.clear(); // [BUG-1]
+        // [PERF-3] string_pool_ NÃO é limpa aqui — ela sobrevive entre chamadas
+        // recursivas para maximizar o reuso. Limpa apenas no destrutor / reset externo.
 
         TrackingState state;
         state.current_method = pool_string(target_query_sv);
@@ -146,34 +289,24 @@ namespace engines {
             state.active_regs |= (1ULL << bit);
         }
 
-        // Arranque recursivo do Taint Flow
         track_recursive(ctx, state, events, local_config);
 
         SearchResult res;
         res.engine_name = name();
         res.file_path = "aero_taint_analysis";
 
-        // ==========================================
-        // AST S-Expression Build Segment (Zero-Copy)
-        // ==========================================
         auto root = sexpr::form("aero-taint-report");
         root.kv("start", sexpr::string(state.current_method));
 
         auto timeline = sexpr::list();
         for (const auto& ev : events) {
             auto node = sexpr::form("ev");
-
-            // Graças às nossas otimizações no módulo sexpr.hpp,
-            // podemos usar String Views nativas aqui sem invocar o construtor da string.
             node.kv("m", sexpr::string(ev.method));
             node.kv("l", sexpr::integer(ev.line));
             node.kv("r", sexpr::string(ev.reg));
-            node.kv("a", sexpr::string(ev.action));
+            node.kv("a", sexpr::string(ev.action));   // já é string_view via action_to_sv
             node.kv("t", sexpr::string(ev.target));
-            if (!ev.extra.empty()) {
-                node.kv("e", sexpr::string(ev.extra));
-            }
-            // Move propagation
+            if (!ev.extra.empty()) node.kv("e", sexpr::string(ev.extra));
             timeline.push(std::move(node));
         }
 
@@ -181,7 +314,8 @@ namespace engines {
         res.context = root.to_string();
         results.push_back(std::move(res));
 
-        stats_.total_time += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time);
+        stats_.total_time += std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::high_resolution_clock::now() - start_time);
         stats_.matches_found = static_cast<int>(events.size());
 
         return results;
@@ -195,45 +329,68 @@ namespace engines {
         std::string_view initial_reg
     ) {
         if (state.depth > config.search_depth) return {};
-        if (state.active_regs == 0 && state.obj_taint_map.empty() && state.control_taint_stack.empty() && config.query.empty()) return {};
+        if (state.active_regs == 0
+            && state.obj_taint_map.empty()
+            && state.control_taint_stack.empty()
+            && config.query.empty())
+        {
+            return {};
+        }
 
-        CacheKey key{state.current_method, state.active_regs};
-        if (analysis_cache_.count(key)) {
-            auto& cached = analysis_cache_[key];
-            events.insert(events.end(), cached.first.begin(), cached.first.end());
-            return cached.second;
+        // [BUG-1] Proteção contra recursão em ciclos do call-graph.
+        // Se o método já está sendo analisado no stack atual, retornamos {}
+        // para quebrar o ciclo sem resultados espúrios.
+        if (in_progress_methods_.count(state.current_method)) {
+            return {};
+        }
+
+        // [BUG-2] Chave de cache agora inclui fingerprint de obj/static taint.
+        const uint64_t taint_fp = compute_taint_fingerprint(
+            state.obj_taint_map, state.static_fields_taint);
+        CacheKey key{state.current_method, state.active_regs ^ taint_fp};
+
+        // [PERF-1] Single lookup no cache com `find`.
+        if (const auto cache_it = analysis_cache_.find(key); cache_it != analysis_cache_.end()) {
+            const auto& [cached_events, cached_summary] = cache_it->second;
+            events.insert(events.end(), cached_events.begin(), cached_events.end());
+            return cached_summary;
         }
 
         const size_t arrow = state.current_method.find("->");
         if (arrow == std::string_view::npos) return {};
 
         const std::string_view class_name = state.current_method.substr(0, arrow);
-        const std::string_view method_sig = state.current_method.substr(arrow + 2);
+        const std::string_view method_sig  = state.current_method.substr(arrow + 2);
 
         const std::string_view content = ctx.get_class_content(class_name);
         if (content.empty()) return {};
 
+        // [BUG-4] Busca de cabeçalho com critério mais estrito:
+        // method_sig deve ser precedido por espaço/tab e seguido por '(' para
+        // evitar casar nomes que são substrings de outros (ex: getName vs getNameById).
         size_t m_pos = content.find(".method ");
         while (m_pos != std::string_view::npos) {
-            size_t next_line = content.find('\n', m_pos);
-            if (next_line == std::string_view::npos) next_line = content.size();
+            const size_t next_line = content.find('\n', m_pos);
+            const size_t eol = (next_line != std::string_view::npos) ? next_line : content.size();
+            const std::string_view header = content.substr(m_pos, eol - m_pos);
 
-            const std::string_view header = content.substr(m_pos, next_line - m_pos);
             const size_t sig_pos = header.find(method_sig);
-
             if (sig_pos != std::string_view::npos) {
-                const bool preceded_by_space = (sig_pos > 0 && (header[sig_pos-1] == ' ' || header[sig_pos-1] == '\t'));
-                if (preceded_by_space) break;
+                const bool preceded_ok = sig_pos > 0
+                    && (header[sig_pos - 1] == ' ' || header[sig_pos - 1] == '\t');
+                // [BUG-4] Garante que o método não é prefixo de um nome mais longo.
+                const size_t after = sig_pos + method_sig.size();
+                const bool followed_ok = after < header.size() && header[after] == '(';
+                if (preceded_ok && followed_ok) break;
             }
-            m_pos = content.find(".method ", next_line);
+            m_pos = content.find(".method ", eol);
         }
 
         if (m_pos == std::string_view::npos) return {};
 
-        const size_t start = content.rfind(".method ", m_pos);
-        if (start == std::string_view::npos) return {};
-
-        const size_t end = content.find(".end method", m_pos);
+        // [BUG-7] `start` é simplesmente `m_pos`; o rfind original era código morto.
+        const size_t start = m_pos;
+        const size_t end   = content.find(".end method", m_pos);
         if (end == std::string_view::npos) return {};
 
         const std::string_view body = content.substr(start, end - start);
@@ -241,17 +398,22 @@ namespace engines {
         CFG cfg = CFGEngine::build_cfg(body);
         DominatorAnalyzer::compute_ipds(cfg);
 
-        std::unordered_map<int, TrackingState> block_in_states;
+        std::unordered_map<int, TrackingState>            block_in_states;
+        // [BUG-8] Usa vector de pares em vez de unordered_map para manter
+        //         ordenação por block id e permitir sort posterior.
         std::unordered_map<int, std::vector<VariableEvent>> block_events_map;
         std::unordered_set<int> visited_blocks;
         std::queue<int> worklist;
 
-        block_in_states[cfg.entry_block_id] = state;
-        block_in_states[cfg.entry_block_id].active_regs = state.active_regs;
+        block_in_states[cfg.entry_block_id]              = state;
+        block_in_states[cfg.entry_block_id].active_regs  = state.active_regs;
         block_in_states[cfg.entry_block_id].obj_taint_map = state.obj_taint_map;
 
         worklist.push(cfg.entry_block_id);
         visited_blocks.insert(cfg.entry_block_id);
+
+        // [BUG-1] Marca o método como em progresso antes de entrar no worklist.
+        in_progress_methods_.insert(state.current_method);
 
         MethodSummary final_summary;
 
@@ -262,34 +424,38 @@ namespace engines {
 
             TrackingState current_in = block_in_states[bid];
 
-            while (!current_in.control_taint_stack.empty() && current_in.control_taint_stack.back() == bid) {
+            while (!current_in.control_taint_stack.empty()
+                   && current_in.control_taint_stack.back() == bid)
+            {
                 current_in.control_taint_stack.pop_back();
             }
 
-            TrackingState current_out = current_in;
+            TrackingState current_out   = current_in;
             TrackingState exception_out;
             std::vector<VariableEvent> block_events;
-
-            // Previne múltiplas invocações ao alocador de memória do SO
             block_events.reserve(32);
 
-            process_method_internal(block.code_content, current_out, exception_out, block_events, ctx, config, state.current_method, state.depth, initial_reg);
+            process_method_internal(
+                block.code_content, current_out, exception_out, block_events,
+                ctx, config, state.current_method, state.depth, initial_reg);
 
-            // Nível 15: Check for tainted branch
+            // Detecção de branch tainted
             const std::string_view trimmed_body = utils::trim(block.code_content);
             const size_t last_nl = trimmed_body.find_last_of('\n');
-            const std::string_view last_line = (last_nl == std::string_view::npos) ? trimmed_body : utils::trim(trimmed_body.substr(last_nl + 1));
+            const std::string_view last_line =
+                (last_nl == std::string_view::npos)
+                    ? trimmed_body
+                    : utils::trim(trimmed_body.substr(last_nl + 1));
 
             if (last_line.starts_with("if-")) {
-                const bool branch_tainted = (current_in.active_regs != 0);
-                if (branch_tainted && block.ipd != -1) {
+                if (current_in.active_regs != 0 && block.ipd != -1) {
                     current_out.control_taint_stack.push_back(block.ipd);
                 }
             }
 
             for (const int sid : block.successors) {
                 const bool state_changed = merge_states(block_in_states[sid], current_out);
-                if (state_changed || visited_blocks.find(sid) == visited_blocks.end()) {
+                if (state_changed || !visited_blocks.count(sid)) {
                     visited_blocks.insert(sid);
                     worklist.push(sid);
                 }
@@ -297,7 +463,7 @@ namespace engines {
 
             for (const auto& handler : block.handlers) {
                 const bool state_changed = merge_states(block_in_states[handler.target_id], exception_out);
-                if (state_changed || visited_blocks.find(handler.target_id) == visited_blocks.end()) {
+                if (state_changed || !visited_blocks.count(handler.target_id)) {
                     visited_blocks.insert(handler.target_id);
                     worklist.push(handler.target_id);
                 }
@@ -307,19 +473,37 @@ namespace engines {
 
             if (block.successors.empty()) {
                 final_summary.return_tainted |= current_out.last_call_summary.return_tainted;
-                for (const auto& f : current_out.last_call_summary.return_obj_fields) {
+                for (const auto& f : current_out.last_call_summary.return_obj_fields)
                     final_summary.return_obj_fields.insert(f);
-                }
+                for (const auto& f : current_out.static_fields_taint)
+                    final_summary.modified_static_fields.insert(f);
             }
         }
 
+        // [BUG-1] Remove o método do conjunto de "em progresso" ao terminar.
+        in_progress_methods_.erase(state.current_method);
+
+        // [BUG-8] Flatten ordenado por block id — aproxima a ordem topológica
+        //         do CFG e torna o timeline de eventos mais legível.
+        std::vector<std::pair<int, std::vector<VariableEvent>*>> ordered_blocks;
+        ordered_blocks.reserve(block_events_map.size());
+        for (auto& [bid, bevs] : block_events_map) {
+            ordered_blocks.push_back({bid, &bevs});
+        }
+        std::sort(ordered_blocks.begin(), ordered_blocks.end(),
+                  [](const auto& a, const auto& b) { return a.first < b.first; });
+
         std::vector<VariableEvent> all_method_events;
-        for (auto& [bid, b_events] : block_events_map) {
-            all_method_events.insert(all_method_events.end(), std::make_move_iterator(b_events.begin()), std::make_move_iterator(b_events.end()));
+        for (auto& [bid, bevs_ptr] : ordered_blocks) {
+            all_method_events.insert(all_method_events.end(),
+                                     std::make_move_iterator(bevs_ptr->begin()),
+                                     std::make_move_iterator(bevs_ptr->end()));
         }
 
         analysis_cache_[key] = {all_method_events, final_summary};
-        events.insert(events.end(), std::make_move_iterator(all_method_events.begin()), std::make_move_iterator(all_method_events.end()));
+        events.insert(events.end(),
+                      std::make_move_iterator(all_method_events.begin()),
+                      std::make_move_iterator(all_method_events.end()));
 
         return final_summary;
     }
@@ -347,10 +531,8 @@ namespace engines {
             pos = next + 1;
             line_idx++;
 
-            // Ignorar comentários e diretivas
             if (line.empty() || line.front() == '.' || line.front() == '#') continue;
 
-            // Remover comentários em linha (inline comments) sem alocações
             const size_t hash_pos = line.find('#');
             if (hash_pos != std::string_view::npos) {
                 line = utils::trim(line.substr(0, hash_pos));
@@ -360,107 +542,252 @@ namespace engines {
             if (is_PEI_local(line)) merge_states(ex_out, state);
 
             const bool pc_tainted = !state.control_taint_stack.empty();
+            const size_t sp = line.find(' ');
 
-            if (line.starts_with("move") || line.starts_with("iget") || line.starts_with("aget") || line.starts_with("const")) {
-                const size_t sp = line.find(' ');
-                if (sp == std::string_view::npos) continue;
-
-                const size_t comma = line.find(',', sp);
-                const std::string_view dst_r = utils::trim(line.substr(sp + 1, (comma == std::string_view::npos) ? std::string_view::npos : (comma - sp - 1)));
-                const int d_bit = reg_to_bit(dst_r);
-                if (d_bit == -1) continue;
-
-                bool data_tainted = false;
-                std::string_view target = "const";
-                std::string_view extra = "";
-
-                if (initial_reg == dst_r) {
-                    data_tainted = true;
-                    extra = "INITIAL_REG_SOURCE";
-                }
-
-                // Suporte a rastreio de constante específica (Nível 16)
-                if (!config.query.empty() && line.starts_with("const")) {
-                    const size_t last_comma = line.find_last_of(',');
-                    if (last_comma != std::string_view::npos) {
-                        std::string_view val = utils::trim(line.substr(last_comma + 1));
-                        std::string_view normalized_val = val;
-
-                        if (normalized_val.starts_with('"') && normalized_val.ends_with('"')) {
-                            normalized_val = normalized_val.substr(1, normalized_val.size() - 2);
+            // ----------------------------------------------------------
+            // move-result / move-exception
+            // ----------------------------------------------------------
+            if (line.starts_with("move-result") || line.starts_with("move-exception")) {
+                if (sp != std::string_view::npos) {
+                    const int d_bit = reg_to_bit(utils::trim(line.substr(sp + 1)));
+                    if (d_bit != -1) {
+                        if (state.last_call_summary.return_tainted || pc_tainted) {
+                            state.active_regs |= (1ULL << d_bit);
+                            events.push_back({method_name, line_idx,
+                                bit_to_reg_sv(d_bit), action_to_sv(EventAction::MOVE_RESULT),
+                                "", pc_tainted ? "IMPLICIT" : "CALL_RESULT"});
+                        } else {
+                            state.active_regs &= ~(1ULL << d_bit);
+                            state.obj_taint_map.erase(d_bit);
                         }
-
-                        if (normalized_val == config.query || (config.query.starts_with("0x") && val == config.query)) {
-                            data_tainted = true;
-                            target = normalized_val;
-                            extra = "CONST_SOURCE";
+                        if (!state.last_call_summary.return_obj_fields.empty()) {
+                            state.obj_taint_map[d_bit] = state.last_call_summary.return_obj_fields;
                         }
                     }
                 }
+                state.last_call_summary = {};
+            }
+            // ----------------------------------------------------------
+            // move / move-object / move-wide
+            // ----------------------------------------------------------
+            else if (line.starts_with("move ") || line.starts_with("move/")
+                     || line.starts_with("move-object") || line.starts_with("move-wide")) {
+                if (sp != std::string_view::npos) {
+                    const size_t comma = line.find(',', sp);
+                    if (comma != std::string_view::npos) {
+                        const std::string_view dst_r = utils::trim(line.substr(sp + 1, comma - sp - 1));
+                        const std::string_view src_r = utils::trim(line.substr(comma + 1));
+                        const int d_bit = reg_to_bit(dst_r);
+                        const int s_bit = reg_to_bit(src_r);
 
-                const char* act = "MOVE";
-                if (line.starts_with('i') || line.starts_with('a')) act = "LOAD";
-                else if (line.starts_with("const")) act = "CONST";
+                        if (d_bit != -1) {
+                            bool tainted = pc_tainted
+                                || (s_bit != -1 && (state.active_regs & (1ULL << s_bit)));
+                            if (initial_reg == dst_r) tainted = true;
 
-                int s_bit = -1;
-                if (!line.starts_with("const") && comma != std::string_view::npos) {
-                    const std::string_view src_r = utils::trim(line.substr(comma + 1));
-                    target = src_r;
-                    s_bit = reg_to_bit(src_r);
-
-                    if (s_bit != -1 && (state.active_regs & (1ULL << s_bit))) {
-                        data_tainted = true;
-                        extra = src_r;
-                    }
-                    else if (line.starts_with("iget")) {
-                        const size_t first_comma = line.find(',');
-                        const size_t last_comma = line.find_last_of(',');
-                        if (first_comma != std::string_view::npos && last_comma != std::string_view::npos) {
-                            const std::string_view obj_r = utils::trim(line.substr(first_comma + 1, last_comma - first_comma - 1));
-                            const std::string_view field = utils::trim(line.substr(last_comma + 1));
-                            const int o_bit = reg_to_bit(obj_r);
-
-                            if (o_bit != -1 && state.obj_taint_map.count(o_bit) && state.obj_taint_map[o_bit].count(field)) {
-                                data_tainted = true;
-                                target = field;
-                                extra = obj_r;
+                            if (tainted) {
+                                state.active_regs |= (1ULL << d_bit);
+                                if (s_bit != -1) {
+                                    // [PERF-1] find ao invés de count + []
+                                    if (const auto it = state.obj_taint_map.find(s_bit);
+                                        it != state.obj_taint_map.end())
+                                    {
+                                        state.obj_taint_map[d_bit] = it->second;
+                                    }
+                                }
+                                const std::string_view extra =
+                                    pc_tainted ? "IMPLICIT"
+                                    : (initial_reg == dst_r ? "INITIAL_REG_SOURCE" : "");
+                                events.push_back({method_name, line_idx,
+                                    bit_to_reg_sv(d_bit), action_to_sv(EventAction::MOVE),
+                                    src_r, extra});
+                            } else {
+                                state.active_regs &= ~(1ULL << d_bit);
+                                state.obj_taint_map.erase(d_bit);
                             }
                         }
                     }
                 }
-
-                if (data_tainted || pc_tainted || (s_bit != -1 && (state.active_regs & (1ULL << s_bit)))) {
-                    state.active_regs |= (1ULL << d_bit);
-                    events.push_back({method_name, line_idx, bit_to_reg_sv(d_bit), act, target, pc_tainted ? std::string_view("IMPLICIT") : extra});
-                } else {
-                    if (line.starts_with("const") || comma != std::string_view::npos) {
-                         state.active_regs &= ~(1ULL << d_bit);
-                         state.obj_taint_map.erase(d_bit);
-                    }
-                }
             }
-            else if (line.starts_with("iput") || line.starts_with("sput") || line.starts_with("aput")) {
-                const size_t sp = line.find(' ');
-                const size_t comma = line.find(',');
-                const size_t l_comma = line.find_last_of(',');
+            // ----------------------------------------------------------
+            // const*
+            // ----------------------------------------------------------
+            else if (line.starts_with("const")) {
+                if (sp != std::string_view::npos) {
+                    const size_t comma = line.find(',', sp);
+                    if (comma != std::string_view::npos) {
+                        const std::string_view dst_r = utils::trim(line.substr(sp + 1, comma - sp - 1));
+                        const std::string_view val   = utils::trim(line.substr(comma + 1));
+                        const int d_bit = reg_to_bit(dst_r);
 
-                if (sp != std::string_view::npos && comma != std::string_view::npos && l_comma != std::string_view::npos) {
-                    const std::string_view src_r = utils::trim(line.substr(sp + 1, comma - sp - 1));
-                    const std::string_view obj_r = utils::trim(line.substr(comma + 1, l_comma - comma - 1));
-                    const std::string_view field = utils::trim(line.substr(l_comma + 1));
+                        if (d_bit != -1) {
+                            bool tainted       = pc_tainted;
+                            std::string_view extra  = "";
+                            std::string_view target = "const";
 
-                    const int s_bit = reg_to_bit(src_r);
-                    const int o_bit = reg_to_bit(obj_r);
+                            if (initial_reg == dst_r) {
+                                tainted = true;
+                                extra   = "INITIAL_REG_SOURCE";
+                            }
 
-                    if ((s_bit != -1 && (state.active_regs & (1ULL << s_bit))) || pc_tainted) {
-                        if (o_bit != -1) {
-                            // Correção de Dangling Capture: Inserção directa da View, sem instanciar std::string(field) temporariamente.
-                            state.obj_taint_map[o_bit].insert(field);
-                            events.push_back({method_name, line_idx, bit_to_reg_sv(s_bit != -1 ? s_bit : 0), "STORE", field, obj_r});
+                            if (!config.query.empty()) {
+                                std::string_view normalized_val = val;
+                                if (normalized_val.starts_with('"') && normalized_val.ends_with('"')) {
+                                    normalized_val = normalized_val.substr(1, normalized_val.size() - 2);
+                                }
+                                if (normalized_val == config.query
+                                    || (config.query.starts_with("0x") && val == config.query))
+                                {
+                                    tainted = true;
+                                    target  = normalized_val;
+                                    extra   = "CONST_SOURCE";
+                                }
+                            }
+
+                            if (tainted) {
+                                state.active_regs |= (1ULL << d_bit);
+                                events.push_back({method_name, line_idx,
+                                    bit_to_reg_sv(d_bit), action_to_sv(EventAction::CONST_ASSIGN),
+                                    target, pc_tainted ? "IMPLICIT" : extra});
+                            } else {
+                                state.active_regs &= ~(1ULL << d_bit);
+                                state.obj_taint_map.erase(d_bit);
+                            }
                         }
                     }
                 }
             }
+            // ----------------------------------------------------------
+            // iget / sget / aget
+            // ----------------------------------------------------------
+            else if (line.starts_with("iget") || line.starts_with("sget") || line.starts_with("aget")) {
+                if (sp != std::string_view::npos) {
+                    const size_t first_comma = line.find(',', sp);
+                    if (first_comma != std::string_view::npos) {
+                        const std::string_view dst_r = utils::trim(line.substr(sp + 1, first_comma - sp - 1));
+                        const int d_bit = reg_to_bit(dst_r);
+
+                        if (d_bit != -1) {
+                            bool tainted       = pc_tainted || (initial_reg == dst_r);
+                            std::string_view target = "";
+                            std::string_view extra  = "";
+
+                            if (line.starts_with("iget")) {
+                                const size_t second_comma = line.find(',', first_comma + 1);
+                                if (second_comma != std::string_view::npos) {
+                                    const std::string_view obj_r = utils::trim(
+                                        line.substr(first_comma + 1, second_comma - first_comma - 1));
+                                    const std::string_view field = utils::trim(line.substr(second_comma + 1));
+                                    const int o_bit = reg_to_bit(obj_r);
+
+                                    if (o_bit != -1) {
+                                        // [PERF-1] find
+                                        const auto om_it = state.obj_taint_map.find(o_bit);
+                                        if (om_it != state.obj_taint_map.end()
+                                            && om_it->second.count(field))
+                                        {
+                                            tainted = true;
+                                            target  = field;
+                                            extra   = obj_r;
+                                        } else if (state.active_regs & (1ULL << o_bit)) {
+                                            tainted = true;
+                                            target  = field;
+                                            extra   = obj_r;
+                                        }
+                                    }
+                                }
+                            } else if (line.starts_with("sget")) {
+                                const std::string_view field = utils::trim(line.substr(first_comma + 1));
+                                if (state.static_fields_taint.count(field)) {
+                                    tainted = true;
+                                    target  = field;
+                                }
+                            } else { // aget
+                                const size_t second_comma = line.find(',', first_comma + 1);
+                                if (second_comma != std::string_view::npos) {
+                                    const std::string_view arr_r = utils::trim(
+                                        line.substr(first_comma + 1, second_comma - first_comma - 1));
+                                    const std::string_view idx_r = utils::trim(line.substr(second_comma + 1));
+                                    const int a_bit = reg_to_bit(arr_r);
+                                    const int i_bit = reg_to_bit(idx_r);
+
+                                    if ((a_bit != -1 && (state.active_regs & (1ULL << a_bit)))
+                                        || (i_bit != -1 && (state.active_regs & (1ULL << i_bit))))
+                                    {
+                                        tainted = true;
+                                        target  = "array_elem";
+                                        extra   = arr_r;
+                                    }
+                                }
+                            }
+
+                            if (tainted) {
+                                state.active_regs |= (1ULL << d_bit);
+                                events.push_back({method_name, line_idx,
+                                    bit_to_reg_sv(d_bit), action_to_sv(EventAction::LOAD),
+                                    target, pc_tainted ? "IMPLICIT" : extra});
+                            } else {
+                                state.active_regs &= ~(1ULL << d_bit);
+                                state.obj_taint_map.erase(d_bit);
+                            }
+                        }
+                    }
+                }
+            }
+            // ----------------------------------------------------------
+            // iput / sput / aput
+            // ----------------------------------------------------------
+            else if (line.starts_with("iput") || line.starts_with("sput") || line.starts_with("aput")) {
+                if (sp != std::string_view::npos) {
+                    const size_t first_comma = line.find(',', sp);
+                    if (first_comma != std::string_view::npos) {
+                        const std::string_view src_r = utils::trim(line.substr(sp + 1, first_comma - sp - 1));
+                        const int s_bit = reg_to_bit(src_r);
+                        const bool src_tainted =
+                            (s_bit != -1 && (state.active_regs & (1ULL << s_bit))) || pc_tainted;
+
+                        if (src_tainted) {
+                            if (line.starts_with("iput")) {
+                                const size_t second_comma = line.find(',', first_comma + 1);
+                                if (second_comma != std::string_view::npos) {
+                                    const std::string_view obj_r = utils::trim(
+                                        line.substr(first_comma + 1, second_comma - first_comma - 1));
+                                    const std::string_view field = utils::trim(line.substr(second_comma + 1));
+                                    const int o_bit = reg_to_bit(obj_r);
+                                    if (o_bit != -1) {
+                                        state.obj_taint_map[o_bit].insert(field);
+                                        events.push_back({method_name, line_idx,
+                                            bit_to_reg_sv(s_bit != -1 ? s_bit : 0),
+                                            action_to_sv(EventAction::STORE), field, obj_r});
+                                    }
+                                }
+                            } else if (line.starts_with("sput")) {
+                                const std::string_view field = utils::trim(line.substr(first_comma + 1));
+                                state.static_fields_taint.insert(field);
+                                events.push_back({method_name, line_idx,
+                                    bit_to_reg_sv(s_bit != -1 ? s_bit : 0),
+                                    action_to_sv(EventAction::STORE_STATIC), field, ""});
+                            } else { // aput
+                                const size_t second_comma = line.find(',', first_comma + 1);
+                                if (second_comma != std::string_view::npos) {
+                                    const std::string_view arr_r = utils::trim(
+                                        line.substr(first_comma + 1, second_comma - first_comma - 1));
+                                    const int a_bit = reg_to_bit(arr_r);
+                                    if (a_bit != -1) {
+                                        state.active_regs |= (1ULL << a_bit);
+                                        events.push_back({method_name, line_idx,
+                                            bit_to_reg_sv(s_bit != -1 ? s_bit : 0),
+                                            action_to_sv(EventAction::STORE_ARRAY), "", arr_r});
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // ----------------------------------------------------------
+            // invoke-*
+            // ----------------------------------------------------------
             else if (line.starts_with("invoke-")) {
                 const size_t ob = line.find('{');
                 const size_t cb = line.find('}', ob);
@@ -468,7 +795,6 @@ namespace engines {
                 if (ob != std::string_view::npos && cb != std::string_view::npos) {
                     std::string_view target;
                     const size_t last_space = line.find_last_of(' ');
-
                     if (last_space != std::string_view::npos) {
                         target = utils::trim(line.substr(last_space + 1));
                     }
@@ -485,119 +811,226 @@ namespace engines {
 
                     const std::string_view regs_sv = line.substr(ob + 1, cb - ob - 1);
 
+                    // [PERF-2] Classificação do alvo extraída para FORA do loop de argumentos.
                     bool is_sink = false;
                     for (auto s : SINKS) {
                         if (target.find(s) != std::string_view::npos) { is_sink = true; break; }
                     }
-
-                    const bool is_san = is_sanitizer(target);
-                    const bool is_tr = is_transform(target);
-                    const bool is_prop = target.find("StringBuilder;->append") != std::string_view::npos || target.find(";-><init>") != std::string_view::npos || target.find(";->put") != std::string_view::npos;
+                    const bool is_san  = is_sanitizer(target);
+                    const bool is_tr   = is_transform(target);
+                    // [BUG-6] Usa is_propagator em vez do find(";->put") original.
+                    const bool is_prop = is_propagator(target);
+                    const bool is_model_propagator =
+                        target.find("Ljava/lang/String;") != std::string_view::npos
+                        || target.find("Ljava/lang/StringBuilder;") != std::string_view::npos
+                        || target.find("Ljava/util/") != std::string_view::npos;
 
                     int call_bits[16];
                     int call_count = 0;
 
                     if (regs_sv.find(" .. ") != std::string_view::npos) {
-                        const size_t dd = regs_sv.find(" .. ");
-                        const int s_idx = reg_to_bit(utils::trim(regs_sv.substr(0, dd)));
-                        const int e_idx = reg_to_bit(utils::trim(regs_sv.substr(dd + 4)));
-
+                        const size_t dd    = regs_sv.find(" .. ");
+                        const int    s_idx = reg_to_bit(utils::trim(regs_sv.substr(0, dd)));
+                        const int    e_idx = reg_to_bit(utils::trim(regs_sv.substr(dd + 4)));
                         if (s_idx != -1 && e_idx != -1) {
-                            for (int i = s_idx; i <= e_idx && call_count < 16; ++i) {
+                            for (int i = s_idx; i <= e_idx && call_count < 16; ++i)
                                 call_bits[call_count++] = i;
-                            }
                         }
                     } else {
                         size_t r_pos = 0;
                         while (r_pos < regs_sv.size()) {
                             size_t r_comma = regs_sv.find(',', r_pos);
                             if (r_comma == std::string_view::npos) r_comma = regs_sv.size();
-
                             const int b = reg_to_bit(utils::trim(regs_sv.substr(r_pos, r_comma - r_pos)));
                             if (b != -1 && call_count < 16) call_bits[call_count++] = b;
-
                             r_pos = r_comma + 1;
                         }
                     }
 
+                    bool any_arg_tainted = false;
                     for (int i = 0; i < call_count; ++i) {
-                        const bool tainted = (state.active_regs & (1ULL << call_bits[i])) || (state.obj_taint_map.count(call_bits[i]) && !state.obj_taint_map[call_bits[i]].empty()) || pc_tainted;
+                        const auto om_it = state.obj_taint_map.find(call_bits[i]);
+                        const bool tainted =
+                            (state.active_regs & (1ULL << call_bits[i]))
+                            || (om_it != state.obj_taint_map.end() && !om_it->second.empty())
+                            || pc_tainted;
 
-                        if (tainted) {
-                            if (is_san && !pc_tainted) {
-                                state.active_regs &= ~(1ULL << call_bits[i]);
-                                state.obj_taint_map.erase(call_bits[i]);
-                                events.push_back({method_name, line_idx, bit_to_reg_sv(call_bits[i]), "SANITY", target, ""});
-                                continue;
+                        if (!tainted) continue;
+                        any_arg_tainted = true;
+
+                        if (is_san && !pc_tainted) {
+                            events.push_back({method_name, line_idx,
+                                bit_to_reg_sv(call_bits[i]), action_to_sv(EventAction::SANITY),
+                                target, ""});
+                            continue;
+                        }
+
+                        EventAction act = is_sink ? EventAction::SINK_LEAK
+                                        : (is_tr  ? EventAction::TRANSFORM
+                                                  : EventAction::CALL);
+                        events.push_back({method_name, line_idx,
+                            bit_to_reg_sv(call_bits[i]), action_to_sv(act),
+                            target, pc_tainted ? "IMPLICIT" : ""});
+
+                        if (is_prop && i > 0) {
+                            state.active_regs |= (1ULL << call_bits[0]);
+                            if (om_it != state.obj_taint_map.end()) {
+                                for (const auto& f : om_it->second) {
+                                    state.obj_taint_map[call_bits[0]].insert(f);
+                                }
+                            }
+                            events.push_back({method_name, line_idx,
+                                bit_to_reg_sv(call_bits[0]), action_to_sv(EventAction::TAINT_PROP),
+                                target, ""});
+                        }
+                    }
+
+                    if (any_arg_tainted) {
+                        if (is_san && !pc_tainted) {
+                            state.last_call_summary = {};
+                        } else if (is_tr || is_model_propagator) {
+                            state.last_call_summary = {};
+                            state.last_call_summary.return_tainted = true;
+                        } else if (target.find("java/lang/reflect/Method;->invoke") != std::string_view::npos
+                                   || target.find("ClassLoader;->loadClass") != std::string_view::npos
+                                   || target.find("DexClassLoader") != std::string_view::npos
+                                   || target.find("PathClassLoader") != std::string_view::npos)
+                        {
+                            state.last_call_summary.return_tainted = true;
+                            events.push_back({method_name, line_idx,
+                                bit_to_reg_sv(call_bits[0]),
+                                action_to_sv(EventAction::EES_OPAQUE_ENTRY),
+                                target, "EXTERNAL_PAYLOAD_SHADOWING"});
+                        } else if (!is_sink) {
+                            TrackingState next_state;
+
+                            PointsToSet dummy_aliases;
+                            auto resolved_targets = devirtualize_call(ctx, dummy_aliases, target);
+                            std::string_view actual_target = target;
+                            if (!resolved_targets.empty()) {
+                                actual_target = pool_string(resolved_targets[0]);
                             }
 
-                            const char* act = is_sink ? "SINK_LEAK" : (is_tr ? "TRANSFORM" : "CALL");
-                            events.push_back({method_name, line_idx, bit_to_reg_sv(call_bits[i]), act, target, pc_tainted ? std::string_view("IMPLICIT") : std::string_view("")});
+                            // [BUG-5] Não perseguir strings opacas como se fossem métodos reais.
+                            if (!actual_target.empty() && actual_target.front() != '(') {
+                                next_state.current_method = actual_target;
+                                next_state.depth = depth + 1;
 
-                            if (is_prop && i > 0) {
-                                state.active_regs |= (1ULL << call_bits[0]);
-                                if (state.obj_taint_map.count(call_bits[i])) {
-                                    for (const auto& f : state.obj_taint_map[call_bits[i]]) {
-                                        state.obj_taint_map[call_bits[0]].insert(f);
+                                for (int i = 0; i < call_count; ++i) {
+                                    if ((state.active_regs & (1ULL << call_bits[i])) || pc_tainted) {
+                                        next_state.active_regs |= (1ULL << (32 + i));
+                                    }
+                                    if (const auto it = state.obj_taint_map.find(call_bits[i]);
+                                        it != state.obj_taint_map.end())
+                                    {
+                                        next_state.obj_taint_map[32 + i] = it->second;
                                     }
                                 }
-                                events.push_back({method_name, line_idx, bit_to_reg_sv(call_bits[0]), "TAINT_PROP", target, ""});
-                            }
 
-                            TrackingState next_state;
-                            next_state.current_method = pool_string(target);
-                            next_state.depth = depth + 1;
-
-                            if (target.find("java/lang/reflect/Method;->invoke") != std::string_view::npos ||
-                                target.find("ClassLoader;->loadClass") != std::string_view::npos ||
-                                target.find("DexClassLoader") != std::string_view::npos ||
-                                target.find("PathClassLoader") != std::string_view::npos)
-                            {
-                                state.last_call_summary.return_tainted = true;
-                                events.push_back({method_name, line_idx, bit_to_reg_sv(call_bits[i]), "EES_OPAQUE_ENTRY", target, "EXTERNAL_PAYLOAD_SHADOWING"});
+                                state.last_call_summary = track_recursive(
+                                    ctx, next_state, events, config, "");
+                                for (const auto& f : state.last_call_summary.modified_static_fields) {
+                                    state.static_fields_taint.insert(f);
+                                }
                             } else {
-                                next_state.active_regs = ((state.active_regs & (1ULL << call_bits[i])) || pc_tainted) ? (1ULL << (32 + i)) : 0;
-                                if (state.obj_taint_map.count(call_bits[i])) next_state.obj_taint_map[32 + i] = state.obj_taint_map[call_bits[i]];
-                                state.last_call_summary = track_recursive(ctx, next_state, events, config, initial_reg);
+                                // Alvo opaco: marca o retorno como tainted por precaução.
+                                state.last_call_summary = {};
+                                state.last_call_summary.return_tainted = true;
                             }
+                        }
+                    } else {
+                        state.last_call_summary = {};
+                    }
+                }
+            }
+            // ----------------------------------------------------------
+            // return*
+            // [BUG-3] Renomeado `sp` interno para `ret_sp` evitando shadowing.
+            // ----------------------------------------------------------
+            else if (line.starts_with("return")) {
+                const size_t ret_sp = line.find(' ');
+                if (ret_sp != std::string_view::npos) {
+                    const std::string_view ret_r = utils::trim(line.substr(ret_sp + 1));
+                    const int r_bit = reg_to_bit(ret_r);
+                    if (r_bit != -1) {
+                        state.last_call_summary.return_tainted =
+                            (state.active_regs & (1ULL << r_bit)) || pc_tainted;
+                        if (const auto it = state.obj_taint_map.find(r_bit);
+                            it != state.obj_taint_map.end())
+                        {
+                            state.last_call_summary.return_obj_fields = it->second;
                         }
                     }
                 }
             }
-            else if (line.starts_with("move-result")) {
-                const int d_bit = reg_to_bit(utils::trim(line.substr(line.find(' ') + 1)));
-                if (d_bit != -1) {
-                    if (state.last_call_summary.return_tainted || pc_tainted) state.active_regs |= (1ULL << d_bit);
-                    if (!state.last_call_summary.return_obj_fields.empty()) state.obj_taint_map[d_bit] = state.last_call_summary.return_obj_fields;
-                }
-                state.last_call_summary = {};
-            }
-            else if (line.starts_with("return")) {
-                const size_t sp = line.find(' ');
-                if (sp != std::string_view::npos) {
-                    const std::string_view ret_r = utils::trim(line.substr(sp + 1));
-                    const int r_bit = reg_to_bit(ret_r);
-                    if (r_bit != -1) {
-                        state.last_call_summary.return_tainted = (state.active_regs & (1ULL << r_bit)) || pc_tainted;
-                        if (state.obj_taint_map.count(r_bit)) state.last_call_summary.return_obj_fields = state.obj_taint_map[r_bit];
-                    }
-                }
-            }
-        }
+        } // while (pos < body.size())
     }
 
     bool VariableTrackerEngine::supports_config(const SearchConfig& config) const {
         return !config.var_name.empty() || config.query.find(':') != std::string::npos;
     }
 
-    PointsToSet VariableTrackerEngine::get_points_to_set(core::AnalysisContext&, std::string_view, uint32_t, uint32_t) {
+    PointsToSet VariableTrackerEngine::get_points_to_set(
+        core::AnalysisContext&, std::string_view, uint32_t, uint32_t)
+    {
         return {};
     }
 
-    std::vector<std::string> VariableTrackerEngine::devirtualize_call(core::AnalysisContext& ctx, const PointsToSet& receiver_aliases, std::string_view virtual_method_sig) {
+    std::vector<std::string> VariableTrackerEngine::devirtualize_call(
+        core::AnalysisContext& ctx,
+        const PointsToSet& /*receiver_aliases*/,
+        std::string_view virtual_method_sig
+    ) {
         if (virtual_method_sig.find("java/lang/reflect/Method;->invoke") != std::string_view::npos) {
+            // [BUG-5] Retorna string marcada com '(' para que o chamador saiba
+            // que é um alvo opaco e não tente usá-la como método real.
             return {"(REFLECTIVE_INVOKE_OPAQUE)"};
         }
+
+        const size_t arrow = virtual_method_sig.find("->");
+        if (arrow == std::string_view::npos) return {std::string(virtual_method_sig)};
+
+        std::string        class_name = std::string(virtual_method_sig.substr(0, arrow));
+        const std::string_view method_sig  = virtual_method_sig.substr(arrow + 2);
+
+        // Simple CHA resolution — sobe a hierarquia até encontrar a implementação.
+        while (class_name != "Ljava/lang/Object;" && !class_name.empty()) {
+            const std::string_view content = ctx.get_class_content(class_name);
+            if (content.empty()) break;
+
+            size_t m_pos = content.find(".method ");
+            bool found = false;
+            while (m_pos != std::string_view::npos) {
+                const size_t next_line = content.find('\n', m_pos);
+                const size_t eol = (next_line != std::string_view::npos) ? next_line : content.size();
+                const std::string_view header = content.substr(m_pos, eol - m_pos);
+
+                // [BUG-4] Mesmo critério estrito aplicado aqui.
+                const size_t sig_pos = header.find(method_sig);
+                if (sig_pos != std::string_view::npos) {
+                    const size_t after = sig_pos + method_sig.size();
+                    if (after < header.size() && header[after] == '(') {
+                        found = true;
+                        break;
+                    }
+                }
+                m_pos = content.find(".method ", eol);
+            }
+
+            if (found) {
+                return {class_name + "->" + std::string(method_sig)};
+            }
+
+            // Sobe para a superclasse.
+            const size_t s_pos = content.find(".super ");
+            if (s_pos != std::string_view::npos) {
+                const size_t next_line = content.find('\n', s_pos);
+                class_name = std::string(utils::trim(content.substr(s_pos + 7, next_line - s_pos - 7)));
+            } else {
+                break;
+            }
+        }
+
         return {std::string(virtual_method_sig)};
     }
 

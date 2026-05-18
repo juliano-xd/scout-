@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -march=native -flto -Wl,--dependency-file=CMakeFiles/scout.dir/link.d CMakeFiles/scout.dir/src/main.cpp.o -o scout  libscout_lib.a

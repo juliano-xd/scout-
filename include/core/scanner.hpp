@@ -26,9 +26,9 @@ namespace core {
 
         [[nodiscard]] static ClassInfo parse(std::string_view dalvik_name) {
             // Remove 'L' prefix e ';' suffix se presentes em O(1)
-            if (dalvik_name.size() >= 2 && dalvik_name.front() == 'L' && dalvik_name.back() == ';') {
-                dalvik_name.remove_prefix(1);
-                dalvik_name.remove_suffix(1);
+            if (dalvik_name.size() >= 2){
+                if (dalvik_name.front() == 'L') dalvik_name.remove_prefix(1);
+                if (dalvik_name.back() == ';')  dalvik_name.remove_suffix(1);
             }
 
             ClassInfo info;

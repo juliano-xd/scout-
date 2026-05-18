@@ -1,0 +1,4 @@
+/home/trindade/Projetos/scout-/build/CMakeFiles/scout_lib.dir
+/home/trindade/Projetos/scout-/build/CMakeFiles/scout.dir
+/home/trindade/Projetos/scout-/build/CMakeFiles/edit_cache.dir
+/home/trindade/Projetos/scout-/build/CMakeFiles/rebuild_cache.dir

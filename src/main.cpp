@@ -9,10 +9,10 @@
 #include <string_view>
 #include <vector>
 #include <optional>
+#include <numeric>
 
 // Headers modernos C++23/26
 #include <print>   // Substitui <iostream> e std::cout para I/O de alta performance
-#include <ranges>  // Para manipulação de coleções O(1)
 
 namespace fs = std::filesystem;
 
@@ -46,12 +46,12 @@ int main(int argc, char** argv) {
 
         // Lambda de formatação unificada (Garante que a flag --machine-sexpr é RESPEITADA por todos)
         auto print_results = [&](const std::vector<engines::SearchResult>& results) {
+            std::string message = formatter->format_search_results(results);
             if (config.machine_sexpr) {
                 const auto args = sexpr::list({sexpr::keyword("pretty"), sexpr::boolean(true)});
-                std::println("{}", formatter->format_search_results(results, args));
-            } else {
-                std::println("{}", formatter->format_search_results(results));
+                message = formatter->format_search_results(results, args);
             }
+            std::println("{}", message);
         };
 
         // Lambda de Alta-Ordem (HOC) para executar qualquer motor com segurança.
@@ -111,19 +111,24 @@ int main(int argc, char** argv) {
                 auto it = fs::recursive_directory_iterator(dir, fs::directory_options::skip_permission_denied, ec);
                 const auto end = fs::recursive_directory_iterator();
 
-                while (it != end && !ec) {
-                    if (it->is_regular_file(ec) && !ec) {
-                        if (it->path().filename() == *search_query) {
-                            engines::SearchResult res;
-                            res.file_path   = fs::relative(it->path(), fs::current_path(), ec);
-                            res.engine_name = "generic";
+                // Verifica se o diretório base é válido antes de iterar
+                if (!ec) {
+                    while (it != end && !ec) {
+                        if (it->is_regular_file(ec) && !ec) {
+                            if (it->path().filename() == *search_query) {
+                                engines::SearchResult res;
+                                res.file_path   = fs::relative(it->path(), dir, ec);
+                                res.engine_name = "generic";
 
-                            print_results({res}); // Unificado
-                            break;
+                                print_results({res}); // Unificado
+                                break;
+                            }
                         }
+                        it.increment(ec);
+                        if (ec) ec.clear(); // Ignora e salta directórios corrompidos
                     }
-                    it.increment(ec);
-                    if (ec) ec.clear(); // Ignora e salta directórios corrompidos
+                } else {
+                    std::println(stderr, "Erro ao aceder ao diretório: {}", ec.message());
                 }
             }
         }
@@ -205,11 +210,16 @@ int main(int argc, char** argv) {
         // Output de Debugging/Verbose
         // ==========================================
         if (config.verbose) {
-            // C++26: Pipeline de Ranges puro. Zero-allocation loop, converte diretamente no final.
+            // C++23: Concatenação eficiente de strings usando std::accumulate
             const auto engines = scout::list_available_engines();
-            const std::string engines_str = engines
-                                          | std::views::join_with(',')
-                                          | std::ranges::to<std::string>();
+            const std::string engines_str = std::accumulate(
+                std::next(engines.begin()),
+                engines.end(),
+                engines.empty() ? std::string() : engines[0],
+                [](std::string acc, const std::string& s) {
+                    return acc + ", " + s;
+                }
+            );
 
             auto n = sexpr::form("scout:info");
             n.kv("dir",     sexpr::string(dir.string()));

@@ -37,9 +37,7 @@ namespace core {
      */
     class AnalysisContext {
     public:
-        explicit AnalysisContext(const std::filesystem::path& root_dir)
-            : root_dir_(root_dir)
-        {
+        explicit AnalysisContext(const std::filesystem::path& root_dir) : root_dir_(root_dir){
             initialize_smali_index();
         }
 
