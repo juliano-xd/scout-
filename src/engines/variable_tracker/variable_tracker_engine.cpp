@@ -224,7 +224,7 @@ namespace engines {
         // [O2] Fast path: se active_regs ja contem todos os bits de incoming
         // e todos os maps de obj/static ja sao subconjunto, pula merge.
         if ((target.active_regs | incoming.active_regs) == target.active_regs
-            && target.control_taint_stack.size() >= incoming.control_taint_stack.size())
+            && target.control_taint_stack == incoming.control_taint_stack)
         {
             bool subset = true;
             for (const auto& [reg, fields] : incoming.obj_taint_map) {
@@ -256,7 +256,9 @@ namespace engines {
             if (t_fields.size() > old_sz) changed = true;
         }
 
-        if (target.control_taint_stack.size() < incoming.control_taint_stack.size()) {
+        if (incoming.control_taint_stack.size() >= target.control_taint_stack.size()
+            && incoming.control_taint_stack != target.control_taint_stack)
+        {
             target.control_taint_stack = incoming.control_taint_stack;
             changed = true;
         }
