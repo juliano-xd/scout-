@@ -1016,11 +1016,23 @@ namespace engines {
                 const size_t eol = (next_line != std::string_view::npos) ? next_line : content.size();
                 const std::string_view header = content.substr(m_pos, eol - m_pos);
 
-                // [BUG-4] Mesmo critério estrito aplicado aqui.
+                // Mesmo criterio estrito de track_recursive:
+                // preceded_ok + followed_ok, com suporte a sig completa.
                 const size_t sig_pos = header.find(method_sig);
                 if (sig_pos != std::string_view::npos) {
+                    const bool preceded_ok = sig_pos > 0
+                        && (header[sig_pos - 1] == ' ' || header[sig_pos - 1] == '\t');
+                    if (!preceded_ok) continue;
+                    const bool has_full_sig = method_sig.find('(') != std::string_view::npos;
                     const size_t after = sig_pos + method_sig.size();
-                    if (after < header.size() && header[after] == '(') {
+                    bool followed_ok;
+                    if (has_full_sig) {
+                        followed_ok = after >= header.size()
+                            || header[after] == ' ' || header[after] == '\t';
+                    } else {
+                        followed_ok = after < header.size() && header[after] == '(';
+                    }
+                    if (followed_ok) {
                         found = true;
                         break;
                     }
