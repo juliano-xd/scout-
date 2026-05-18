@@ -302,11 +302,7 @@ namespace engines {
 
         analysis_cache_.clear();
         in_progress_methods_.clear(); // [BUG-1]
-        string_pool_.clear(); // [BUG-6] Limpa pool entre chamadas de search()
-                              // para evitar crescimento unbounded. As string_views
-                              // retornadas em SearchResult sao invalidadas na
-                              // proxima chamada, mas isso e seguro pois cada invocacao
-                              // de search() e conceitualmente independente.
+        string_pool_.clear(); // [BUG-6]
 
         TrackingState state;
         state.current_method = pool_string(target_query_sv);
