@@ -172,7 +172,8 @@ namespace engines {
             std::string_view current_method;
             uint64_t active_regs = 0;
             std::unordered_map<int, std::unordered_set<std::string_view>> obj_taint_map;
-            std::unordered_map<int, PointsToSet> alias_map;
+            // [L2] Dead code — alias_map declarado mas nunca usado.
+            // std::unordered_map<int, PointsToSet> alias_map;
             std::vector<int> control_taint_stack;
             int depth = 0;
             MethodSummary last_call_summary;

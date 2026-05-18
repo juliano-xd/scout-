@@ -59,9 +59,8 @@ namespace formatters {
         ) const;
     };
 
-    /**
-     * @brief Função de conveniência para serializar eventos causais (Nível 16).
-     */
+    /* [L1] Dead code — nunca foi usado.
     std::string format_causal_intent(const std::vector<engines::VariableEvent>& events);
+    */
 
 } // namespace formatters

@@ -81,6 +81,7 @@ namespace formatters {
     /**
      * @brief Traduz eventos de Taint/Alias em S-Expressions semânticas para IA.
      */
+    /* [L1] Dead code — CausalIntentSerializer nunca foi usado.
     class CausalIntentSerializer {
         int handle_counter_ = 0;
         std::unordered_map<std::string, std::string> reg_to_handle_;
@@ -91,7 +92,6 @@ namespace formatters {
             auto chain = sexpr::list();
 
             for (const auto& ev : events) {
-                // Saliency Filter: Poda de ruído Dalvik
                 if (ev.action == "SINK_LEAK" || ev.action == "TAINT_PROP" ||
                     ev.action == "STORE" || ev.extra == "IMPLICIT" || ev.action == "EES_OPAQUE_ENTRY") {
 
@@ -108,7 +108,7 @@ namespace formatters {
                 }
             }
             root.kv("intent-chain", std::move(chain));
-            return root.to_string(true); // Sempre pretty para IA entender melhor
+            return root.to_string(true);
         }
 
     private:
@@ -119,10 +119,10 @@ namespace formatters {
         }
     };
 
-    // Função global de interface para o motor de análise
     std::string format_causal_intent(const std::vector<engines::VariableEvent>& events) {
         CausalIntentSerializer cis;
         return cis.serialize(events);
     }
+    */
 
 } // namespace formatters
