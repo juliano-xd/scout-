@@ -88,6 +88,15 @@ namespace engines {
         std::vector<size_t> line_start_pos;
         std::unordered_map<std::string_view, int> label_to_line;
 
+        // [C22] Catch clauses extraídas antes de construir o CFG.
+        struct CatchClause {
+            std::string_view type;
+            std::string_view from_label;
+            std::string_view to_label;
+            std::string_view handler_label;
+        };
+        std::vector<CatchClause> catch_clauses;
+
         size_t pos = 0;
         while (pos < body.size()) {
             size_t next = body.find('\n', pos);
@@ -95,9 +104,35 @@ namespace engines {
             std::string_view raw_line = body.substr(pos, next - pos);
             std::string_view line = utils::trim(raw_line);
             if (!line.empty()) {
-                if (line[0] == ':') label_to_line[line] = lines.size();
-                lines.push_back(line);
-                line_start_pos.push_back(pos);
+                if (line[0] == ':') {
+                    label_to_line[line] = lines.size();
+                    lines.push_back(line);
+                    line_start_pos.push_back(pos);
+                } else if (line.starts_with(".catch ") || line.starts_with(".catchall ")) {
+                    // Extrai cláusula catch: .catch Type {from .. to} handler
+                    const size_t brace_open = line.find('{');
+                    const size_t brace_close = line.find('}', brace_open);
+                    const size_t ddot = line.find(" .. ", brace_open);
+                    if (brace_open != std::string_view::npos && brace_close != std::string_view::npos
+                        && ddot != std::string_view::npos)
+                    {
+                        CatchClause cc;
+                        if (line.starts_with(".catch ")) {
+                            const size_t t_start = 7; // after ".catch "
+                            const size_t t_end = line.find(" {", t_start);
+                            cc.type = utils::trim(line.substr(t_start, t_end - t_start));
+                        } else {
+                            cc.type = ""; // catchall
+                        }
+                        cc.from_label = utils::trim(line.substr(brace_open + 1, ddot - brace_open - 1));
+                        cc.to_label   = utils::trim(line.substr(ddot + 4, brace_close - ddot - 4));
+                        cc.handler_label = utils::trim(line.substr(brace_close + 1));
+                        catch_clauses.push_back(cc);
+                    }
+                } else {
+                    lines.push_back(line);
+                    line_start_pos.push_back(pos);
+                }
             }
             pos = next + 1;
         }
@@ -170,6 +205,38 @@ namespace engines {
                     cfg.blocks[i + 1].predecessors.push_back(i);
                 }
             }
+        }
+
+        // [C22] Popula exception edges nos blocos dentro de cada cláusula catch.
+        // Para cada bloco cujas linhas caem dentro do intervalo [from, to),
+        // adiciona a exceção como handler. A prioridade é crescente por ordem
+        // de aparecimento (primeiro catch listado = maior prioridade).
+        int catch_priority = 0;
+        for (const auto& cc : catch_clauses) {
+            const auto from_it = label_to_line.find(cc.from_label);
+            const auto to_it = label_to_line.find(cc.to_label);
+            const auto handler_it = label_to_line.find(cc.handler_label);
+            if (from_it == label_to_line.end() || to_it == label_to_line.end()
+                || handler_it == label_to_line.end())
+            {
+                ++catch_priority;
+                continue;
+            }
+            const int from_line = from_it->second;
+            const int to_line = to_it->second;
+            const int handler_bid = line_to_block[handler_it->second];
+            for (size_t i = 0; i < cfg.blocks.size(); ++i) {
+                const size_t bs = block_start_line[i];
+                const size_t be = (i + 1 < cfg.blocks.size()) ? block_start_line[i + 1] : lines.size();
+                // Bloco está dentro do try-range se começa em [from_line, to_line)
+                if (static_cast<int>(bs) >= from_line && static_cast<int>(be) <= to_line) {
+                    cfg.blocks[i].handlers.push_back(
+                        {cc.type, handler_bid, catch_priority});
+                    cfg.blocks[i].contains_peis = true;
+                    cfg.blocks[i].is_in_try_scope = true;
+                }
+            }
+            ++catch_priority;
         }
 
         return cfg;

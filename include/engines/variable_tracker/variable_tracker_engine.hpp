@@ -19,115 +19,24 @@ namespace engines {
      */
     using LocusID = uint32_t;
 
-    /**
-     * @brief PointsToSet: Conjunto de possíveis instâncias (LocusIDs) para um registrador.
-     * Otimizado via Small Vector Optimization (SVO) para evitar alocações na heap em 90% dos casos.
-     */
+    // [C17] PointsToSet substituído por vector simples.
+    // A implementação anterior usava union { LocusID[2]; vector<LocusID>*; }
+    // com flag is_large separada — frágil e com UB potencial.
+    // Como PointsToSet é stub (get_points_to_set retorna vazio), o custo
+    // adicional da alocação heap não impacta performance mensurável.
     struct PointsToSet {
-        static constexpr size_t SmallSize = 2;
-
-        union {
-            LocusID small[SmallSize];
-            std::vector<LocusID>* large;
-        } storage;
-
-        uint8_t count = 0;
-        bool is_large = false;
-
-        PointsToSet() : count(0), is_large(false) {}
-
-        ~PointsToSet() {
-            if (is_large) delete storage.large;
-        }
-
-        PointsToSet(const PointsToSet& other) {
-            copy_from(other);
-        }
-
-        PointsToSet& operator=(const PointsToSet& other) {
-            if (this != &other) {
-                if (is_large) delete storage.large;
-                copy_from(other);
-            }
-            return *this;
-        }
-
-        PointsToSet(PointsToSet&& other) noexcept
-            : count(other.count), is_large(other.is_large) {
-            if (is_large) {
-                storage.large = other.storage.large;
-                other.storage.large = nullptr;
-            } else {
-                for (int i = 0; i < count; ++i)
-                    storage.small[i] = other.storage.small[i];
-            }
-            other.count = 0;
-            other.is_large = false;
-        }
-
-        PointsToSet& operator=(PointsToSet&& other) noexcept {
-            if (this != &other) {
-                if (is_large) delete storage.large;
-                is_large = other.is_large;
-                count = other.count;
-                if (is_large) {
-                    storage.large = other.storage.large;
-                    other.storage.large = nullptr;
-                } else {
-                    for (int i = 0; i < count; ++i)
-                        storage.small[i] = other.storage.small[i];
-                }
-                other.count = 0;
-                other.is_large = false;
-            }
-            return *this;
-        }
+        std::vector<LocusID> storage;
 
         void add(LocusID id) {
-            if (contains(id)) return;
-            if (!is_large) {
-                if (count < SmallSize) {
-                    storage.small[count++] = id;
-                } else {
-                    auto* v = new std::vector<LocusID>();
-                    v->push_back(storage.small[0]);
-                    v->push_back(storage.small[1]);
-                    v->push_back(id);
-                    storage.large = v;
-                    is_large = true;
-                    count = 3;
-                }
-            } else {
-                storage.large->push_back(id);
-                count = static_cast<uint8_t>(std::min<size_t>(255, storage.large->size()));
-            }
+            if (!contains(id)) storage.push_back(id);
         }
 
         bool contains(LocusID id) const {
-            if (!is_large) {
-                for (int i = 0; i < count; ++i) if (storage.small[i] == id) return true;
-                return false;
-            }
-            return std::find(storage.large->begin(), storage.large->end(), id) != storage.large->end();
+            return std::find(storage.begin(), storage.end(), id) != storage.end();
         }
 
-        bool empty() const { return count == 0; }
-        void clear() {
-            if (is_large) delete storage.large;
-            is_large = false;
-            count = 0;
-        }
-
-    private:
-        void copy_from(const PointsToSet& other) {
-            is_large = other.is_large;
-            count = other.count;
-            if (is_large) {
-                storage.large = new std::vector<LocusID>(*other.storage.large);
-            } else {
-                for (int i = 0; i < count; ++i) storage.small[i] = other.storage.small[i];
-            }
-        }
+        bool empty() const { return storage.empty(); }
+        void clear() { storage.clear(); }
     };
 
     struct VariableEvent {

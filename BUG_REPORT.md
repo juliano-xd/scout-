@@ -344,6 +344,15 @@ de exception handler em `track_recursive` (linhas 507-513) é código morto.
 | C8 | merge_states: compara conteúdo, não tamanho | `ec66901` |
 | C9 | Comentário enganoso sobre string_pool_ | `b87e381` |
 | C10 | process_method_internal decomposto em 7 handlers | `9948996` |
+| C11 | control_taint_stack pop em qualquer posição (std::erase) | `50494c9` |
+| C14 | CHA verifica Ljava/lang/Object; | `50494c9` |
+| C15 | aput extrai registrador de índice | `50494c9` |
+| C41 | array-length adicionado ao is_PEI_local | `50494c9` |
+| C42 | aput verifica obj_taint_map no índice | `50494c9` |
+| C12 | CHA multi-target: coleta todas as implementações + interfaces | *(este commit)* |
+| C13 | invoke-type dispatch (direct/static pula CHA) | *(este commit)* |
+| C17 | PointsToSet union → std::vector<LocusID> (elimina UB) | *(este commit)* |
+| C22 | Exception edges populados pelo CFG builder (.catch parsing) | *(este commit)* |
 
 ## Issues Corrigidas (Sessão Anterior)
 

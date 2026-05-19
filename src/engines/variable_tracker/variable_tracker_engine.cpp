@@ -885,6 +885,12 @@ namespace engines {
         std::string_view method_name, int depth
     ) {
         const bool pc_tainted = !state.control_taint_stack.empty();
+
+        // [C13] Extrai o tipo de invoke (virtual, direct, super, interface, static).
+        const size_t first_sp = line.find(' ');
+        const std::string_view invoke_type =
+            (first_sp != std::string_view::npos) ? line.substr(0, first_sp) : "";
+
         const size_t ob = line.find('{');
         const size_t cb = line.find('}', ob);
 
@@ -998,36 +1004,57 @@ namespace engines {
                 } else if (!is_sink) {
                     TrackingState next_state;
 
-                    PointsToSet dummy_aliases;
-                    auto resolved_targets = devirtualize_call(ctx, dummy_aliases, target);
-                    std::string_view actual_target = target;
-                    if (!resolved_targets.empty()) {
-                        actual_target = pool_string(resolved_targets[0]);
+                    // [C13] Dispatch conforme tipo de invoke.
+                    std::vector<std::string> resolved_targets;
+                    if (invoke_type == "invoke-direct" || invoke_type == "invoke-static") {
+                        // Alvo exato — sem CHA.
+                        resolved_targets = {std::string(target)};
+                    } else if (invoke_type == "invoke-super") {
+                        // invoke-super resolve na superclasse, não na atual.
+                        // O target já nomeia a superclasse diretamente no Smali,
+                        // então usamos como está com CHA a partir dela.
+                        PointsToSet dummy_aliases;
+                        resolved_targets = devirtualize_call(ctx, dummy_aliases, target);
+                    } else {
+                        // invoke-virtual, invoke-interface: CHA normal.
+                        PointsToSet dummy_aliases;
+                        resolved_targets = devirtualize_call(ctx, dummy_aliases, target);
                     }
 
-                    if (!actual_target.empty() && actual_target.front() != '(') {
-                        next_state.current_method = actual_target;
-                        next_state.depth = depth + 1;
+                    // [C12] Itera todos os alvos resolvidos, merge dos summaries.
+                    MethodSummary merged_summary;
+                    for (const auto& rtarget : resolved_targets) {
+                        if (rtarget.empty() || rtarget.front() == '(') {
+                            merged_summary.return_tainted = true;
+                            continue;
+                        }
+
+                        TrackingState target_state;
+                        target_state.current_method = pool_string(rtarget);
+                        target_state.depth = depth + 1;
 
                         for (int i = 0; i < call_count; ++i) {
                             if ((state.active_regs & (1ULL << call_bits[i])) || pc_tainted) {
-                                next_state.active_regs |= (1ULL << (32 + i));
+                                target_state.active_regs |= (1ULL << (32 + i));
                             }
                             if (const auto it = state.obj_taint_map.find(call_bits[i]);
                                 it != state.obj_taint_map.end())
                             {
-                                next_state.obj_taint_map[32 + i] = it->second;
+                                target_state.obj_taint_map[32 + i] = it->second;
                             }
                         }
 
-                        state.last_call_summary = track_recursive(
-                            ctx, next_state, events, config, "");
-                        for (const auto& f : state.last_call_summary.modified_static_fields) {
-                            state.static_fields_taint.insert(f);
-                        }
-                    } else {
-                        state.last_call_summary = {};
-                        state.last_call_summary.return_tainted = true;
+                        const auto sub_summary = track_recursive(
+                            ctx, target_state, events, config, "");
+                        merged_summary.return_tainted |= sub_summary.return_tainted;
+                        for (const auto& f : sub_summary.return_obj_fields)
+                            merged_summary.return_obj_fields.insert(f);
+                        for (const auto& f : sub_summary.modified_static_fields)
+                            merged_summary.modified_static_fields.insert(f);
+                    }
+                    state.last_call_summary = merged_summary;
+                    for (const auto& f : merged_summary.modified_static_fields) {
+                        state.static_fields_taint.insert(f);
                     }
                 }
             } else {
@@ -1082,13 +1109,17 @@ namespace engines {
         const size_t arrow = virtual_method_sig.find("->");
         if (arrow == std::string_view::npos) return {std::string(virtual_method_sig)};
 
-        std::string        class_name = std::string(virtual_method_sig.substr(0, arrow));
-        const std::string_view method_sig  = virtual_method_sig.substr(arrow + 2);
+        std::string class_name = std::string(virtual_method_sig.substr(0, arrow));
+        const std::string_view method_sig = virtual_method_sig.substr(arrow + 2);
 
-        // Simple CHA resolution — sobe a hierarquia até encontrar a implementação.
-        while (!class_name.empty()) {
-            const std::string_view content = ctx.get_class_content(class_name);
-            if (content.empty()) break;
+        // [C12] CHA multi-target: coleta TODAS as implementações disponíveis
+        // na hierarquia (superclasses + interfaces), não apenas a primeira.
+        std::vector<std::string> results;
+        std::unordered_set<std::string> seen; // dedup
+
+        auto find_method_in_class = [&](const std::string& cl_name) -> bool {
+            const std::string_view content = ctx.get_class_content(cl_name);
+            if (content.empty()) return false;
 
             size_t m_pos = content.find(".method ");
             bool found = false;
@@ -1097,13 +1128,11 @@ namespace engines {
                 const size_t eol = (next_line != std::string_view::npos) ? next_line : content.size();
                 const std::string_view header = content.substr(m_pos, eol - m_pos);
 
-                // Mesmo criterio estrito de track_recursive:
-                // preceded_ok + followed_ok, com suporte a sig completa.
                 const size_t sig_pos = header.find(method_sig);
                 if (sig_pos != std::string_view::npos) {
                     const bool preceded_ok = sig_pos > 0
                         && (header[sig_pos - 1] == ' ' || header[sig_pos - 1] == '\t');
-                    if (!preceded_ok) continue;
+                    if (!preceded_ok) { m_pos = content.find(".method ", eol); continue; }
                     const bool has_full_sig = method_sig.find('(') != std::string_view::npos;
                     const size_t after = sig_pos + method_sig.size();
                     bool followed_ok;
@@ -1113,17 +1142,45 @@ namespace engines {
                     } else {
                         followed_ok = after < header.size() && header[after] == '(';
                     }
-                    if (followed_ok) {
-                        found = true;
-                        break;
-                    }
+                    if (followed_ok) { found = true; break; }
                 }
                 m_pos = content.find(".method ", eol);
             }
+            return found;
+        };
 
-            if (found) {
-                return {class_name + "->" + std::string(method_sig)};
+        // [C12] Função auxiliar para coletar interfaces de uma classe.
+        auto collect_interfaces = [&](const std::string& cl_name) {
+            const std::string_view content = ctx.get_class_content(cl_name);
+            if (content.empty()) return;
+            size_t ipos = 0;
+            while ((ipos = content.find(".implements ", ipos)) != std::string_view::npos) {
+                const size_t next_line = content.find('\n', ipos);
+                const size_t eol = (next_line != std::string_view::npos) ? next_line : content.size();
+                const std::string_view iface_name = utils::trim(
+                    content.substr(ipos + 12, eol - ipos - 12));
+                const std::string iface_str(iface_name);
+                if (seen.insert(iface_str).second) {
+                    if (find_method_in_class(iface_str)) {
+                        results.push_back(iface_str + "->" + std::string(method_sig));
+                    }
+                }
+                ipos = eol;
             }
+        };
+
+        // Sobe a hierarquia de superclasses, coletando implementações.
+        while (!class_name.empty()) {
+            if (!seen.insert(class_name).second) break;
+            if (find_method_in_class(class_name)) {
+                results.push_back(class_name + "->" + std::string(method_sig));
+            }
+
+            const std::string_view content = ctx.get_class_content(class_name);
+            if (content.empty()) break;
+
+            // Coleta também interfaces desta classe.
+            collect_interfaces(class_name);
 
             // Sobe para a superclasse.
             const size_t s_pos = content.find(".super ");
@@ -1135,7 +1192,10 @@ namespace engines {
             }
         }
 
-        return {std::string(virtual_method_sig)};
+        if (results.empty()) {
+            results.push_back(std::string(virtual_method_sig));
+        }
+        return results;
     }
 
 } // namespace engines
