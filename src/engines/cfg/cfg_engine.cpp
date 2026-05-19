@@ -144,10 +144,12 @@ namespace engines {
 
         for (size_t i = 0; i < lines.size(); ++i) {
             std::string_view line = lines[i];
-            if (line.starts_with("if-") || line.starts_with("goto") || line.starts_with("return") || line.starts_with("throw")) {
+            if (line.starts_with("if-") || line.starts_with("goto") || line.starts_with("return") || line.starts_with("throw")
+                || line.starts_with("packed-switch") || line.starts_with("sparse-switch")) {
                 if (i + 1 < lines.size()) is_leader[i + 1] = true;
                 size_t colon = line.find_last_of(':');
-                if (colon != std::string_view::npos) {
+                if (colon != std::string_view::npos
+                    && !line.starts_with("packed-switch") && !line.starts_with("sparse-switch")) {
                     std::string_view target = line.substr(colon);
                     if (label_to_line.count(target)) is_leader[label_to_line[target]] = true;
                 }
