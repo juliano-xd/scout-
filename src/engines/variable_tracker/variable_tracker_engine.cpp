@@ -317,7 +317,13 @@ namespace engines {
 
         SearchResult res;
         res.engine_name = name();
-        res.file_path = "aero_taint_analysis";
+        const size_t arrow = target_query_sv.find("->");
+        if (arrow != std::string_view::npos) {
+            res.file_path = std::string(target_query_sv.substr(0, arrow));
+        }
+        if (!events.empty()) {
+            res.line_number = static_cast<std::size_t>(events.front().line);
+        }
 
         auto root = sexpr::form("aero-taint-report");
         root.kv("start", sexpr::string(state.current_method));
