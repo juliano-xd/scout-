@@ -145,8 +145,8 @@ namespace engines {
             int val = 0;
             auto res = std::from_chars(reg.data() + 1, reg.data() + reg.size(), val);
             if (res.ec != std::errc{}) return -1;
-            if (prefix == 'v') return (val >= 0 && val < 32) ? val : -1;
-            if (prefix == 'p') return (val >= 0 && val < 16) ? 32 + val : -1;
+            if (prefix == 'v') return (val >= 0 && val < VREG_COUNT) ? val : -1;
+            if (prefix == 'p') return (val >= 0 && val < PARAM_COUNT) ? PARAM_OFFSET + val : -1;
             return -1;
         }
 
@@ -155,8 +155,15 @@ namespace engines {
         bool is_sanitizer(std::string_view target);
         bool is_transform(std::string_view target);
         bool is_propagator(std::string_view target); // [BUG-6] substitui is_prop inline
+        static constexpr int REG_COUNT = 48;
+        static constexpr int VREG_COUNT = 32;
+        static constexpr int PARAM_OFFSET = VREG_COUNT;
+        static constexpr int PARAM_COUNT = 16;
+        static constexpr int MAX_CALL_ARGS = REG_COUNT;
+        static constexpr uint64_t FINGERPRINT_MIX = 0x9e3779b97f4a7c15ULL;
+        static constexpr uint64_t FINGERPRINT_STATIC_SEED = 0xdeadbeefcafeULL;
+
         static bool merge_states(TrackingState& target, const TrackingState& incoming);
-        static constexpr int MAX_CALL_ARGS = 48;
 
         // [C10] Handlers extraídos de process_method_internal
         void handle_move_result(

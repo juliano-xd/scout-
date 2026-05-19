@@ -171,11 +171,11 @@ namespace engines {
             for (const auto& [reg, fields] : obj_map) {
                 for (const auto& f : fields) {
                     // XOR comutativo — a ordem dos registradores não importa para a chave
-                    h ^= sv_hash(f) ^ (static_cast<uint64_t>(reg) * 0x9e3779b97f4a7c15ULL);
+                    h ^= sv_hash(f) ^ (static_cast<uint64_t>(reg) * VariableTrackerEngine::FINGERPRINT_MIX);
                 }
             }
             for (const auto& f : static_fields) {
-                h ^= sv_hash(f) ^ 0xdeadbeefcafeULL;
+                h ^= sv_hash(f) ^ VariableTrackerEngine::FINGERPRINT_STATIC_SEED;
             }
             return h;
         }
@@ -188,7 +188,7 @@ namespace engines {
     }
 
     std::string_view VariableTrackerEngine::bit_to_reg_sv(int bit) {
-        if (bit >= 0 && bit < 48) return REG_NAMES[bit];
+        if (bit >= 0 && bit < REG_COUNT) return REG_NAMES[bit];
         return "unk";
     }
 
@@ -382,7 +382,7 @@ namespace engines {
         // controle (ex: dentro vs fora de um if com taint).
         uint64_t control_hash = 0;
         for (const int ctrl : state.control_taint_stack) {
-            control_hash ^= static_cast<uint64_t>(ctrl) * 0x9e3779b97f4a7c15ULL;
+            control_hash ^= static_cast<uint64_t>(ctrl) * FINGERPRINT_MIX;
         }
         CacheKey key{state.current_method, state.active_regs, taint_fp, control_hash, state.depth};
 
