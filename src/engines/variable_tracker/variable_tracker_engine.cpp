@@ -443,7 +443,7 @@ namespace engines {
         // [BUG-8] Usa vector de pares em vez de unordered_map para manter
         //         ordenação por block id e permitir sort posterior.
         std::unordered_map<int, std::vector<VariableEvent>> block_events_map;
-        std::unordered_set<int> visited_blocks;
+        std::vector<bool> visited_blocks(cfg.blocks.size(), false);
         std::queue<int> worklist;
 
         block_in_states[cfg.entry_block_id]              = state;
@@ -451,7 +451,7 @@ namespace engines {
         block_in_states[cfg.entry_block_id].obj_taint_map = state.obj_taint_map;
 
         worklist.push(cfg.entry_block_id);
-        visited_blocks.insert(cfg.entry_block_id);
+        visited_blocks[cfg.entry_block_id] = true;
 
         // [BUG-1] Marca o método como em progresso antes de entrar no worklist.
         in_progress_methods_.insert(state.current_method);
@@ -492,16 +492,16 @@ namespace engines {
 
             for (const int sid : block.successors) {
                 const bool state_changed = merge_states(block_in_states[sid], current_out);
-                if (state_changed || !visited_blocks.count(sid)) {
-                    visited_blocks.insert(sid);
+                if (state_changed || !visited_blocks[sid]) {
+                    visited_blocks[sid] = true;
                     worklist.push(sid);
                 }
             }
 
             for (const auto& handler : block.handlers) {
                 const bool state_changed = merge_states(block_in_states[handler.target_id], exception_out);
-                if (state_changed || !visited_blocks.count(handler.target_id)) {
-                    visited_blocks.insert(handler.target_id);
+                if (state_changed || !visited_blocks[handler.target_id]) {
+                    visited_blocks[handler.target_id] = true;
                     worklist.push(handler.target_id);
                 }
             }
