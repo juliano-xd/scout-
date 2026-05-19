@@ -440,9 +440,7 @@ namespace engines {
         DominatorAnalyzer::compute_ipds(cfg);
 
         std::unordered_map<int, TrackingState>            block_in_states;
-        // [BUG-8] Usa vector de pares em vez de unordered_map para manter
-        //         ordenação por block id e permitir sort posterior.
-        std::unordered_map<int, std::vector<VariableEvent>> block_events_map;
+        std::vector<std::vector<VariableEvent>> block_events_map(cfg.blocks.size());
         std::vector<bool> visited_blocks(cfg.blocks.size(), false);
         std::queue<int> worklist;
 
@@ -520,21 +518,11 @@ namespace engines {
         // [BUG-1] Remove o método do conjunto de "em progresso" ao terminar.
         in_progress_methods_.erase(state.current_method);
 
-        // [BUG-8] Flatten ordenado por block id — aproxima a ordem topológica
-        //         do CFG e torna o timeline de eventos mais legível.
-        std::vector<std::pair<int, std::vector<VariableEvent>*>> ordered_blocks;
-        ordered_blocks.reserve(block_events_map.size());
-        for (auto& [bid, bevs] : block_events_map) {
-            ordered_blocks.push_back({bid, &bevs});
-        }
-        std::sort(ordered_blocks.begin(), ordered_blocks.end(),
-                  [](const auto& a, const auto& b) { return a.first < b.first; });
-
         std::vector<VariableEvent> all_method_events;
-        for (auto& [bid, bevs_ptr] : ordered_blocks) {
+        for (auto& bevs : block_events_map) {
             all_method_events.insert(all_method_events.end(),
-                                     std::make_move_iterator(bevs_ptr->begin()),
-                                     std::make_move_iterator(bevs_ptr->end()));
+                                     std::make_move_iterator(bevs.begin()),
+                                     std::make_move_iterator(bevs.end()));
         }
 
         analysis_cache_[key] = {all_method_events, final_summary};
