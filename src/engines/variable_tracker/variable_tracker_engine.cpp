@@ -925,7 +925,7 @@ namespace engines {
                 || target.find("Ljava/lang/StringBuilder;") != std::string_view::npos
                 || target.find("Ljava/util/") != std::string_view::npos;
 
-            int call_bits[16];
+            std::array<int, MAX_CALL_ARGS> call_bits{};
             int call_count = 0;
 
             if (regs_sv.find(" .. ") != std::string_view::npos) {
@@ -933,7 +933,7 @@ namespace engines {
                 const int    s_idx = reg_to_bit(utils::trim(regs_sv.substr(0, dd)));
                 const int    e_idx = reg_to_bit(utils::trim(regs_sv.substr(dd + 4)));
                 if (s_idx != -1 && e_idx != -1) {
-                    for (int i = s_idx; i <= e_idx && call_count < 16; ++i)
+                    for (int i = s_idx; i <= e_idx && call_count < MAX_CALL_ARGS; ++i)
                         call_bits[call_count++] = i;
                 }
             } else {
@@ -942,7 +942,7 @@ namespace engines {
                     size_t r_comma = regs_sv.find(',', r_pos);
                     if (r_comma == std::string_view::npos) r_comma = regs_sv.size();
                     const int b = reg_to_bit(utils::trim(regs_sv.substr(r_pos, r_comma - r_pos)));
-                    if (b != -1 && call_count < 16) call_bits[call_count++] = b;
+                    if (b != -1 && call_count < MAX_CALL_ARGS) call_bits[call_count++] = b;
                     r_pos = r_comma + 1;
                 }
             }

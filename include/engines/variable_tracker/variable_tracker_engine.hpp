@@ -157,6 +157,7 @@ namespace engines {
         bool is_transform(std::string_view target);
         bool is_propagator(std::string_view target); // [BUG-6] substitui is_prop inline
         static bool merge_states(TrackingState& target, const TrackingState& incoming);
+        static constexpr int MAX_CALL_ARGS = 48;
 
         // [C10] Handlers extraídos de process_method_internal
         void handle_move_result(
