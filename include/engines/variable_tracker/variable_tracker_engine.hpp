@@ -5,7 +5,6 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
-#include <set>
 #include <string_view>
 #include <algorithm>
 #include <charconv>
@@ -197,7 +196,16 @@ namespace engines {
             TrackingState& state);
 
     private:
-        std::set<std::string, std::less<>> string_pool_;
+        struct TransparentStringHash {
+            using is_transparent = void;
+            size_t operator()(std::string_view s) const noexcept {
+                return std::hash<std::string_view>{}(s);
+            }
+            size_t operator()(const std::string& s) const noexcept {
+                return std::hash<std::string>{}(s);
+            }
+        };
+        std::unordered_set<std::string, TransparentStringHash, std::equal_to<>> string_pool_;
         std::unordered_map<CacheKey,
                            std::pair<std::vector<VariableEvent>, MethodSummary>,
                            CacheKeyHash> analysis_cache_;
