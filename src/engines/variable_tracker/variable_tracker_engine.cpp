@@ -290,7 +290,7 @@ namespace engines {
         } else if (initial_reg_str.empty()) {
             const size_t colon = target_query_sv.find_last_of(':');
             if (colon != std::string_view::npos) {
-                initial_reg_str = std::string(target_query_sv.substr(colon + 1));
+                initial_reg_str = std::string(utils::trim(target_query_sv.substr(colon + 1)));
                 target_query_sv = target_query_sv.substr(0, colon);
             }
         }
