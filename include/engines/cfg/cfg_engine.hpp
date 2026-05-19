@@ -21,7 +21,7 @@ namespace engines {
      */
     struct BasicBlock {
         int id;
-        std::string_view code_content;
+        std::string code_content;
 
         // Fluxo Normal
         std::vector<int> successors;
