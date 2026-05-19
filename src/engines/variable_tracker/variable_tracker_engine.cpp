@@ -301,6 +301,7 @@ namespace engines {
         }
 
         analysis_cache_.clear();
+        method_body_cache_.clear();
         in_progress_methods_.clear(); // [BUG-1]
         string_pool_.clear(); // [BUG-6]
 
@@ -389,52 +390,50 @@ namespace engines {
         const size_t arrow = state.current_method.find("->");
         if (arrow == std::string_view::npos) return {};
 
-        const std::string_view class_name = state.current_method.substr(0, arrow);
-        const std::string_view method_sig  = state.current_method.substr(arrow + 2);
+        std::string_view body;
+        const auto body_cache_it = method_body_cache_.find(state.current_method);
+        if (body_cache_it != method_body_cache_.end()) {
+            body = body_cache_it->second;
+        } else {
+            const std::string_view class_name = state.current_method.substr(0, arrow);
+            const std::string_view method_sig  = state.current_method.substr(arrow + 2);
 
-        const std::string_view content = ctx.get_class_content(class_name);
-        if (content.empty()) return {};
+            const std::string_view content = ctx.get_class_content(class_name);
+            if (content.empty()) return {};
 
-        // [BUG-4] Busca de cabeçalho com critério mais estrito:
-        // method_sig deve ser precedido por espaço/tab e seguido por '(' para
-        // evitar casar nomes que são substrings de outros (ex: getName vs getNameById).
-        size_t m_pos = content.find(".method ");
-        while (m_pos != std::string_view::npos) {
-            const size_t next_line = content.find('\n', m_pos);
-            const size_t eol = (next_line != std::string_view::npos) ? next_line : content.size();
-            const std::string_view header = content.substr(m_pos, eol - m_pos);
+            size_t m_pos = content.find(".method ");
+            while (m_pos != std::string_view::npos) {
+                const size_t next_line = content.find('\n', m_pos);
+                const size_t eol = (next_line != std::string_view::npos) ? next_line : content.size();
+                const std::string_view header = content.substr(m_pos, eol - m_pos);
 
-            const size_t sig_pos = header.find(method_sig);
-            if (sig_pos != std::string_view::npos) {
-                const bool preceded_ok = sig_pos > 0
-                    && (header[sig_pos - 1] == ' ' || header[sig_pos - 1] == '\t');
-                // [BUG-4] Garante que o método não é prefixo de um nome mais longo.
-                // Se method_sig já contém '(' é uma assinatura completa
-                // (auto-qualificada). Basta verificar que termina em boundary
-                // (fim da linha ou espaço). Caso contrário, é nome simples
-                // e exigimos '(' após.
-                const bool has_full_sig = method_sig.find('(') != std::string_view::npos;
-                const size_t after = sig_pos + method_sig.size();
-                bool followed_ok;
-                if (has_full_sig) {
-                    followed_ok = after >= header.size()
-                        || header[after] == ' ' || header[after] == '\t';
-                } else {
-                    followed_ok = after < header.size() && header[after] == '(';
+                const size_t sig_pos = header.find(method_sig);
+                if (sig_pos != std::string_view::npos) {
+                    const bool preceded_ok = sig_pos > 0
+                        && (header[sig_pos - 1] == ' ' || header[sig_pos - 1] == '\t');
+                    const bool has_full_sig = method_sig.find('(') != std::string_view::npos;
+                    const size_t after = sig_pos + method_sig.size();
+                    bool followed_ok;
+                    if (has_full_sig) {
+                        followed_ok = after >= header.size()
+                            || header[after] == ' ' || header[after] == '\t';
+                    } else {
+                        followed_ok = after < header.size() && header[after] == '(';
+                    }
+                    if (preceded_ok && followed_ok) break;
                 }
-                if (preceded_ok && followed_ok) break;
+                m_pos = content.find(".method ", eol);
             }
-            m_pos = content.find(".method ", eol);
+
+            if (m_pos == std::string_view::npos) return {};
+
+            const size_t start = m_pos;
+            const size_t end   = content.find(".end method", m_pos);
+            if (end == std::string_view::npos) return {};
+
+            body = content.substr(start, end - start);
+            method_body_cache_[state.current_method] = body;
         }
-
-        if (m_pos == std::string_view::npos) return {};
-
-        // [BUG-7] `start` é simplesmente `m_pos`; o rfind original era código morto.
-        const size_t start = m_pos;
-        const size_t end   = content.find(".end method", m_pos);
-        if (end == std::string_view::npos) return {};
-
-        const std::string_view body = content.substr(start, end - start);
 
         CFG cfg = CFGEngine::build_cfg(body);
         DominatorAnalyzer::compute_ipds(cfg);

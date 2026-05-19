@@ -214,6 +214,7 @@ namespace engines {
         // Impede recursão infinita quando o call-graph contém ciclos (A→B→A).
         // Armazena string_views cujo storage vive em string_pool_, portanto são seguras.
         std::unordered_set<std::string_view> in_progress_methods_;
+        std::unordered_map<std::string_view, std::string_view> method_body_cache_;
 
         EngineStats stats_;
     };
