@@ -1079,7 +1079,11 @@ namespace engines {
     }
 
     bool VariableTrackerEngine::supports_config(const SearchConfig& config) const {
-        return !config.var_name.empty() || config.query.find(':') != std::string::npos;
+        const bool has_method = config.query.find("->") != std::string_view::npos;
+        const bool has_var = !config.var_name.empty();
+        const bool has_register = config.query.find(':') != std::string_view::npos;
+        const bool has_const_target = config.query.find('?') != std::string_view::npos;
+        return has_method && (has_var || has_register || has_const_target);
     }
 
     PointsToSet VariableTrackerEngine::get_points_to_set(
