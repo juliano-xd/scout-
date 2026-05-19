@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+ROOT_DIR=$(git rev-parse --show-toplevel)
+SCRIPT="$ROOT_DIR/scripts/generate_rules_sexpr.py"
+INPUT="$ROOT_DIR/RULES.md"
+OUTPUT="$ROOT_DIR/RULES_IA.md"
+
+if git diff --cached --name-only | grep -q "RULES.md"; then
+    if [ -f "$SCRIPT" ] && [ -f "$INPUT" ]; then
+        python3 "$SCRIPT" "$INPUT" "$OUTPUT"
+        git add "$OUTPUT"
+    fi
+fi
