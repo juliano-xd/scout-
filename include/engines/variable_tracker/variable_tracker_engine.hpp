@@ -60,12 +60,14 @@ namespace engines {
         uint64_t active_regs;
         uint64_t taint_fp;
         uint64_t control_hash = 0;
+        int depth = 0;
 
         bool operator==(const CacheKey& other) const {
             return method_sig == other.method_sig
                 && active_regs == other.active_regs
                 && taint_fp == other.taint_fp
-                && control_hash == other.control_hash;
+                && control_hash == other.control_hash
+                && depth == other.depth;
         }
     };
 
@@ -75,6 +77,7 @@ namespace engines {
             h ^= std::hash<uint64_t>{}(k.active_regs) << 1;
             h ^= std::hash<uint64_t>{}(k.taint_fp) << 2;
             h ^= std::hash<uint64_t>{}(k.control_hash) << 3;
+            h ^= std::hash<int>{}(k.depth) << 4;
             return h;
         }
     };

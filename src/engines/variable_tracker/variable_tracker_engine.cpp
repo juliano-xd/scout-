@@ -377,7 +377,7 @@ namespace engines {
         for (const int ctrl : state.control_taint_stack) {
             control_hash ^= static_cast<uint64_t>(ctrl) * 0x9e3779b97f4a7c15ULL;
         }
-        CacheKey key{state.current_method, state.active_regs, taint_fp, control_hash};
+        CacheKey key{state.current_method, state.active_regs, taint_fp, control_hash, state.depth};
 
         // [PERF-1] Single lookup no cache com `find`.
         if (const auto cache_it = analysis_cache_.find(key); cache_it != analysis_cache_.end()) {
