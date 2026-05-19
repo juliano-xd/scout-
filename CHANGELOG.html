@@ -120,11 +120,11 @@ footer {
   <h1>Scout++ <span>&mdash;</span> Modifica&ccedil;&otilde;es</h1>
   <p>Relat&oacute;rio t&eacute;cnico das corre&ccedil;&otilde;es, otimiza&ccedil;&otilde;es
   e manuten&ccedil;&atilde;o realizadas no motor de Taint Analysis.</p>
-  <div class="meta">9 commits &middot; 8 arquivos fonte &middot; ~140 linhas alteradas</div>
+  <div class="meta">12 commits &middot; 9 arquivos fonte &middot; ~780 linhas alteradas (F1)</div>
 </header>
 
 <div class="section">
-  <div class="section-title">Corre&ccedil;&otilde;es &mdash; C1 a C6</div>
+  <div class="section-title">Corre&ccedil;&otilde;es &mdash; C1 a C44</div>
 
   <div class="entry">
     <div class="entry-header">
@@ -214,6 +214,63 @@ footer {
     </div>
     <ul class="file-list">
       <li>variable_tracker_engine.cpp +5 &minus;2</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-hash">50494c9</span>
+      <span class="entry-type type-fix">fix</span>
+      <span class="entry-title">control_taint_stack pop, CHA/Object, aput index, PEIs (C11 C14 C15 C41 C42)</span>
+    </div>
+    <div class="entry-desc">
+      Conjunto de 5 corre&ccedil;&otilde;es HIGH:
+      <strong>C11</strong> &mdash; <code>control_taint_stack</code> removia apenas do
+      final (LIFO). Substitu&iacute;do por <code>std::erase(bid)</code> em qualquer
+      posi&ccedil;&atilde;o.<br>
+      <strong>C14</strong> &mdash; CHA ignorava <code>Ljava/lang/Object;</code>.
+      Loop alterado de <code>class_name != Object</code> para <code>!class_name.empty()</code>.<br>
+      <strong>C15</strong> &mdash; <code>aput</code> marcava array inteiro como tainted
+      sem verificar registrador de &iacute;ndice. Agora extrai e verifica o &iacute;ndice.<br>
+      <strong>C41</strong> &mdash; <code>array-length</code> faltava em
+      <code>is_PEI_local</code> (pode lan&ccedil;ar NPE).<br>
+      <strong>C42</strong> &mdash; <code>aput</code> n&atilde;o verificava
+      <code>obj_taint_map</code> no &iacute;ndice. Agora verifica field taint al&eacute;m
+      de <code>active_regs</code>.
+    </div>
+    <ul class="file-list">
+      <li>variable_tracker_engine.cpp +42 &minus;7</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-hash">faa47e7</span>
+      <span class="entry-type type-fix">fix</span>
+      <span class="entry-title">CHA multi-target, invoke-type dispatch, exception edges, PointsToSet (C12 C13 C17 C22)</span>
+    </div>
+    <div class="entry-desc">
+      Conjunto de 4 corre&ccedil;&otilde;es HIGH:
+      <strong>C12</strong> &mdash; <code>devirtualize_call</code> retornava apenas o
+      primeiro alvo da hierarquia. Agora coleta TODAS as implementa&ccedil;&otilde;es
+      da cadeia de superclasses + interfaces (<code>.implements</code>).
+      <code>handle_invoke_instruction</code> itera todos os alvos e merge dos summaries.<br>
+      <strong>C13</strong> &mdash; Nenhuma distin&ccedil;&atilde;o entre tipos de
+      <code>invoke-*</code>. Agora extrai o tipo da instru&ccedil;&atilde;o:
+      <code>invoke-direct</code> e <code>invoke-static</code> pulam CHA (alvo exato).<br>
+      <strong>C17</strong> &mdash; <code>PointsToSet</code> usava <code>union</code>
+      com flag <code>is_large</code> separada — UB potencial. Substitu&iacute;do por
+      <code>std::vector&lt;LocusID&gt;</code> simples. Sem impacto de performance
+      (stub n&atilde;o utilizado em hot path).<br>
+      <strong>C22</strong> &mdash; Exception edges nunca populados pelo CFG builder.
+      <code>build_cfg</code> agora parseia diretivas <code>.catch</code> e
+      <code>.catchall</code>, extrai try-range labels e adiciona
+      <code>ExceptionEdge</code> aos blocos no intervalo.
+    </div>
+    <ul class="file-list">
+      <li>variable_tracker_engine.cpp +98 &minus;31</li>
+      <li>variable_tracker_engine.hpp +9 &minus;107</li>
+      <li>cfg_engine.cpp +73 &minus;0</li>
     </ul>
   </div>
 </div>
@@ -307,9 +364,39 @@ footer {
   </div>
 </div>
 
+<div class="section">
+  <div class="section-title">Funcionalidades &mdash; F1</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-hash">(pending)</span>
+      <span class="entry-type type-feat">feat</span>
+      <span class="entry-title">ProgressReporter com S-Expr de progresso em stderr</span>
+    </div>
+    <div class="entry-desc">
+      Nova classe RAII <code>scout::ProgressReporter</code> que emite
+      <code>(:scout:progress ...)</code> em stderr antes e depois de cada
+      engine, informando engine, query, status (running/done/failed),
+      contagem de resultados e tempo decorrido em milissegundos.
+      Em TTY o <code>\r</code> sobrescreve a linha de progresso; em pipe
+      ambos os eventos ficam vis&iacute;veis no stderr. O stdout permanece
+      limpo para consumo por parsers. Integrado a <code>run_standard_module</code>
+      no main.cpp, cobrindo automaticamente todos os engines.
+    </div>
+    <ul class="file-list">
+      <li>include/utils/progress_reporter.hpp +55</li>
+      <li>src/utils/progress_reporter.cpp +90</li>
+      <li>tests/test_progress_reporter.cpp +110</li>
+      <li>tests/CMakeLists.txt +4</li>
+      <li>CMakeLists.txt +15 &minus;0</li>
+      <li>src/main.cpp +3 &minus;0</li>
+    </ul>
+  </div>
+</div>
+
 <div class="stats">
   <div class="stats-item">
-    <div class="stats-num">6</div>
+    <div class="stats-num">11</div>
     <div class="stats-label">Bug Fixes</div>
   </div>
   <div class="stats-item">
@@ -319,6 +406,10 @@ footer {
   <div class="stats-item">
     <div class="stats-num">1</div>
     <div class="stats-label">Manuten&ccedil;&atilde;o</div>
+  </div>
+  <div class="stats-item">
+    <div class="stats-num">2</div>
+    <div class="stats-label">Funcionalidades</div>
   </div>
   <div class="stats-item">
     <div class="stats-num">1</div>

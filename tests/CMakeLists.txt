@@ -1,0 +1,3 @@
+add_executable(test_progress_reporter test_progress_reporter.cpp)
+target_link_libraries(test_progress_reporter PRIVATE scout_lib gtest_main)
+add_test(NAME ProgressReporter COMMAND test_progress_reporter)

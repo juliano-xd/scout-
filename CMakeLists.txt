@@ -11,6 +11,16 @@ set(CMAKE_CXX_FLAGS "-O3 -march=native -flto")
 # Includes da biblioteca do Scout
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+# Google Test para testes unitários
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.15.2
+)
+set(FETCHCONTENT_QUIET OFF)
+FetchContent_MakeAvailable(googletest)
+
 # Biblioteca principal
 add_library(scout_lib
     src/engines/class_search/class_search_engine.cpp
@@ -27,9 +37,13 @@ add_library(scout_lib
     src/engines/smali_dump/smali_dump_engine.cpp
     src/engines/register_engines.cpp
     src/formatters/sexpr_formatter.cpp
-
+    src/utils/progress_reporter.cpp
 )
 
 # Executável principal
 add_executable(scout src/main.cpp)
 target_link_libraries(scout PRIVATE scout_lib)
+
+# Testes unitários
+enable_testing()
+add_subdirectory(tests)

@@ -1,6 +1,7 @@
 #include "../include/cli/parser.hpp"
 #include "../include/engines/register_engines.hpp"
 #include "../include/utils/sexpr.hpp"
+#include "../include/utils/progress_reporter.hpp"
 #include "../include/core/analysis_context.hpp"
 
 #include <filesystem>
@@ -75,7 +76,12 @@ int main(int argc, char** argv) {
                 // Aplica modificadores específicos do motor invocado
                 config_modifier(scfg);
 
+                scout::ProgressReporter pr(engine_name, query);
+                pr.start();
+
                 auto results = engine->search(analysis_ctx, scfg);
+
+                pr.finish(results.size());
                 print_results(results);
                 return true;
             }
